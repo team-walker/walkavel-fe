@@ -1,0 +1,16 @@
+name: ✅ 작업 정의 (Task/Refactor)
+description: 일반적인 개발 작업, 리팩토링, 문서 업데이트 등을 정의할 때 사용합니다.
+title: '[TASK] '
+labels: ['task']
+body:
+  - type: textarea
+    id: details
+    attributes:
+      label: 상세 작업 내용
+      description: 수행해야 할 구체적인 작업들을 적어주세요.
+      placeholder: |
+        - [ ] ... 구현
+        - [ ] ... 수정
+        - [ ] ... 테스트 작성
+    validations:
+      required: true

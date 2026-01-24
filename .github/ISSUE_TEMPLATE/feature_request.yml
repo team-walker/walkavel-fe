@@ -1,0 +1,22 @@
+name: ✨ Frontend 기능 제안
+description: 프론트엔드 새로운 기능이나 UI 개선을 제안합니다.
+title: '[FEAT] '
+labels: ['feat', 'frontend']
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: 기능 설명
+      description: 제안하고자 하는 기능에 대해 상세히 설명해 주세요.
+    validations:
+      required: true
+  - type: textarea
+    id: logic
+    attributes:
+      label: 구현 제안
+      description: 생각하신 구현 방식이나 UI 레이아웃이 있다면 적어주세요.
+  - type: textarea
+    id: ref
+    attributes:
+      label: 참고 자료
+      description: 참고할 만한 디자인이나 서비스 링크가 있다면 적어주세요.

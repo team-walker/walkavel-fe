@@ -1,0 +1,35 @@
+name: 🐞 Frontend 버그 제보
+description: 프론트엔드 UI/UX 또는 클라이언트 로직 버그를 제보합니다.
+title: '[BUG] '
+labels: ['bug', 'frontend']
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: 버그 설명
+      description: 어떤 문제가 발생했나요?
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: 브라우저 환경
+      placeholder: 예) Chrome 120, Safari Mobile
+  - type: textarea
+    id: steps
+    attributes:
+      label: 재현 단계
+      placeholder: |
+        1. ... 페이지로 접속
+        2. ... 버튼 클릭
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 기대 결과
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: 스크린샷
+      description: 이미지나 GIF를 드래그 앤 드롭해 주세요.
