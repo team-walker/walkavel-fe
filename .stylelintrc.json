@@ -1,3 +1,12 @@
 {
-  "extends": ["stylelint-config-standard"]
+  "extends": ["stylelint-config-standard", "stylelint-config-recess-order"],
+  "rules": {
+    "at-rule-no-unknown": [
+      true,
+      {
+        "ignoreAtRules": ["theme", "utility", "variants", "tailwind", "apply", "layer", "config"]
+      }
+    ],
+    "import-notation": "string"
+  }
 }
