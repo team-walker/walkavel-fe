@@ -8,7 +8,8 @@
 
 **✅ 아래 항목을 충족하는지 확인해 주세요!**
 
-- [ ] Reviewers 설정 (팀원 전원)
+- [ ] Reviewers 설정 (팀원 전원 + AI reviewer)
+- [ ] AI 코드 리뷰 확인 (Gemini Code Assist)
 - [ ] Assignees 본인으로 설정
 - [ ] Labels 설정 (`feat`, `fix`, `refactor` 등)
 - [ ] 관련 이슈(Issue) 연결 완료 (`Close #이슈번호`)
