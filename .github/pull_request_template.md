@@ -1,17 +1,27 @@
 ## PR 체크리스트
 
+> [!TIP]
+> 자세한 협업 규칙 및 컨벤션은 [README 가이드라인](https://github.com/team-walker/frontend#-team-collaboration-guidelines)을 참고해 주세요!
+
 **✅ 아래 규칙 한번더 확인해 주세요!**
 
 - [ ] 커밋 메시지 규칙 준수 (Conventional Commits: `feat:`, `fix:` 등)
 - [ ] 불필요한 `console.log` 및 주석 제거 완료
 - [ ] PR 제목 형식 준수 (예: `feat: 로그인 페이지 구현 #12`)
+- [ ] **Assignees 설정**: 본인이 담당자로 잘 지정되었는지 확인해 주세요.
+- [ ] **Reviewers 설정**: 팀원 전원 + AI reviewer (자동 지정 완료!)
+- [ ] **AI 코드 리뷰 확인**: Gemini Code Assist의 1차 리뷰를 확인했나요? (자동 지정 완료!)
+- [ ] **Labels 설정**: PR 제목에 맞춰 `feat`, `fix` 등 라벨이 잘 달렸나요?
+- [ ] **관련 이슈 연결**: 본문에 `Close #이슈번호`를 적어 이슈를 연결해 주세요
+- [ ] **셀프 코드 리뷰 & 리뷰 요청**: 셀프 리뷰를 마친 후, `ready for review` 라벨을 달고 필요 시 팀원을 @멘션해 주세요!
 
-**✅ 아래 항목을 충족하는지 확인해 주세요!**
+---
 
-- [ ] Reviewers 설정 (팀원 전원)
-- [ ] Assignees 본인으로 설정
-- [ ] Labels 설정 (`feat`, `fix`, `refactor` 등)
-- [ ] 관련 이슈(Issue) 연결 완료 (`Close #이슈번호`)
+## 관련 이슈
+
+<!-- 이슈 번호를 적어주세요. 예: Close #12 -->
+
+- Close #이슈번호
 
 ## 작업 개요
 
@@ -35,13 +45,12 @@
 
 <!-- UI 변경 사항이나 기능 동작 확인 결과를 작성해 주세요 -->
 
+- [ ] 유닛 테스트 통과 여부 (`pnpm test`)
+- [ ] 린트 및 타입 체크 확인 (`pnpm lint`, `pnpm typecheck`)
 - [ ] 빌드 통과 여부 (`pnpm build`)
+- [ ] 데스크톱 및 모바일 뷰 반응형 동작 확인
 - [ ] 주요 브라우저(Chrome, Safari 등) 동작 확인
 
 ## (선택) 스크린샷 및 참고 자료
 
 <!-- UI 변경 사항이 있다면 캡처 화면을 첨부해 주세요 (Before/After 권장) -->
-
-| Before | After |
-| :----: | :---: |
-|        |       |
