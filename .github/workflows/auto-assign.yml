@@ -12,6 +12,7 @@ jobs:
       contents: read
       issues: write
       pull-requests: write
+      issues: write
     steps:
       - name: 'Auto PR Assignment & Reviewers'
         uses: pozil/auto-assign-issue@v1
