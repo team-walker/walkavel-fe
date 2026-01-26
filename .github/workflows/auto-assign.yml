@@ -24,7 +24,7 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 path: '.github/CODEOWNERS',
-                ref: context.payload.pull_request.head.sha
+                ref: context.payload.pull_request.head.sha // 현재 PR의 변경사항을 즉시 반영하려면 head.sha 추천
               });
 
               const content = Buffer.from(codeownersFile.content, 'base64').toString('utf8');
