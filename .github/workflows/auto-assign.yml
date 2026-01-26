@@ -2,35 +2,53 @@ name: Auto Assignment
 
 on:
   pull_request_target:
-    types: [opened, reopened]
+    types: [opened, reopened, synchronize]
 
 jobs:
   assign:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
+      issues: write
     steps:
-      - name: 'Auto PR Assignment'
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: 'Auto PR Assignment & Reviewer Request'
         uses: actions/github-script@v7
         with:
           script: |
-            // 1. Assign the PR creator
+            const fs = require('fs');
+            const creator = context.payload.pull_request.user.login;
+            // 1. CODEOWNERS 읽기 및 유저 추출
+            const content = fs.readFileSync('.github/CODEOWNERS', 'utf8');
+            const matches = content.match(/@[\w-]+/g);
+
+            // 유저가 없을 경우를 대비한 안전장치
+            const teamMembers = matches 
+              ? [...new Set(matches.map(m => m.replace('@', '')))]
+              : [];
+            console.log(`Detected team members: ${teamMembers.join(', ')}`);
+            // 2. 담당자 지정 (Assignee)
             await github.rest.issues.addAssignees({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number,
-              assignees: [context.payload.pull_request.user.login]
+              assignees: [creator]
             });
-
-            // 2. Request Review from Gemini Code Assist Bot
-            // Note: Ensure the 'Gemini Code Assist' app is installed in the repository.
+            // 3. 리뷰어 요청 (Reviewers)
+            // 본인 제외 + Gemini 봇 추가
+            const reviewers = teamMembers.filter(member => member !== creator);
+            reviewers.push('gemini-code-assist[bot]');
+            console.log(`Requesting review from: ${reviewers.join(', ')}`);
             try {
               await github.rest.pulls.requestReviewers({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 pull_number: context.issue.number,
-                reviewers: ['gemini-code-assist[bot]']
+                reviewers: reviewers
               });
             } catch (error) {
-              console.log("Failed to request review from gemini-code-assist[bot]. Ensure the App is installed.");
+              console.log("Reviewer request failed. This usually happens if a user is not a collaborator. Error: " + error.message);
             }
