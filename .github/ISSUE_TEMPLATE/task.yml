@@ -1,7 +1,7 @@
 name: ✅ 작업 정의 (Task/Refactor)
 description: 일반적인 개발 작업, 리팩토링, 문서 업데이트 등을 정의할 때 사용합니다.
 title: '[TASK] '
-labels: ['task']
+labels: ['task', 'frontend']
 body:
   - type: textarea
     id: details
