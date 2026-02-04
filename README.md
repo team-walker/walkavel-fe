@@ -33,6 +33,8 @@
 | **Framework**            | Next.js 16 (App Router)        |
 | **Language**             | TypeScript                     |
 | **Styling**              | Tailwind CSS 4, PostCSS        |
+| **PWA**                  | @ducanh2912/next-pwa           |
+| **Animation**            | Framer Motion                  |
 | **Package Manager**      | pnpm                           |
 | **Linting & Formatting** | ESLint, Prettier, Stylelint    |
 | **Git Hooks**            | Husky, Commitlint, lint-staged |
@@ -41,9 +43,13 @@
 
 ```bash
 ├── .github/          # Github Actions & Templates
-├── app/              # Next.js App Router Pages
+├── app/              # Next.js App Router Pages & Templates
+│   ├── layout.tsx    # Root RootLayout (Viewport & Metadata)
+│   └── template.tsx  # Page Transition Template
+├── components/       # Reusable UI Components
+│   └── layout/       # Mobile Layout (MainLayout, BottomNav)
 ├── lib/              # Utility functions
-├── public/           # Static assets
+├── public/           # Static assets (Manifest, Icons)
 └── ...
 ```
 
@@ -76,6 +82,17 @@ pnpm dev
 ```bash
 pnpm test
 ```
+
+---
+
+## ✨ 핵심 기능 (Features)
+
+### 📲 Mobile PWA
+
+- **모바일 웹앱 환경**: 홈 화면 추가(A2HS) 지원 및 스탠드얼론 실행
+- **오프라인 지원**: 서비스 워커를 통한 리소스 캐싱 전략 수립
+- **모바일 최적화 UI**: 480px 고정 너비 및 Safe Area(노치 디자인) 완벽 대응
+- **부드러운 전환**: Framer Motion을 활용한 앱 스타일 페이지 전환
 
 ---
 
