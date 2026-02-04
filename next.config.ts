@@ -11,13 +11,24 @@ const withPWA = withPWAInit({
     disableDevLogs: true, // 브라우저 콘솔창에 Workbox(PWA 도구)가 출력하는 로그를 숨깁니다. 콘솔을 깔끔하게 유지하고 싶을 때 사용
     runtimeCaching: [
       {
-        urlPattern: ({ url }) => url.pathname.includes('/images/'),
+        urlPattern: /\.(?:png|gif|jpg|jpeg|svg|ico|woff|woff2|ttf|eot)$/,
         handler: 'CacheFirst',
         options: {
-          cacheName: 'walkavel-images',
+          cacheName: 'static-assets',
           expiration: {
             maxEntries: 100,
-            maxAgeSeconds: 60 * 60 * 24 * 30, // 30일
+            maxAgeSeconds: 30 * 24 * 60 * 60, // 30일
+          },
+        },
+      },
+      {
+        urlPattern: /^\/_next\/(static|chunks|webpack)\/.*/,
+        handler: 'StaleWhileRevalidate',
+        options: {
+          cacheName: 'next-js-assets',
+          expiration: {
+            maxEntries: 100,
+            maxAgeSeconds: 7 * 24 * 60 * 60, // 7일
           },
         },
       },
@@ -27,7 +38,43 @@ const withPWA = withPWAInit({
 
 const nextConfig: NextConfig = {
   /* config options here */
-  turbopack: {},
+  turbopack: {
+    rules: {
+      '*.svg': {
+        loaders: ['@svgr/webpack'],
+        as: '*.js',
+      },
+    },
+  },
+  webpack(config) {
+    // Find the existing rule that handles SVG imports
+    const fileLoaderRule = config.module.rules.find(
+      (rule: { test?: { test: (path: string) => boolean } }) => rule.test?.test?.('.svg'),
+    );
+
+    config.module.rules.push(
+      // Reapply the existing rule, but only for svg imports ending in ?url
+      {
+        ...fileLoaderRule,
+        test: /\.svg$/i,
+        resourceQuery: /url/, // *.svg?url
+      },
+      // Convert all other *.svg imports to React components
+      {
+        test: /\.svg$/i,
+        issuer: fileLoaderRule?.issuer,
+        resourceQuery: { not: [...(fileLoaderRule?.resourceQuery?.not || []), /url/] },
+        use: ['@svgr/webpack'],
+      },
+    );
+
+    // Modify the file loader rule to ignore *.svg, since we have it handled now.
+    if (fileLoaderRule) {
+      fileLoaderRule.exclude = /\.svg$/i;
+    }
+
+    return config;
+  },
 };
 
 export default withPWA(nextConfig);
