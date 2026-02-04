@@ -33,6 +33,8 @@
 | **Framework**            | Next.js 16 (App Router)        |
 | **Language**             | TypeScript                     |
 | **Styling**              | Tailwind CSS 4, PostCSS        |
+| **PWA**                  | @ducanh2912/next-pwa           |
+| **Animation**            | Framer Motion                  |
 | **Package Manager**      | pnpm                           |
 | **Linting & Formatting** | ESLint, Prettier, Stylelint    |
 | **Git Hooks**            | Husky, Commitlint, lint-staged |
@@ -41,9 +43,13 @@
 
 ```bash
 ├── .github/          # Github Actions & Templates
-├── app/              # Next.js App Router Pages
+├── app/              # Next.js App Router Pages & Templates
+│   ├── layout.tsx    # Root RootLayout (Viewport & Metadata)
+│   └── template.tsx  # Page Transition Template
+├── components/       # Reusable UI Components
+│   └── layout/       # Mobile Layout (MainLayout, BottomNav)
 ├── lib/              # Utility functions
-├── public/           # Static assets
+├── public/           # Static assets (Manifest, Icons)
 └── ...
 ```
 
@@ -76,6 +82,19 @@ pnpm dev
 ```bash
 pnpm test
 ```
+
+---
+
+## ✨ 핵심 기능 (Features)
+
+### 📲 Mobile PWA & UI
+
+- **모바일 웹앱 환경**: 홈 화면 추가(A2HS) 지원 및 스탠드얼론 실행 가능
+- **오프라인 지원**: `@ducanh2912/next-pwa`를 통한 서비스 워커 리소스 캐싱
+- **모바일 최적화 UI**:
+  - **Safe Area 대응**: iOS/Android 노치 디자인 및 하단 바 충돌 방지 (`env(safe-area-inset-*)`)
+  - **480px 고정 레이아웃**: 데스크탑에서도 일관된 모바일 경험을 제공하는 중앙 정렬 레이아웃
+- **부드러운 전환**: `framer-motion`과 Next.js `template.tsx`를 결합한 페이지 전환 애니메이션
 
 ---
 
