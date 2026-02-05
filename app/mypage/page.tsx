@@ -70,7 +70,6 @@ export default function MyPage() {
       alert('저장 완료');
       router.replace('/auth/login');
     } catch (err) {
-      console.error(err);
       alert('저장 실패');
     } finally {
       setLoading(false);
@@ -81,45 +80,59 @@ export default function MyPage() {
     <div className="flex min-h-screen items-center justify-center bg-white text-black">
       <div className="w-[420px] rounded border p-6 shadow">
         <h1 className="mb-4 text-xl font-bold">마이페이지</h1>
-        <div className="mb-3">
-          <label htmlFor="email">Email</label>
-          <input
-            id="email"
-            value={user?.email || ''}
-            disabled
-            className="w-full border bg-gray-100 p-2"
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="nickname">Nickname</label>
-          <input
-            id="nickname"
-            value={nickname}
-            onChange={(e) => setNickname(e.target.value)}
-            className="w-full border p-2"
-          />
-        </div>
-        <div className="mb-3">
-          <label>Avatar</label>
-          {!preview && avatarUrl && (
-            <img src={avatarUrl} alt="기존 프로필" className="mb-2 h-20 w-20 rounded-full" />
-          )}
-          {preview && (
-            <img
-              src={preview}
-              alt="새 프로필 미리보기"
-              className="mb-2 h-20 w-20 rounded-full border"
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium" htmlFor="email">
+              Email
+            </label>
+            <input
+              id="email"
+              value={user?.email || ''}
+              disabled
+              className="w-full rounded border bg-gray-100 p-2"
             />
-          )}
-          <input type="file" accept="image/*" onChange={handleFile} />
+          </div>
+          <div>
+            <label className="block text-sm font-medium" htmlFor="nickname">
+              Nickname
+            </label>
+            <input
+              id="nickname"
+              value={nickname}
+              onChange={(e) => setNickname(e.target.value)}
+              className="w-full rounded border p-2"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium">Avatar</label>
+            <div className="mt-2 mb-2">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              {!preview && avatarUrl && (
+                <img
+                  src={avatarUrl}
+                  alt="Current profile"
+                  className="h-20 w-20 rounded-full border object-cover"
+                />
+              )}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              {preview && (
+                <img
+                  src={preview}
+                  alt="New preview"
+                  className="h-20 w-20 rounded-full border object-cover"
+                />
+              )}
+            </div>
+            <input type="file" accept="image/*" onChange={handleFile} className="text-sm" />
+          </div>
+          <button
+            onClick={handleSave}
+            disabled={loading}
+            className="w-full rounded bg-blue-500 py-2 font-bold text-white"
+          >
+            {loading ? '저장 중...' : '변경 사항 저장'}
+          </button>
         </div>
-        <button
-          onClick={handleSave}
-          disabled={loading}
-          className="w-full rounded bg-blue-500 py-2 text-white"
-        >
-          {loading ? '저장중...' : '저장'}
-        </button>
       </div>
     </div>
   );
