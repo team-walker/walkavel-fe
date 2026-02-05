@@ -12,7 +12,6 @@ export default function DashboardPage() {
   const [email, setEmail] = useState<string | null>(null);
   const [token, setToken] = useState<string | null>(null);
 
-  // ✅ any 제거 → 명확한 타입
   const [result, setResult] = useState<Record<string, unknown> | null>(null);
 
   // 세션 가져오기
