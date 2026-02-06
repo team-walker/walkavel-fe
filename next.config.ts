@@ -47,6 +47,18 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/storage/v1/object/public/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'k.kakaocdn.net',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
 
@@ -74,6 +86,7 @@ const nextConfig: NextConfig = {
       const existingNot =
         resourceQuery &&
         typeof resourceQuery === 'object' &&
+        'not' in resourceQuery &&
         'not' in resourceQuery &&
         Array.isArray(resourceQuery.not)
           ? resourceQuery.not
