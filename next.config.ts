@@ -48,6 +48,12 @@ const nextConfig: NextConfig = {
         pathname: '/storage/v1/object/public/**',
       },
       {
+        protocol: 'http',
+        hostname: 'k.kakaocdn.net',
+        port: '',
+        pathname: '/**',
+      },
+      {
         protocol: 'https',
         hostname: 'k.kakaocdn.net',
         port: '',
