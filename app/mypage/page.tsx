@@ -1,6 +1,7 @@
 'use client';
 
 import { User } from '@supabase/supabase-js';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
@@ -103,19 +104,21 @@ export default function MyPage() {
           <div>
             <label className="block text-sm font-medium">Avatar</label>
             <div className="mt-2 mb-2">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
               {!preview && avatarUrl && (
-                <img
+                <Image
                   src={avatarUrl}
                   alt="Current profile"
+                  width={80}
+                  height={80}
                   className="h-20 w-20 rounded-full border object-cover"
                 />
               )}
-              {/* eslint-disable-next-line @next/next/no-img-element */}
               {preview && (
-                <img
+                <Image
                   src={preview}
                   alt="New preview"
+                  width={80}
+                  height={80}
                   className="h-20 w-20 rounded-full border object-cover"
                 />
               )}

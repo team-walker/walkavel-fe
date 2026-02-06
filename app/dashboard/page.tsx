@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 
-// 공통 클라이언트를 import 합니다.
 import { supabase } from '@/lib/supabase/client';
 
 export default function DashboardPage() {

@@ -1,6 +1,7 @@
 'use client';
 
 import { User } from '@supabase/supabase-js';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -40,7 +41,6 @@ export default function LoginPage() {
           }
         }
       } catch (err) {
-        // any 대신 Error 타입 체크로 린트 에러 해결
         const errorMessage = err instanceof Error ? err.message : '알 수 없는 오류가 발생했습니다.';
         alert(`세션을 불러오는 중 오류가 발생했습니다: ${errorMessage}`);
       } finally {
@@ -80,7 +80,7 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-white text-black">
       <div className="w-[400px] space-y-4 rounded border p-6 shadow">
-        <h1 className="text-center text-xl font-bold">소셜로그인 레츠고</h1>
+        <h1 className="text-center text-xl font-bold">소셜로그인</h1>
         {!user ? (
           <div className="space-y-3">
             <button
@@ -100,12 +100,15 @@ export default function LoginPage() {
           <div className="space-y-3 text-center">
             <div className="flex justify-center">
               {profile?.avatar_url && (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={profile.avatar_url}
-                  alt="Profile"
-                  className="h-20 w-20 rounded-full border object-cover"
-                />
+                <div className="relative h-20 w-20">
+                  <Image
+                    src={profile.avatar_url}
+                    alt="Profile"
+                    fill
+                    className="rounded-full border object-cover"
+                    priority
+                  />
+                </div>
               )}
             </div>
             <div className="space-y-1 text-left">
