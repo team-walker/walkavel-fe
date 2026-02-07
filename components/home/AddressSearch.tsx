@@ -37,7 +37,7 @@ export default function AddressSearch({ onSelectAddress }: AddressSearchProps) {
   const searchAddress = async (searchQuery: string, signal: AbortSignal) => {
     setIsLoading(true);
     try {
-      const addresses = await searchAddressGeocode(searchQuery, signal);
+      const addresses = await searchAddressGeocode(searchQuery, '서울특별시', signal);
       setResults(addresses);
       setIsOpen(true);
     } catch (error) {

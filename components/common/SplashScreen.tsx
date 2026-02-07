@@ -7,8 +7,8 @@ import { createPortal } from 'react-dom';
 
 interface SplashScreenProps {
   onComplete: () => void;
-  isAppReady: boolean; // 앱 초기화(데이터 로딩 등) 완료 여부
-  minDisplayTime?: number; // 최소 노출 시간 (ms)
+  isAppReady: boolean;
+  minDisplayTime?: number;
 }
 
 export default function SplashScreen({
@@ -21,10 +21,13 @@ export default function SplashScreen({
   const [minTimePassed, setMinTimePassed] = useState(false);
 
   useEffect(() => {
-    // eslint-disable-next-line
-    setMounted(true);
+    const mountTimer = setTimeout(() => {
+      setMounted(true);
+    }, 0);
+    return () => clearTimeout(mountTimer);
+  }, []);
 
-    // 최소 노출 시간 타이머 시작
+  useEffect(() => {
     const timer = setTimeout(() => {
       setMinTimePassed(true);
     }, minDisplayTime);
@@ -33,41 +36,20 @@ export default function SplashScreen({
   }, [minDisplayTime]);
 
   useEffect(() => {
-    if (!mounted) return;
+    if (!mounted || !minTimePassed || !isAppReady) return;
 
-    const isMobileDevice = () => {
-      const userAgent = typeof window !== 'undefined' ? navigator.userAgent : '';
-      const mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-        userAgent,
-      );
-      const narrowScreen = typeof window !== 'undefined' && window.innerWidth < 768;
-      return mobile || narrowScreen;
-    };
+    const hideTimer = setTimeout(() => {
+      setIsVisible(false);
+    }, 0);
 
-    // 모바일이 아니면 바로 종료 (필요하다면 로직 변경 가능)
-    // 개발 및 테스트를 위해 일시적으로 모바일 체크 비활성화
-    if (!isMobileDevice()) {
+    const exitTimer = setTimeout(() => {
       onComplete();
-      return;
-    }
+    }, 800);
 
-    // 앱 준비 완료 + 최소 시간 경과 시 퇴장 애니메이션 시작
-    if (isAppReady && minTimePassed) {
-      // 비동기로 상태 업데이트하여 렌더링 사이클 충돌 방지
-      const hideTimer = setTimeout(() => {
-        setIsVisible(false);
-      }, 0);
-
-      // 퇴장 애니메이션(0.8s)이 끝난 후 언마운트
-      const exitTimer = setTimeout(() => {
-        onComplete();
-      }, 800);
-
-      return () => {
-        clearTimeout(hideTimer);
-        clearTimeout(exitTimer);
-      };
-    }
+    return () => {
+      clearTimeout(hideTimer);
+      clearTimeout(exitTimer);
+    };
   }, [mounted, isAppReady, minTimePassed, onComplete]);
 
   if (!mounted) return null;
@@ -79,7 +61,7 @@ export default function SplashScreen({
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.8, ease: 'easeInOut' }}
-          className="fixed inset-0 z-[9999] flex h-dvh w-full flex-col items-center justify-center bg-white p-6"
+          className="fixed inset-0 z-9999 flex h-dvh w-full flex-col items-center justify-center bg-white p-6"
         >
           <motion.div
             initial={{ scale: 0.8, opacity: 0, y: 20 }}
