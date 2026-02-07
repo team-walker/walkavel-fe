@@ -18,7 +18,7 @@ const withPWA = withPWAInit({
           cacheName: 'static-assets',
           expiration: {
             maxEntries: 100,
-            maxAgeSeconds: 30 * 24 * 60 * 60, // 30일
+            maxAgeSeconds: 30 * 24 * 60 * 60,
           },
         },
       },
@@ -29,7 +29,7 @@ const withPWA = withPWAInit({
           cacheName: 'next-js-assets',
           expiration: {
             maxEntries: 100,
-            maxAgeSeconds: 7 * 24 * 60 * 60, // 7일
+            maxAgeSeconds: 7 * 24 * 60 * 60,
           },
         },
       },
@@ -38,7 +38,59 @@ const withPWA = withPWAInit({
 });
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  turbopack: {
+    rules: {
+      '*.svg': {
+        loaders: ['@svgr/webpack'],
+        as: '*.js',
+      },
+    },
+  },
+  webpack(config: Configuration) {
+    const rules = ((config.module ??= {}).rules ??= []);
+
+    const fileLoaderRule = (rules as RuleSetRule[]).find(
+      (rule) => typeof rule !== 'string' && rule.test instanceof RegExp && rule.test.test('.svg'),
+    );
+
+    if (fileLoaderRule) {
+      const { issuer, resourceQuery } = fileLoaderRule;
+
+      const existingNot =
+        resourceQuery &&
+        typeof resourceQuery === 'object' &&
+        'not' in resourceQuery &&
+        'not' in resourceQuery &&
+        Array.isArray(resourceQuery.not)
+          ? resourceQuery.not
+          : [];
+
+      rules.push(
+        {
+          ...fileLoaderRule,
+          test: /\.svg$/i,
+          resourceQuery: /url/, // *.svg?url
+        },
+        {
+          test: /\.svg$/i,
+          issuer,
+          resourceQuery: {
+            not: [...(existingNot as (string | RegExp)[]), /url/],
+          },
+          use: ['@svgr/webpack'],
+        },
+      );
+
+      fileLoaderRule.exclude = /\.svg$/i;
+    } else {
+      rules.push({
+        test: /\.svg$/i,
+        use: ['@svgr/webpack'],
+      });
+    }
+
+    return config;
+  },
   images: {
     remotePatterns: [
       {
@@ -65,68 +117,13 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
-    ],
-  },
-
-  turbopack: {
-    rules: {
-      '*.svg': {
-        loaders: ['@svgr/webpack'],
-        as: '*.js',
+      {
+        protocol: 'http',
+        hostname: 'tong.visitkorea.or.kr',
+        port: '',
+        pathname: '/**',
       },
-    },
-  },
-  webpack(config: Configuration) {
-    // Initialize module and rules if they don't exist
-    const rules = ((config.module ??= {}).rules ??= []);
-
-    // Find the existing rule that handles SVG imports
-    const fileLoaderRule = (rules as RuleSetRule[]).find(
-      (rule) => typeof rule !== 'string' && rule.test instanceof RegExp && rule.test.test('.svg'),
-    );
-
-    if (fileLoaderRule) {
-      const { issuer, resourceQuery } = fileLoaderRule;
-
-      // Extract existing 'not' conditions safely
-      const existingNot =
-        resourceQuery &&
-        typeof resourceQuery === 'object' &&
-        'not' in resourceQuery &&
-        'not' in resourceQuery &&
-        Array.isArray(resourceQuery.not)
-          ? resourceQuery.not
-          : [];
-
-      rules.push(
-        // Reapply the existing rule, but only for svg imports ending in ?url
-        {
-          ...fileLoaderRule,
-          test: /\.svg$/i,
-          resourceQuery: /url/, // *.svg?url
-        },
-        // Convert all other *.svg imports to React components
-        {
-          test: /\.svg$/i,
-          issuer,
-          resourceQuery: {
-            not: [...(existingNot as (string | RegExp)[]), /url/],
-          },
-          use: ['@svgr/webpack'],
-        },
-      );
-
-      // Modify the existing file loader rule to ignore *.svg, since we have it handled now.
-      fileLoaderRule.exclude = /\.svg$/i;
-    } else {
-      // Fallback: If no existing rule is found, just add the SVGR loader.
-      rules.push({
-        test: /\.svg$/i,
-        use: ['@svgr/webpack'],
-      });
-    }
-
-    return config;
+    ],
   },
 };
 

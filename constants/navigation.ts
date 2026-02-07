@@ -22,7 +22,7 @@ export const NAV_ITEMS: NavItems[] = [
     icon: BookmarkIcon,
   },
   {
-    href: '/profile',
+    href: '/mypage',
     label: '마이페이지',
     icon: ProfileIcon,
   },
