@@ -12,6 +12,11 @@ export async function GET(request: NextRequest) {
   const clientId = process.env.NAVER_CLIENT_ID;
   const clientSecret = process.env.NAVER_CLIENT_SECRET;
 
+  if (!clientId || !clientSecret) {
+    console.error('Naver API credentials are not set in environment variables.');
+    return NextResponse.json({ error: 'Server configuration error.' }, { status: 500 });
+  }
+
   const SEOUL_COORDINATE = '126.978388,37.566610';
 
   let url = `https://maps.apigw.ntruss.com/map-geocode/v2/geocode?query=${encodeURIComponent(query)}`;
@@ -21,8 +26,8 @@ export async function GET(request: NextRequest) {
     const response = await fetch(url, {
       method: 'GET',
       headers: {
-        'X-NCP-APIGW-API-KEY-ID': clientId || '',
-        'X-NCP-APIGW-API-KEY': clientSecret || '',
+        'X-NCP-APIGW-API-KEY-ID': clientId,
+        'X-NCP-APIGW-API-KEY': clientSecret,
         Accept: 'application/json',
       },
     });

@@ -28,6 +28,17 @@ export default function SplashScreen({
   }, []);
 
   useEffect(() => {
+    if (!mounted) return;
+
+    if (window.innerWidth >= 768) {
+      const bypassTimer = setTimeout(() => {
+        onComplete();
+      }, 0);
+      return () => clearTimeout(bypassTimer);
+    }
+  }, [mounted, onComplete]);
+
+  useEffect(() => {
     const timer = setTimeout(() => {
       setMinTimePassed(true);
     }, minDisplayTime);
