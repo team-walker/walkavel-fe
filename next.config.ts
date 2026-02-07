@@ -39,6 +39,35 @@ const withPWA = withPWAInit({
 
 const nextConfig: NextConfig = {
   /* config options here */
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'zfwbmoemqiikijiidqis.supabase.co',
+        port: '',
+        pathname: '/storage/v1/object/public/**',
+      },
+      {
+        protocol: 'http',
+        hostname: 'k.kakaocdn.net',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'k.kakaocdn.net',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+        port: '',
+        pathname: '/**',
+      },
+    ],
+  },
+
   turbopack: {
     rules: {
       '*.svg': {
@@ -63,6 +92,7 @@ const nextConfig: NextConfig = {
       const existingNot =
         resourceQuery &&
         typeof resourceQuery === 'object' &&
+        'not' in resourceQuery &&
         'not' in resourceQuery &&
         Array.isArray(resourceQuery.not)
           ? resourceQuery.not
