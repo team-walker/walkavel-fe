@@ -7,8 +7,8 @@ import SplashScreen from '@/components/common/SplashScreen';
 import AddressSearch from '@/components/home/AddressSearch';
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
-import { useSplashStore } from '@/lib/store/splash';
-import HeartIcon from '@/public/icons/heart.svg';
+import BookmarkIcon from '@/public/icons/bookmark.svg';
+import { useSplashStore } from '@/store/splash';
 
 const CardSection = ({ onComplete }: { onComplete: () => void }) => (
   <div className="flex h-full flex-col py-4">
@@ -26,7 +26,7 @@ const CardSection = ({ onComplete }: { onComplete: () => void }) => (
       {/* Heart Icon placeholder */}
       <div className="absolute top-6 right-6">
         <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20 backdrop-blur-md">
-          <HeartIcon className="h-6 w-6 text-white" />
+          <BookmarkIcon className="h-6 w-6 text-white" />
         </div>
       </div>
 
