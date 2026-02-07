@@ -6,6 +6,6 @@ interface SplashStore {
 }
 
 export const useSplashStore = create<SplashStore>((set) => ({
-  isVisible: true, // 초기값: 스플래시 표시
+  isVisible: true,
   hideSplash: () => set({ isVisible: false }),
 }));

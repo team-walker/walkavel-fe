@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
 import BookmarkIcon from '@/public/icons/bookmark.svg';
 import { useSplashStore } from '@/store/splash';
+import { AddressResult } from '@/types/address';
 
 const CardSection = ({ onComplete }: { onComplete: () => void }) => (
   <div className="flex h-full flex-col py-4">
@@ -76,12 +77,6 @@ const FinishSection = ({
 );
 
 type STEP = 'SEARCH' | 'SWIPE' | 'FINISH';
-
-interface AddressResult {
-  roadAddress: string;
-  jibunAddress: string;
-  englishAddress: string;
-}
 
 export default function RootPage() {
   const { isVisible, hideSplash } = useSplashStore();

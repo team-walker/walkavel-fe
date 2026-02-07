@@ -71,7 +71,6 @@ export default function AddressSearch({ onSelectAddress }: AddressSearchProps) {
 
   const handleSelectAddress = (address: AddressResult) => {
     isSelecting.current = true;
-    console.log('address', address);
 
     setQuery(address.roadAddress);
     setResults([]);
@@ -112,7 +111,7 @@ export default function AddressSearch({ onSelectAddress }: AddressSearchProps) {
       </div>
       <Popover open={isOpen && query.trim().length >= 2} onOpenChange={setIsOpen}>
         <PopoverTrigger asChild>
-          <div className="group relative flex items-center">
+          <div className="group relative flex w-full items-center">
             <Search className="absolute left-4 h-5 w-5 text-zinc-400 transition-colors group-focus-within:text-blue-500" />
             <Input
               type="text"
@@ -136,7 +135,7 @@ export default function AddressSearch({ onSelectAddress }: AddressSearchProps) {
         </PopoverTrigger>
 
         <PopoverContent
-          className="mt-2 w-(--radix-popover-trigger-width) overflow-hidden rounded-3xl border-zinc-100 bg-white/80 p-2 shadow-2xl backdrop-blur-xl"
+          className="mt-2 w-(--radix-popover-trigger-width) min-w-(--radix-popover-trigger-width) overflow-hidden rounded-3xl border-zinc-100 bg-white/80 p-2 shadow-2xl backdrop-blur-xl"
           align="start"
           onOpenAutoFocus={(e) => e.preventDefault()}
         >
@@ -162,7 +161,7 @@ export default function AddressSearch({ onSelectAddress }: AddressSearchProps) {
                       key={item.roadAddress}
                       initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.05 }} // 스태거링 효과
+                      transition={{ delay: index * 0.05 }}
                     >
                       <CommandItem
                         onSelect={() => handleSelectAddress(item)}
