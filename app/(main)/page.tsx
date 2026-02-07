@@ -11,7 +11,7 @@ import BookmarkIcon from '@/public/icons/bookmark.svg';
 import { useSplashStore } from '@/store/splash';
 import { AddressResult } from '@/types/address';
 
-const CardSection = ({ onComplete }: { onComplete: () => void }) => (
+const CardSection = () => (
   <div className="flex h-full flex-col py-4">
     <Card className="relative flex h-full w-full flex-col overflow-hidden rounded-[32px] border-none shadow-none">
       <Image
@@ -93,9 +93,7 @@ export default function RootPage() {
       return;
     }
 
-    // 초기화 로직
     const initApp = async () => {
-      // 시뮬레이션을 위해 약간의 지연 추가
       await new Promise((resolve) => setTimeout(resolve, 100));
       setIsAppReady(true);
     };
@@ -111,7 +109,7 @@ export default function RootPage() {
     <>
       {isVisible && <SplashScreen isAppReady={isAppReady} onComplete={hideSplash} />}
       {step === 'SEARCH' && <AddressSearch onSelectAddress={handleAddressSelect} />}
-      {step === 'SWIPE' && <CardSection onComplete={() => setStep('FINISH')} />}
+      {step === 'SWIPE' && <CardSection />}
       {step === 'FINISH' && (
         <FinishSection onReset={() => setStep('SEARCH')} onReselect={() => setStep('SEARCH')} />
       )}
