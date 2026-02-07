@@ -1,17 +1,16 @@
 import './globals.css';
+import 'pretendard/dist/web/static/pretendard.css';
 
 import type { Metadata, Viewport } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Inter, Outfit } from 'next/font/google';
 
-import MainLayout from '@/components/layout/MainLayout';
-
-const geistSans = Geist({
-  variable: '--font-geist-sans',
+const inter = Inter({
+  variable: '--font-inter',
   subsets: ['latin'],
 });
 
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
+const outfit = Outfit({
+  variable: '--font-outfit',
   subsets: ['latin'],
 });
 
@@ -19,8 +18,8 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
-  userScalable: false, // 줌 방지 (앱 같은 느낌을 주기 위함)
-  viewportFit: 'cover', // 아이폰 노치 영역까지 화면 채움
+  userScalable: false,
+  viewportFit: 'cover',
 };
 
 export const metadata: Metadata = {
@@ -44,8 +43,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko-KR">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <MainLayout>{children}</MainLayout>
+      <body className={`${inter.variable} ${outfit.variable} font-sans antialiased`}>
+        {children}
       </body>
     </html>
   );

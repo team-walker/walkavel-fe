@@ -27,6 +27,7 @@ module.exports = {
         'revert', // 커밋 되돌리기
         'perf', // 성능 개선
         'ci', // CI 설정 파일 수정 (GitHub Actions, Husky 등)
+        'build', // 빌드 시스템 또는 외부 종속성 변경 (npm, gradle 등)
         'init', // 프로젝트 초기 생성
       ],
     ],

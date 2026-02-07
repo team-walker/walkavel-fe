@@ -13,6 +13,7 @@ jobs:
       pull-requests: write
     steps:
       - name: 'Auto PR Assignment'
+        if: github.base_ref == 'main'
         uses: pozil/auto-assign-issue@v1
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
