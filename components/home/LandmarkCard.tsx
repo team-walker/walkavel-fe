@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 
 import { Card } from '@/components/ui/card';
-import BookmarkIcon from '@/public/icons/bookmark.svg';
+import BookmarkIcon from '@/public/images/bookmark.svg';
 import { LandmarkDto } from '@/types/model';
 
 type DIRECTION = 'left' | 'right';

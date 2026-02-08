@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 
-import CheckIcon from '@/public/icons/check.svg';
+import CheckIcon from '@/public/images/check.svg';
 
 export default function FinishSection({
   onReset,

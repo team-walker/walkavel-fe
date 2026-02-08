@@ -1,6 +1,6 @@
 'use client';
 
-import Logo from '@/public/icons/logo.svg';
+import Logo from '@/public/images/logo.svg';
 
 export default function Header() {
   return (
