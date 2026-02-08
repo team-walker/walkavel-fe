@@ -1,5 +1,35 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+interface AddressElement {
+  types: string[];
+  longName: string;
+  shortName: string;
+  code: string;
+}
+
+interface NaverAddress {
+  roadAddress: string;
+  jibunAddress: string;
+  englishAddress: string;
+  addressElements: AddressElement[];
+  x: string;
+  y: string;
+  distance: number;
+  sido?: string;
+  sigugun?: string;
+}
+
+interface NaverGeocodeResponse {
+  status: string;
+  meta: {
+    totalCount: number;
+    page: number;
+    count: number;
+  };
+  addresses: NaverAddress[];
+  errorMessage: string;
+}
+
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
   const query = searchParams.get('query');
@@ -32,13 +62,31 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    const data = await response.json();
+    const data: NaverGeocodeResponse = await response.json();
 
-    if (region && data.addresses) {
-      data.addresses = data.addresses.filter(
-        (address: { roadAddress: string; jibunAddress: string }) =>
-          address.roadAddress.includes(region) || address.jibunAddress.includes(region),
-      );
+    if (data.addresses) {
+      data.addresses = data.addresses.map((address: NaverAddress) => {
+        const sido =
+          address.addressElements.find((element: AddressElement) => element.types.includes('SIDO'))
+            ?.longName || '';
+        const sigugun =
+          address.addressElements.find((element: AddressElement) =>
+            element.types.includes('SIGUGUN'),
+          )?.longName || '';
+
+        return {
+          ...address,
+          sido,
+          sigugun,
+        };
+      });
+
+      if (region) {
+        data.addresses = data.addresses.filter(
+          (address: NaverAddress) =>
+            address.roadAddress.includes(region) || address.jibunAddress.includes(region),
+        );
+      }
 
       data.meta.totalCount = data.addresses.length;
       data.meta.count = data.addresses.length;
