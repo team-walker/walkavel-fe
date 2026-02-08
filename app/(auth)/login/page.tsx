@@ -18,14 +18,12 @@ export default function LoginPage() {
   const { user, isInitialized, setReturnTo } = useAuthStore();
   const { handleOAuthLogin, loading, error } = useLoginLogic();
 
-  // 2. 이미 로그인된 사용자는 이전 페이지로 리다이렉트
   useEffect(() => {
     if (isInitialized && user) {
       router.replace(returnTo);
     }
   }, [isInitialized, user, router, returnTo]);
 
-  // 3. returnTo 경로를 전역 스토어에 동기화
   useEffect(() => {
     if (returnTo) {
       setReturnTo(returnTo);
@@ -33,7 +31,9 @@ export default function LoginPage() {
   }, [returnTo, setReturnTo]);
 
   const handleGuestContinue = () => {
-    router.replace(returnTo);
+    const protectedPaths = ['/bookmark', '/mypage'];
+    const target = protectedPaths.some((path) => returnTo.startsWith(path)) ? '/' : returnTo;
+    router.replace(target);
   };
 
   return (
@@ -55,7 +55,6 @@ export default function LoginPage() {
           마음에 드는 곳은 북마크로 저장할 수 있어요
         </p>
 
-        {/* 에러 발생 시 안내 UI */}
         {error && (
           <div className="mb-4 w-full rounded-lg bg-red-50 p-3 text-center text-sm text-red-600">
             {error}
