@@ -1,23 +1,31 @@
 import type { User } from '@supabase/supabase-js';
 import { create } from 'zustand';
 
+interface PendingAction {
+  type: 'bookmark';
+  payload: { landmarkId: number };
+}
+
 interface AuthState {
   user: User | null;
   isInitialized: boolean;
+  returnTo: string | null;
+  pendingAction: PendingAction | null;
   setUser: (user: User | null) => void;
   setInitialized: (initialized: boolean) => void;
-  clearAuth: () => void;
+  setReturnTo: (path: string | null) => void;
+  setPendingAction: (action: PendingAction | null) => void;
+  resetAuth: () => void;
 }
 
-/**
- * Supabase 인증 상태를 관리하는 UI 전역 스토어
- * 실제 토큰(JWT) 정보는 Supabase SDK가 내부적으로 관리하므로
- * 이곳에서는 사용자 프로필과 초기화 상태만 관리합니다.
- */
 export const useAuthStore = create<AuthState>((set) => ({
   user: null,
   isInitialized: false,
+  returnTo: null,
+  pendingAction: null,
   setUser: (user) => set({ user }),
-  setInitialized: (initialized) => set({ isInitialized: initialized }),
-  clearAuth: () => set({ user: null }),
+  setInitialized: (isInitialized) => set({ isInitialized }),
+  setReturnTo: (path) => set({ returnTo: path }),
+  setPendingAction: (pendingAction) => set({ pendingAction }),
+  resetAuth: () => set({ user: null, returnTo: null, pendingAction: null }),
 }));

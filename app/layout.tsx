@@ -4,6 +4,8 @@ import 'pretendard/dist/web/static/pretendard.css';
 import type { Metadata, Viewport } from 'next';
 import { Inter, Outfit } from 'next/font/google';
 
+import AuthProvider from './providers';
+
 const inter = Inter({
   variable: '--font-inter',
   subsets: ['latin'],
@@ -44,7 +46,7 @@ export default function RootLayout({
   return (
     <html lang="ko-KR">
       <body className={`${inter.variable} ${outfit.variable} font-sans antialiased`}>
-        {children}
+        <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
   );

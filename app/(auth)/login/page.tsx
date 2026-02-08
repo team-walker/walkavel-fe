@@ -1,0 +1,109 @@
+'use client';
+
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
+
+import { Button } from '@/components/ui/button';
+import { useLoginLogic } from '@/hooks/useLoginLogic';
+import FootLogoIcon from '@/public/images/foot-logo.svg';
+import GoogleIcon from '@/public/images/google.svg';
+import KakaoIcon from '@/public/images/kakao.svg';
+import { useAuthStore } from '@/store/authStore';
+
+export default function LoginPage() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const returnTo = searchParams.get('returnTo') || '/';
+
+  const { user, isInitialized, setReturnTo } = useAuthStore();
+  const { handleOAuthLogin, loading, error } = useLoginLogic();
+
+  // 2. 이미 로그인된 사용자는 이전 페이지로 리다이렉트
+  useEffect(() => {
+    if (isInitialized && user) {
+      router.replace(returnTo);
+    }
+  }, [isInitialized, user, router, returnTo]);
+
+  // 3. returnTo 경로를 전역 스토어에 동기화
+  useEffect(() => {
+    if (returnTo) {
+      setReturnTo(returnTo);
+    }
+  }, [returnTo, setReturnTo]);
+
+  const handleGuestContinue = () => {
+    router.replace(returnTo);
+  };
+
+  return (
+    <div className="flex min-h-dvh flex-col items-center justify-center bg-white text-zinc-900">
+      <div className="mx-auto flex w-full max-w-[384px] flex-col items-center px-7">
+        <div className="mb-14 flex h-25 w-25 items-center justify-center rounded-[32px] bg-[#3182F6] shadow-[0_8px_30px_rgba(49,130,246,0.15)]">
+          <FootLogoIcon className="h-12 w-12 text-white" />
+        </div>
+
+        <div className="mb-4 text-center">
+          <h1 className="text-[28px] leading-tight font-bold tracking-tight text-[#111827]">
+            걷고 싶은 장소,
+            <br />
+            카드로 발견하세요
+          </h1>
+        </div>
+
+        <p className="mb-12 text-center text-[16px] font-medium text-[#6B7280]">
+          마음에 드는 곳은 북마크로 저장할 수 있어요
+        </p>
+
+        {/* 에러 발생 시 안내 UI */}
+        {error && (
+          <div className="mb-4 w-full rounded-lg bg-red-50 p-3 text-center text-sm text-red-600">
+            {error}
+          </div>
+        )}
+
+        <div className="flex w-full flex-col gap-3">
+          <Button
+            onClick={() => handleOAuthLogin('google')}
+            disabled={loading}
+            className="flex h-14 w-full cursor-pointer items-center justify-center gap-2.5 rounded-3xl border border-[#E5E7EB] bg-white text-[16px] font-semibold text-[#111827] shadow-none hover:bg-zinc-50 active:scale-[0.98] disabled:opacity-50"
+          >
+            <GoogleIcon className="pointer-events-none h-5 w-5" />
+            Google로 시작하기
+          </Button>
+
+          <Button
+            onClick={() => handleOAuthLogin('kakao')}
+            disabled={loading}
+            className="flex h-14 w-full cursor-pointer items-center justify-center gap-2.5 rounded-3xl bg-[#FEE500] text-[16px] font-semibold text-[#181600] shadow-none hover:bg-[#FDD000] active:scale-[0.98] disabled:opacity-50"
+          >
+            <KakaoIcon className="pointer-events-none h-5 w-5" />
+            카카오로 시작하기
+          </Button>
+        </div>
+
+        <div className="mt-6">
+          <Button
+            variant="ghost"
+            onClick={handleGuestContinue}
+            className="h-auto p-0 text-[14px] font-medium text-[#9CA3AF] underline underline-offset-4 hover:bg-transparent hover:text-zinc-500"
+          >
+            로그인 없이 둘러보기
+          </Button>
+        </div>
+
+        <div className="mt-14 text-center text-[12px] leading-relaxed text-[#D1D5DB]">
+          로그인하면{' '}
+          <button className="underline underline-offset-2 hover:text-[#9CA3AF]">서비스 약관</button>
+          과{' '}
+          <button className="underline underline-offset-2 hover:text-[#9CA3AF]">
+            개인정보 처리방침
+          </button>
+          에
+          <br />
+          동의하는 것으로 간주돼요
+        </div>
+      </div>
+    </div>
+  );
+}
