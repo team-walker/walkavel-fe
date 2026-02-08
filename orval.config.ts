@@ -7,8 +7,14 @@ export default defineConfig({
       mode: 'split',
       target: './types/api.ts',
       schemas: './types/model',
-      client: 'fetch',
+      client: 'axios',
       prettier: true,
+      override: {
+        mutator: {
+          path: './lib/api/axios-instance.ts',
+          name: 'customInstance',
+        },
+      },
     },
   },
 });
