@@ -1,12 +1,17 @@
+'use client';
+
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 import { NAV_ITEMS } from '@/constants/navigation';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/cn';
+import { useAuthStore } from '@/store/authStore';
 
 export default function BottomNav() {
   const pathname = usePathname();
+  const router = useRouter();
+  const { user } = useAuthStore();
 
   return (
     <nav
@@ -21,6 +26,12 @@ export default function BottomNav() {
             <Link
               key={href}
               href={href}
+              onClick={(e) => {
+                if ((href === '/bookmark' || href === '/mypage') && !user) {
+                  e.preventDefault();
+                  router.push(`/login?returnTo=${encodeURIComponent(href)}`);
+                }
+              }}
               className={cn(
                 'relative flex flex-1 flex-col items-center justify-center py-1 transition-colors duration-200',
                 isActive ? 'text-[#3182F6]' : 'text-[#99A1AF] hover:text-[#3182F6]/50',
