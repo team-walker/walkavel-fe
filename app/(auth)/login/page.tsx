@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { useLoginLogic } from '@/hooks/useLoginLogic';
@@ -10,7 +10,7 @@ import GoogleIcon from '@/public/images/google.svg';
 import KakaoIcon from '@/public/images/kakao.svg';
 import { useAuthStore } from '@/store/authStore';
 
-export default function LoginPage() {
+function LoginContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const returnTo = searchParams.get('returnTo') || '/';
@@ -104,5 +104,13 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="flex min-h-dvh items-center justify-center bg-white" />}>
+      <LoginContent />
+    </Suspense>
   );
 }
