@@ -51,12 +51,13 @@ jobs:
       issues: write
       pull-requests: write
     steps:
-      - name: 'Auto PR Assignment'
+      - name: 'Auto PR Assignment & Reviewers (for main)'
         if: github.base_ref == 'main'
         uses: pozil/auto-assign-issue@v1
         with:
           repo-token: ${{ github.token }}
           assignees: ${{ github.actor }}
+          reviewers: ['jsyoon27', 'JHParrrk', 'YOJIN003']
           numOfAssignee: 1
 
       - name: 'Request Review from Gemini'
