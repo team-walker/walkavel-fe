@@ -20,6 +20,7 @@ interface LandmarkcardProps {
   isBookmarked?: boolean;
   direction?: DIRECTION | null;
   shouldWiggle?: boolean;
+  isFirstCard?: boolean;
 }
 
 export default function LandmarkCard({
@@ -32,6 +33,7 @@ export default function LandmarkCard({
   isBookmarked,
   direction,
   shouldWiggle,
+  isFirstCard,
 }: LandmarkcardProps) {
   const x = useMotionValue(0);
   const [imageError, setImageError] = useState(false);
@@ -45,6 +47,7 @@ export default function LandmarkCard({
     if (info.offset.x < -threshold || info.velocity.x < -velocityThreshold) {
       onSwipe?.('left');
     } else if (info.offset.x > threshold || info.velocity.x > velocityThreshold) {
+      if (isFirstCard) return;
       onSwipe?.('right');
     }
   };
@@ -89,7 +92,7 @@ export default function LandmarkCard({
       },
     },
     exit: (dir: DIRECTION | null) => ({
-      x: dir === 'left' ? -1000 : 0, // 다음 카드로 넘어갈 때 왼쪽으로 나감
+      x: dir === 'left' ? -1000 : dir === 'right' ? 1000 : 0,
       opacity: 0,
       scale: 0.9,
       transition: { duration: 0.3 },
@@ -116,7 +119,7 @@ export default function LandmarkCard({
       }}
       drag={isTop ? 'x' : false}
       dragConstraints={{ left: 0, right: 0 }}
-      dragElastic={0.8}
+      dragElastic={isFirstCard ? { left: 0.8, right: 0.1 } : 0.8}
       onDragStart={onDragStart}
       onDragEnd={handleDragEnd}
       whileTap={{ scale: isTop ? 1.01 : 1 }}
