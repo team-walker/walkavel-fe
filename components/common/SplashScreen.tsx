@@ -1,9 +1,10 @@
 'use client';
 
 import { AnimatePresence, motion } from 'framer-motion';
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
+
+import FootLogoIcon from '@/public/images/foot-logo.svg';
 
 interface SplashScreenProps {
   onComplete: () => void;
@@ -90,14 +91,8 @@ export default function SplashScreen({
             }}
             className="flex flex-col items-center gap-4 sm:gap-6"
           >
-            <div className="relative h-20 w-20 sm:h-24 sm:w-24">
-              <Image
-                src="/icons/logo.svg"
-                alt="Walkavel Logo"
-                fill
-                priority
-                className="object-contain"
-              />
+            <div className="mb-14 flex h-25 w-25 items-center justify-center rounded-[32px] bg-[#3182F6] shadow-[0_8px_30px_rgba(49,130,246,0.15)]">
+              <FootLogoIcon className="h-12 w-12 text-white" />
             </div>
 
             <div className="text-center">
