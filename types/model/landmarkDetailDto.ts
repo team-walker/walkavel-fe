@@ -5,16 +5,13 @@
  * 프로젝트 API 명세서입니다.
  * OpenAPI spec version: 1.0.0
  */
-import type { LandmarkDetailDtoAddr1 } from './landmarkDetailDtoAddr1';
 import type { LandmarkDetailDtoAddr2 } from './landmarkDetailDtoAddr2';
 import type { LandmarkDetailDtoAreacode } from './landmarkDetailDtoAreacode';
 import type { LandmarkDetailDtoCat1 } from './landmarkDetailDtoCat1';
 import type { LandmarkDetailDtoCat2 } from './landmarkDetailDtoCat2';
 import type { LandmarkDetailDtoCat3 } from './landmarkDetailDtoCat3';
-import type { LandmarkDetailDtoContenttypeid } from './landmarkDetailDtoContenttypeid';
 import type { LandmarkDetailDtoCpyrhtdivcd } from './landmarkDetailDtoCpyrhtdivcd';
 import type { LandmarkDetailDtoCreatedtime } from './landmarkDetailDtoCreatedtime';
-import type { LandmarkDetailDtoFirstimage } from './landmarkDetailDtoFirstimage';
 import type { LandmarkDetailDtoFirstimage2 } from './landmarkDetailDtoFirstimage2';
 import type { LandmarkDetailDtoHomepage } from './landmarkDetailDtoHomepage';
 import type { LandmarkDetailDtoLclssystm1 } from './landmarkDetailDtoLclssystm1';
@@ -26,16 +23,17 @@ import type { LandmarkDetailDtoMapx } from './landmarkDetailDtoMapx';
 import type { LandmarkDetailDtoMapy } from './landmarkDetailDtoMapy';
 import type { LandmarkDetailDtoMlevel } from './landmarkDetailDtoMlevel';
 import type { LandmarkDetailDtoModifiedtime } from './landmarkDetailDtoModifiedtime';
-import type { LandmarkDetailDtoOverview } from './landmarkDetailDtoOverview';
 import type { LandmarkDetailDtoSigungucode } from './landmarkDetailDtoSigungucode';
 import type { LandmarkDetailDtoTel } from './landmarkDetailDtoTel';
 import type { LandmarkDetailDtoZipcode } from './landmarkDetailDtoZipcode';
 
 export interface LandmarkDetailDto {
   contentid: number;
-  contenttypeid?: LandmarkDetailDtoContenttypeid;
+  /** @nullable */
+  contenttypeid?: number | null;
   title: string;
-  addr1?: LandmarkDetailDtoAddr1;
+  /** @nullable */
+  addr1?: string | null;
   addr2?: LandmarkDetailDtoAddr2;
   zipcode?: LandmarkDetailDtoZipcode;
   tel?: LandmarkDetailDtoTel;
@@ -47,7 +45,8 @@ export interface LandmarkDetailDto {
   mapx?: LandmarkDetailDtoMapx;
   mapy?: LandmarkDetailDtoMapy;
   mlevel?: LandmarkDetailDtoMlevel;
-  firstimage?: LandmarkDetailDtoFirstimage;
+  /** @nullable */
+  firstimage?: string | null;
   firstimage2?: LandmarkDetailDtoFirstimage2;
   cpyrhtdivcd?: LandmarkDetailDtoCpyrhtdivcd;
   createdtime?: LandmarkDetailDtoCreatedtime;
@@ -58,5 +57,6 @@ export interface LandmarkDetailDto {
   lclssystm2?: LandmarkDetailDtoLclssystm2;
   lclssystm3?: LandmarkDetailDtoLclssystm3;
   homepage?: LandmarkDetailDtoHomepage;
-  overview?: LandmarkDetailDtoOverview;
+  /** @nullable */
+  overview?: string | null;
 }

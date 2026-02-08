@@ -5,54 +5,54 @@
  * 프로젝트 API 명세서입니다.
  * OpenAPI spec version: 1.0.0
  */
-import type { LandmarkDtoAddr1 } from './landmarkDtoAddr1';
-import type { LandmarkDtoAddr2 } from './landmarkDtoAddr2';
-import type { LandmarkDtoAreacode } from './landmarkDtoAreacode';
-import type { LandmarkDtoCat1 } from './landmarkDtoCat1';
-import type { LandmarkDtoCat2 } from './landmarkDtoCat2';
-import type { LandmarkDtoCat3 } from './landmarkDtoCat3';
-import type { LandmarkDtoContenttypeid } from './landmarkDtoContenttypeid';
-import type { LandmarkDtoCpyrhtdivcd } from './landmarkDtoCpyrhtdivcd';
-import type { LandmarkDtoCreatedtime } from './landmarkDtoCreatedtime';
-import type { LandmarkDtoFirstimage } from './landmarkDtoFirstimage';
-import type { LandmarkDtoFirstimage2 } from './landmarkDtoFirstimage2';
-import type { LandmarkDtoLclssystm1 } from './landmarkDtoLclssystm1';
-import type { LandmarkDtoLclssystm2 } from './landmarkDtoLclssystm2';
-import type { LandmarkDtoLclssystm3 } from './landmarkDtoLclssystm3';
-import type { LandmarkDtoLdongregncd } from './landmarkDtoLdongregncd';
-import type { LandmarkDtoLdongsigngucd } from './landmarkDtoLdongsigngucd';
-import type { LandmarkDtoMapx } from './landmarkDtoMapx';
-import type { LandmarkDtoMapy } from './landmarkDtoMapy';
-import type { LandmarkDtoMlevel } from './landmarkDtoMlevel';
-import type { LandmarkDtoModifiedtime } from './landmarkDtoModifiedtime';
-import type { LandmarkDtoSigungucode } from './landmarkDtoSigungucode';
-import type { LandmarkDtoTel } from './landmarkDtoTel';
-import type { LandmarkDtoZipcode } from './landmarkDtoZipcode';
 
 export interface LandmarkDto {
   contentid: number;
-  contenttypeid?: LandmarkDtoContenttypeid;
+  /** @nullable */
+  contenttypeid?: number | null;
   title: string;
-  addr1?: LandmarkDtoAddr1;
-  addr2?: LandmarkDtoAddr2;
-  zipcode?: LandmarkDtoZipcode;
-  tel?: LandmarkDtoTel;
-  areacode?: LandmarkDtoAreacode;
-  sigungucode?: LandmarkDtoSigungucode;
-  cat1?: LandmarkDtoCat1;
-  cat2?: LandmarkDtoCat2;
-  cat3?: LandmarkDtoCat3;
-  mapx?: LandmarkDtoMapx;
-  mapy?: LandmarkDtoMapy;
-  mlevel?: LandmarkDtoMlevel;
-  firstimage?: LandmarkDtoFirstimage;
-  firstimage2?: LandmarkDtoFirstimage2;
-  cpyrhtdivcd?: LandmarkDtoCpyrhtdivcd;
-  createdtime?: LandmarkDtoCreatedtime;
-  modifiedtime?: LandmarkDtoModifiedtime;
-  ldongregncd?: LandmarkDtoLdongregncd;
-  ldongsigngucd?: LandmarkDtoLdongsigngucd;
-  lclssystm1?: LandmarkDtoLclssystm1;
-  lclssystm2?: LandmarkDtoLclssystm2;
-  lclssystm3?: LandmarkDtoLclssystm3;
+  /** @nullable */
+  addr1?: string | null;
+  /** @nullable */
+  addr2?: string | null;
+  /** @nullable */
+  zipcode?: string | null;
+  /** @nullable */
+  tel?: string | null;
+  /** @nullable */
+  areacode?: number | null;
+  /** @nullable */
+  sigungucode?: number | null;
+  /** @nullable */
+  cat1?: string | null;
+  /** @nullable */
+  cat2?: string | null;
+  /** @nullable */
+  cat3?: string | null;
+  /** @nullable */
+  mapx?: number | null;
+  /** @nullable */
+  mapy?: number | null;
+  /** @nullable */
+  mlevel?: number | null;
+  /** @nullable */
+  firstimage?: string | null;
+  /** @nullable */
+  firstimage2?: string | null;
+  /** @nullable */
+  cpyrhtdivcd?: string | null;
+  /** @nullable */
+  createdtime?: string | null;
+  /** @nullable */
+  modifiedtime?: string | null;
+  /** @nullable */
+  ldongregncd?: number | null;
+  /** @nullable */
+  ldongsigngucd?: number | null;
+  /** @nullable */
+  lclssystm1?: string | null;
+  /** @nullable */
+  lclssystm2?: string | null;
+  /** @nullable */
+  lclssystm3?: string | null;
 }

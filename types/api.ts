@@ -5,6 +5,7 @@
  * 프로젝트 API 명세서입니다.
  * OpenAPI spec version: 1.0.0
  */
+import { customInstance } from '../lib/api/axios-instance';
 import type {
   AuthMeResponseDto,
   LandmarkDetailResponseDto,
@@ -12,252 +13,58 @@ import type {
   TourControllerGetLandmarksByRegionParams,
 } from './model';
 
-export type HTTPStatusCode1xx = 100 | 101 | 102 | 103;
-export type HTTPStatusCode2xx = 200 | 201 | 202 | 203 | 204 | 205 | 206 | 207;
-export type HTTPStatusCode3xx = 300 | 301 | 302 | 303 | 304 | 305 | 307 | 308;
-export type HTTPStatusCode4xx =
-  | 400
-  | 401
-  | 402
-  | 403
-  | 404
-  | 405
-  | 406
-  | 407
-  | 408
-  | 409
-  | 410
-  | 411
-  | 412
-  | 413
-  | 414
-  | 415
-  | 416
-  | 417
-  | 418
-  | 419
-  | 420
-  | 421
-  | 422
-  | 423
-  | 424
-  | 426
-  | 428
-  | 429
-  | 431
-  | 451;
-export type HTTPStatusCode5xx = 500 | 501 | 502 | 503 | 504 | 505 | 507 | 511;
-export type HTTPStatusCodes =
-  | HTTPStatusCode1xx
-  | HTTPStatusCode2xx
-  | HTTPStatusCode3xx
-  | HTTPStatusCode4xx
-  | HTTPStatusCode5xx;
+export const getAPIDocumentation = () => {
+  const appControllerGetHello = () => {
+    return customInstance<void>({ url: `/`, method: 'GET' });
+  };
 
-export type appControllerGetHelloResponse200 = {
-  data: void;
-  status: 200;
-};
+  const tourControllerGetLandmarksByRegion = (params: TourControllerGetLandmarksByRegionParams) => {
+    return customInstance<LandmarkDto[]>({
+      url: `/tour/landmarks/by-region`,
+      method: 'GET',
+      params,
+    });
+  };
 
-export type appControllerGetHelloResponseSuccess = appControllerGetHelloResponse200 & {
-  headers: Headers;
-};
-export type appControllerGetHelloResponse = appControllerGetHelloResponseSuccess;
+  const tourControllerGetLandmarkDetail = (contentId: number) => {
+    return customInstance<LandmarkDetailResponseDto>({
+      url: `/tour/landmarks/${contentId}`,
+      method: 'GET',
+    });
+  };
 
-export const getAppControllerGetHelloUrl = () => {
-  return `/`;
-};
+  const tourControllerGetLandmarks = () => {
+    return customInstance<LandmarkDto[]>({ url: `/tour`, method: 'GET' });
+  };
 
-export const appControllerGetHello = async (
-  options?: RequestInit,
-): Promise<appControllerGetHelloResponse> => {
-  const res = await fetch(getAppControllerGetHelloUrl(), {
-    ...options,
-    method: 'GET',
-  });
+  /**
+   * 토큰을 통해 인증된 유저의 정보를 가져옵니다.
+   * @summary 내 정보 조회
+   */
+  const authControllerGetMe = () => {
+    return customInstance<AuthMeResponseDto>({ url: `/auth/me`, method: 'GET' });
+  };
 
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
-
-  const data: appControllerGetHelloResponse['data'] = body ? JSON.parse(body) : {};
-  return { data, status: res.status, headers: res.headers } as appControllerGetHelloResponse;
-};
-
-export type tourControllerGetLandmarksByRegionResponse400 = {
-  data: void;
-  status: 400;
-};
-
-export type tourControllerGetLandmarksByRegionResponse404 = {
-  data: void;
-  status: 404;
-};
-
-export type tourControllerGetLandmarksByRegionResponseDefault = {
-  data: LandmarkDto[];
-  status: Exclude<HTTPStatusCodes, 400 | 404>;
-};
-export type tourControllerGetLandmarksByRegionResponseError = (
-  | tourControllerGetLandmarksByRegionResponse400
-  | tourControllerGetLandmarksByRegionResponse404
-  | tourControllerGetLandmarksByRegionResponseDefault
-) & {
-  headers: Headers;
-};
-
-export type tourControllerGetLandmarksByRegionResponse =
-  tourControllerGetLandmarksByRegionResponseError;
-
-export const getTourControllerGetLandmarksByRegionUrl = (
-  params: TourControllerGetLandmarksByRegionParams,
-) => {
-  const normalizedParams = new URLSearchParams();
-
-  Object.entries(params || {}).forEach(([key, value]) => {
-    if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
-    }
-  });
-
-  const stringifiedParams = normalizedParams.toString();
-
-  return stringifiedParams.length > 0
-    ? `/tour/landmarks/by-region?${stringifiedParams}`
-    : `/tour/landmarks/by-region`;
-};
-
-export const tourControllerGetLandmarksByRegion = async (
-  params: TourControllerGetLandmarksByRegionParams,
-  options?: RequestInit,
-): Promise<tourControllerGetLandmarksByRegionResponse> => {
-  const res = await fetch(getTourControllerGetLandmarksByRegionUrl(params), {
-    ...options,
-    method: 'GET',
-  });
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
-
-  const data: tourControllerGetLandmarksByRegionResponse['data'] = body ? JSON.parse(body) : {};
   return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as tourControllerGetLandmarksByRegionResponse;
+    appControllerGetHello,
+    tourControllerGetLandmarksByRegion,
+    tourControllerGetLandmarkDetail,
+    tourControllerGetLandmarks,
+    authControllerGetMe,
+  };
 };
-
-export type tourControllerGetLandmarkDetailResponse400 = {
-  data: void;
-  status: 400;
-};
-
-export type tourControllerGetLandmarkDetailResponse404 = {
-  data: void;
-  status: 404;
-};
-
-export type tourControllerGetLandmarkDetailResponseDefault = {
-  data: LandmarkDetailResponseDto;
-  status: Exclude<HTTPStatusCodes, 400 | 404>;
-};
-export type tourControllerGetLandmarkDetailResponseError = (
-  | tourControllerGetLandmarkDetailResponse400
-  | tourControllerGetLandmarkDetailResponse404
-  | tourControllerGetLandmarkDetailResponseDefault
-) & {
-  headers: Headers;
-};
-
-export type tourControllerGetLandmarkDetailResponse = tourControllerGetLandmarkDetailResponseError;
-
-export const getTourControllerGetLandmarkDetailUrl = (contentId: number) => {
-  return `/tour/landmarks/${contentId}`;
-};
-
-export const tourControllerGetLandmarkDetail = async (
-  contentId: number,
-  options?: RequestInit,
-): Promise<tourControllerGetLandmarkDetailResponse> => {
-  const res = await fetch(getTourControllerGetLandmarkDetailUrl(contentId), {
-    ...options,
-    method: 'GET',
-  });
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
-
-  const data: tourControllerGetLandmarkDetailResponse['data'] = body ? JSON.parse(body) : {};
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as tourControllerGetLandmarkDetailResponse;
-};
-
-export type tourControllerGetLandmarksResponse200 = {
-  data: void;
-  status: 200;
-};
-
-export type tourControllerGetLandmarksResponseSuccess = tourControllerGetLandmarksResponse200 & {
-  headers: Headers;
-};
-export type tourControllerGetLandmarksResponse = tourControllerGetLandmarksResponseSuccess;
-
-export const getTourControllerGetLandmarksUrl = () => {
-  return `/tour`;
-};
-
-export const tourControllerGetLandmarks = async (
-  options?: RequestInit,
-): Promise<tourControllerGetLandmarksResponse> => {
-  const res = await fetch(getTourControllerGetLandmarksUrl(), {
-    ...options,
-    method: 'GET',
-  });
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
-
-  const data: tourControllerGetLandmarksResponse['data'] = body ? JSON.parse(body) : {};
-  return { data, status: res.status, headers: res.headers } as tourControllerGetLandmarksResponse;
-};
-
-/**
- * 토큰을 통해 인증된 유저의 정보를 가져옵니다.
- * @summary 내 정보 조회
- */
-export type authControllerGetMeResponse200 = {
-  data: AuthMeResponseDto;
-  status: 200;
-};
-
-export type authControllerGetMeResponse401 = {
-  data: void;
-  status: 401;
-};
-
-export type authControllerGetMeResponseSuccess = authControllerGetMeResponse200 & {
-  headers: Headers;
-};
-export type authControllerGetMeResponseError = authControllerGetMeResponse401 & {
-  headers: Headers;
-};
-
-export type authControllerGetMeResponse =
-  | authControllerGetMeResponseSuccess
-  | authControllerGetMeResponseError;
-
-export const getAuthControllerGetMeUrl = () => {
-  return `/auth/me`;
-};
-
-export const authControllerGetMe = async (
-  options?: RequestInit,
-): Promise<authControllerGetMeResponse> => {
-  const res = await fetch(getAuthControllerGetMeUrl(), {
-    ...options,
-    method: 'GET',
-  });
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
-
-  const data: authControllerGetMeResponse['data'] = body ? JSON.parse(body) : {};
-  return { data, status: res.status, headers: res.headers } as authControllerGetMeResponse;
-};
+export type AppControllerGetHelloResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getAPIDocumentation>['appControllerGetHello']>>
+>;
+export type TourControllerGetLandmarksByRegionResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getAPIDocumentation>['tourControllerGetLandmarksByRegion']>>
+>;
+export type TourControllerGetLandmarkDetailResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getAPIDocumentation>['tourControllerGetLandmarkDetail']>>
+>;
+export type TourControllerGetLandmarksResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getAPIDocumentation>['tourControllerGetLandmarks']>>
+>;
+export type AuthControllerGetMeResult = NonNullable<
+  Awaited<ReturnType<ReturnType<typeof getAPIDocumentation>['authControllerGetMe']>>
+>;
