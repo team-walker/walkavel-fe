@@ -72,6 +72,7 @@ export default function SplashScreen({
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.8, ease: 'easeInOut' }}
+          data-testid="splash-screen"
           className="fixed inset-0 z-9999 flex h-dvh w-full flex-col items-center justify-center bg-white p-6"
         >
           <motion.div

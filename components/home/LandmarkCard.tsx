@@ -101,6 +101,7 @@ export default function LandmarkCard({
 
   return (
     <motion.div
+      data-testid="landmark-card"
       custom={direction}
       variants={variants}
       initial="initial"
@@ -144,7 +145,6 @@ export default function LandmarkCard({
         )}
         <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/10 to-transparent" />
 
-        {/* 북마크 */}
         <div className="pointer-events-auto absolute top-6 right-6 z-20">
           <button
             onClick={handleBookmarkClick}
@@ -158,7 +158,6 @@ export default function LandmarkCard({
           </button>
         </div>
 
-        {/* 콘텐츠 정보 */}
         <div className="relative z-10 mt-auto p-10 text-white">
           <motion.h2
             layoutId={`title-${data.contentid}`}

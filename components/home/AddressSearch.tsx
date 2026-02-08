@@ -95,6 +95,7 @@ export default function AddressSearch({ onSelectAddress }: AddressSearchProps) {
             className="h-[60px] w-full rounded-2xl border border-transparent bg-[#F2F4F7] px-4 pl-12 text-lg font-medium transition-all outline-none placeholder:text-zinc-400"
             placeholder="동 이름으로 검색 (예: 인사동, 명동)"
             readOnly
+            data-testid="address-search-input"
           />
         </div>
       </div>
@@ -130,6 +131,7 @@ export default function AddressSearch({ onSelectAddress }: AddressSearchProps) {
                 }
               }}
               onBlur={() => setIsFocused(false)}
+              data-testid="address-search-input"
             />
           </div>
         </PopoverTrigger>
@@ -141,6 +143,7 @@ export default function AddressSearch({ onSelectAddress }: AddressSearchProps) {
         >
           {isLoading && (
             <motion.div
+              data-testid="search-loading"
               className="absolute top-0 left-0 h-1 bg-blue-500"
               initial={{ width: 0 }}
               animate={{ width: '100%' }}
@@ -164,6 +167,7 @@ export default function AddressSearch({ onSelectAddress }: AddressSearchProps) {
                       transition={{ delay: index * 0.05 }}
                     >
                       <CommandItem
+                        data-testid="search-result-item"
                         onSelect={() => handleSelectAddress(item)}
                         className="flex cursor-pointer items-center space-x-4 rounded-2xl bg-transparent p-3 text-zinc-900 transition-colors hover:bg-zinc-100 data-[selected=true]:bg-zinc-100 data-[selected=true]:text-zinc-900"
                       >

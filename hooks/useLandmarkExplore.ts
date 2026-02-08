@@ -31,7 +31,7 @@ export const useLandmarkExplore = () => {
           sigugun: address.sigugun,
         });
 
-        const shuffled = shuffleArray(data.splice(0, 5));
+        const shuffled = shuffleArray(data);
         setLandmarks(shuffled);
         setRegion(address);
         setCurrentIndex(0);

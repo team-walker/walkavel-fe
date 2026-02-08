@@ -17,7 +17,6 @@ export default function Overlay({ onDismiss }: OverlayProps) {
       className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-black/40 backdrop-blur-[5px]"
     >
       <div className="flex flex-col items-center gap-10 text-white">
-        {/* 고스트 핸드 애니메이션 (우 -> 좌) */}
         <div className="relative flex h-40 w-64 items-center justify-center">
           <div className="absolute h-1 w-48 rounded-full bg-white/20" />
           <motion.div
@@ -38,7 +37,6 @@ export default function Overlay({ onDismiss }: OverlayProps) {
               size={80}
               className="rotate-[-20deg] fill-white/20 text-white drop-shadow-[0_0_20px_rgba(255,255,255,0.5)]"
             />
-            {/* 터치 지점 파동 효과 */}
             <motion.div
               initial={{ scale: 0, opacity: 0.5 }}
               animate={{ scale: 2, opacity: 0 }}
@@ -48,7 +46,6 @@ export default function Overlay({ onDismiss }: OverlayProps) {
           </motion.div>
         </div>
 
-        {/* 캡슐형 안내 문구 */}
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
