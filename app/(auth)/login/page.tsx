@@ -15,8 +15,14 @@ function LoginContent() {
   const searchParams = useSearchParams();
   const returnTo = searchParams.get('returnTo') || '/';
 
+  const urlError = searchParams.get('error');
+  const urlErrorDescription = searchParams.get('error_description');
+
   const { user, isInitialized, setReturnTo } = useAuthStore();
-  const { handleOAuthLogin, loading, error } = useLoginLogic();
+  const { handleOAuthLogin, loading, error: loginError } = useLoginLogic();
+
+  const displayError =
+    urlError === 'auth_failed' ? urlErrorDescription || '로그인에 실패했습니다.' : loginError;
 
   useEffect(() => {
     if (isInitialized && user) {
@@ -55,9 +61,9 @@ function LoginContent() {
           마음에 드는 곳은 북마크로 저장할 수 있어요
         </p>
 
-        {error && (
+        {displayError && (
           <div className="mb-4 w-full rounded-lg bg-red-50 p-3 text-center text-sm text-red-600">
-            {error}
+            {displayError}
           </div>
         )}
 

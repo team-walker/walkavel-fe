@@ -18,7 +18,10 @@ export async function GET(request: Request) {
     if (error) {
       console.error('Auth callback error:', error.message);
       return NextResponse.redirect(
-        new URL(`/auth/login?error=${encodeURIComponent(error.message)}`, request.url),
+        new URL(
+          `/login?error=auth_failed&error_description=${encodeURIComponent(error.message)}`,
+          request.url,
+        ),
       );
     }
   }
