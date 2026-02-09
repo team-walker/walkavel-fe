@@ -36,7 +36,7 @@ export const useLoginLogic = () => {
       console.error('Login error:', error);
       const message = error instanceof Error ? error.message : '로그인 중 문제가 발생했습니다.';
       setError(message);
-      setLoading(false); // 에러 발생 시에만 로딩 상태 해제
+      setLoading(false);
     }
   };
 

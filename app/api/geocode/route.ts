@@ -33,7 +33,7 @@ interface NaverGeocodeResponse {
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
   const query = searchParams.get('query');
-  const region = searchParams.get('region'); // Custom parameter for strict filtering
+  const region = searchParams.get('region');
 
   if (!query) {
     return NextResponse.json({ error: 'Query is required.' }, { status: 400 });

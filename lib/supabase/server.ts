@@ -18,7 +18,7 @@ export async function createClient() {
               cookieStore.set(name, value, options),
             );
           } catch {
-            // 서버 컴포넌트에서 쿠키를 설정할 때 발생하는 오류는 무시합니다.
+            // 서버 컴포넌트에서 쿠키를 설정할 때 발생하는 오류는 무시
             // (미들웨어에서 세션을 처리하는 경우)
           }
         },
