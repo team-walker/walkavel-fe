@@ -81,19 +81,17 @@ export default function AddressSearch({ onSelectAddress }: AddressSearchProps) {
 
   if (!isMounted) {
     return (
-      <div className="mx-auto w-full max-w-md pt-8">
-        <div className="mb-8 space-y-1">
-          <h1 className="text-3xl font-bold tracking-tight text-zinc-900">
-            어디로 <br />
-            <span className="text-blue-600">워커블</span>할까요?
-          </h1>
+      <div className="mx-auto w-full max-w-md px-6 pt-8">
+        <div className="mb-6 space-y-2">
+          <h1 className="text-[32px] font-bold tracking-tight text-[#101828]">어디로 갈까요?</h1>
+          <p className="text-[17px] text-[#6A7282]">걷고 싶은 동네를 검색해보세요</p>
         </div>
         <div className="group relative flex items-center">
-          <Search className="absolute left-4 h-5 w-5 text-zinc-400" />
+          <Search className="absolute left-5 h-5.5 w-5.5 text-[#99A1AF]" />
           <Input
             type="text"
-            className="h-[60px] w-full rounded-2xl border border-transparent bg-[#F2F4F7] px-4 pl-12 text-lg font-medium transition-all outline-none placeholder:text-zinc-400"
-            placeholder="동 이름으로 검색 (예: 인사동, 명동)"
+            className="h-14.5 w-full rounded-3xl border-none bg-[#F2F4F7] px-5 pl-13 text-[17px] font-medium transition-all outline-none placeholder:text-[#99A1AF]"
+            placeholder="동 이름으로 검색 (예: 강남동, 명동)"
             readOnly
             data-testid="address-search-input"
           />
@@ -103,23 +101,28 @@ export default function AddressSearch({ onSelectAddress }: AddressSearchProps) {
   }
 
   return (
-    <div className="mx-auto w-full max-w-md pt-8" ref={containerRef}>
-      <div className="mb-8 space-y-1">
-        <h1 className="text-3xl font-bold tracking-tight text-zinc-900">
-          어디로 <br />
-          <span className="text-blue-600">워커블</span>할까요?
-        </h1>
+    <div className="mx-auto w-full max-w-md px-6 pt-8" ref={containerRef}>
+      <div className="mb-6 space-y-2">
+        <h1 className="text-[32px] font-bold tracking-tight text-[#101828]">어디로 갈까요?</h1>
+        <p className="text-[17px] text-[#6A7282]">걷고 싶은 동네를 검색해보세요</p>
       </div>
       <Popover open={isOpen && query.trim().length >= 2} onOpenChange={setIsOpen}>
         <PopoverTrigger asChild>
           <div className="group relative flex w-full items-center">
-            <Search className="absolute left-4 h-5 w-5 text-zinc-400 transition-colors group-focus-within:text-blue-500" />
+            <Search
+              className={`absolute left-5 h-5.5 w-5.5 transition-colors ${
+                isFocused ? 'text-[#3182F6]' : 'text-[#99A1AF]'
+              }`}
+            />
             <Input
               type="text"
-              className={`h-[60px] w-full rounded-2xl border-none px-4 pl-12 text-lg font-medium transition-all duration-300 outline-none placeholder:text-zinc-400 focus:ring-0 focus-visible:ring-0 ${
-                isFocused || query.length > 0 ? 'bg-white shadow-md' : 'bg-[#F2F4F7]'
+              className={`h-14.5 w-full border-none px-5 pl-13 text-[17px] font-medium transition-all duration-300 outline-none placeholder:text-[#99A1AF] focus:ring-0 focus-visible:ring-0 ${
+                isFocused || query.length > 0
+                  ? 'bg-white shadow-[0_0_0_1px_#3182F6,0_10px_15px_-3px_rgba(0,0,0,0.1)]'
+                  : 'bg-[#F2F4F7]'
               }`}
-              placeholder="동 이름으로 검색 (예: 인사동, 명동)"
+              style={{ borderRadius: '16px' }}
+              placeholder="동 이름으로 검색 (예: 강남동, 명동)"
               value={query}
               onChange={(e) => {
                 setQuery(e.target.value);
@@ -137,44 +140,49 @@ export default function AddressSearch({ onSelectAddress }: AddressSearchProps) {
         </PopoverTrigger>
 
         <PopoverContent
-          className="mt-2 w-(--radix-popover-trigger-width) min-w-(--radix-popover-trigger-width) overflow-hidden rounded-3xl border-zinc-100 bg-white/80 p-2 shadow-2xl backdrop-blur-xl"
+          className="mt-3 w-(--radix-popover-trigger-width) min-w-(--radix-popover-trigger-width) overflow-hidden border-[#F3F4F6] bg-white p-0 shadow-[0_20px_25px_-5px_rgba(0,0,0,0.1),0_8px_10px_-6px_rgba(0,0,0,0.1)]"
+          style={{ borderRadius: '20px' }}
           align="start"
           onOpenAutoFocus={(e) => e.preventDefault()}
         >
           {isLoading && (
             <motion.div
               data-testid="search-loading"
-              className="absolute top-0 left-0 h-1 bg-blue-500"
+              className="absolute top-0 left-0 z-50 h-1 bg-blue-500"
               initial={{ width: 0 }}
               animate={{ width: '100%' }}
               transition={{ duration: 1, repeat: Infinity, ease: 'easeInOut' }}
             />
           )}
           <Command className="bg-transparent">
-            <CommandList className="max-h-64 overflow-x-hidden overflow-y-auto">
-              {!isLoading && (
-                <CommandEmpty className="py-4 text-center text-sm text-zinc-500">
+            <CommandList className="no-scrollbar max-h-64 overflow-x-hidden overflow-y-auto">
+              {!isLoading && results.length === 0 && query.length >= 2 && (
+                <CommandEmpty className="h-14.5 py-4 text-center text-sm font-medium text-zinc-500">
                   검색 결과가 없습니다.
                 </CommandEmpty>
               )}
-              <CommandGroup>
+              <CommandGroup
+                className={`${!isLoading && results.length === 0 && query.length >= 2 ? 'p-0' : 'p-2.5'}`}
+              >
                 <AnimatePresence mode="popLayout">
                   {results.map((item, index) => (
                     <motion.div
                       key={item.roadAddress}
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.05 }}
+                      initial={{ opacity: 0, y: 5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.03 }}
                     >
                       <CommandItem
                         data-testid="search-result-item"
                         onSelect={() => handleSelectAddress(item)}
-                        className="flex cursor-pointer items-center space-x-4 rounded-2xl bg-transparent p-3 text-zinc-900 transition-colors hover:bg-zinc-100 data-[selected=true]:bg-zinc-100 data-[selected=true]:text-zinc-900"
+                        className="group flex h-17 cursor-pointer items-center space-x-3 bg-transparent px-5 text-[#101828] transition-colors hover:bg-[#F2F4F7] aria-selected:bg-[#F2F4F7]"
                       >
-                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-zinc-50 group-hover:bg-white">
-                          <MapPin className="h-5 w-5 text-zinc-400" />
+                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#F2F4F7] transition-colors group-aria-selected:bg-[#3182F6]/10">
+                          <MapPin className="h-4.5 w-4.5 text-[#99A1AF] transition-colors group-aria-selected:text-[#3182F6]" />
                         </div>
-                        <span className="truncate text-base font-semibold">{item.roadAddress}</span>
+                        <span className="truncate text-[16px] font-medium tracking-[-0.31px]">
+                          {item.roadAddress}
+                        </span>
                       </CommandItem>
                     </motion.div>
                   ))}

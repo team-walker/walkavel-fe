@@ -16,9 +16,9 @@ export default function BottomNav() {
   return (
     <nav
       aria-label="하단 네비게이션"
-      className="fixed bottom-0 left-1/2 z-50 w-full max-w-[480px] -translate-x-1/2 border-t-[0.5px] border-[#F3F4F6] bg-white pb-[env(safe-area-inset-bottom)]"
+      className="fixed bottom-0 left-1/2 z-50 w-full max-w-120 -translate-x-1/2 border-t-[0.5px] border-[#F3F4F6] bg-white pb-[env(safe-area-inset-bottom)]"
     >
-      <div className="flex h-[88px] items-center justify-between px-5">
+      <div className="flex h-22 items-center justify-between px-5">
         {NAV_ITEMS.map(({ href, label, icon: IconComponent }) => {
           const isActive = pathname === href;
 
