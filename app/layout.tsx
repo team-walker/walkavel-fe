@@ -4,6 +4,8 @@ import 'pretendard/dist/web/static/pretendard.css';
 import type { Metadata, Viewport } from 'next';
 import { Inter, Outfit } from 'next/font/google';
 
+import { Toaster } from '@/components/ui/sonner';
+
 import AuthProvider from './providers';
 
 const inter = Inter({
@@ -47,6 +49,7 @@ export default function RootLayout({
     <html lang="ko-KR">
       <body className={`${inter.variable} ${outfit.variable} font-sans antialiased`}>
         <AuthProvider>{children}</AuthProvider>
+        <Toaster position="top-center" />
       </body>
     </html>
   );
