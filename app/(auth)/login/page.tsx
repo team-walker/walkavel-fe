@@ -99,11 +99,13 @@ function LoginContent() {
 
         <div className="mt-14 text-center text-[12px] leading-relaxed text-[#D1D5DB]">
           로그인하면{' '}
-          <button className="underline underline-offset-2 hover:text-[#9CA3AF]">서비스 약관</button>
+          <a href="/terms" className="underline underline-offset-2 hover:text-[#9CA3AF]">
+            서비스 약관
+          </a>
           과{' '}
-          <button className="underline underline-offset-2 hover:text-[#9CA3AF]">
+          <a href="/privacy" className="underline underline-offset-2 hover:text-[#9CA3AF]">
             개인정보 처리방침
-          </button>
+          </a>
           에
           <br />
           동의하는 것으로 간주돼요
