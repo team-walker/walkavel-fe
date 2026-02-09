@@ -11,7 +11,6 @@ import { useExploreStore } from '@/store/exploreStore';
 import { useRegionStore } from '@/store/regionStore';
 import { AddressResult } from '@/types/address';
 import { getAPIDocumentation } from '@/types/api';
-import { LandmarkDto } from '@/types/model';
 
 export const useLandmarkExplore = () => {
   const router = useRouter();
@@ -51,6 +50,19 @@ export const useLandmarkExplore = () => {
       setPendingAction(null);
     }
   }, [user, pendingAction, landmarks, toggleBookmark, setPendingAction]);
+
+  const _hasHydrated = _hasExploreHydrated && _hasRegionHydrated;
+
+  useEffect(() => {
+    if (user && pendingAction && pendingAction.type === 'bookmark') {
+      const { landmarkId } = pendingAction.payload;
+      const timer = setTimeout(() => {
+        setBookmarkedIds((prev) => new Set(prev).add(landmarkId));
+        setPendingAction(null);
+      }, 0);
+      return () => clearTimeout(timer);
+    }
+  }, [user, pendingAction, setPendingAction]);
 
   const handleAddressSelect = useCallback(
     async (address: AddressResult) => {

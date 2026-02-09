@@ -10,6 +10,8 @@ import { Toaster } from '@/components/ui/sonner';
 
 import AuthProvider from './providers';
 
+import AuthProvider from './providers';
+
 const inter = Inter({
   variable: '--font-inter',
   subsets: ['latin'],
