@@ -28,29 +28,46 @@
 
 ## 🛠 기술 스택
 
-| Category                 | Technology                     |
-| ------------------------ | ------------------------------ |
-| **Framework**            | Next.js 16 (App Router)        |
-| **Language**             | TypeScript                     |
-| **Styling**              | Tailwind CSS 4, PostCSS        |
-| **PWA**                  | @ducanh2912/next-pwa           |
-| **Animation**            | Framer Motion                  |
-| **Package Manager**      | pnpm                           |
-| **Linting & Formatting** | ESLint, Prettier, Stylelint    |
-| **Git Hooks**            | Husky, Commitlint, lint-staged |
+| Category                 | Technology                                     |
+| ------------------------ | ---------------------------------------------- |
+| **Framework**            | Next.js 16 (App Router), React 19              |
+| **Language**             | TypeScript 5                                   |
+| **Auth**                 | Supabase Auth (@supabase/ssr)                  |
+| **State Management**     | Zustand                                        |
+| **Styling**              | Tailwind CSS 4, Radix UI, Lucide React         |
+| **API & Data**           | Axios, Orval (API Code Generation), Zod        |
+| **PWA**                  | @ducanh2912/next-pwa                           |
+| **Animation**            | Framer Motion                                  |
+| **Documentation**        | Storybook                                      |
+| **Testing**              | Jest, React Testing Library, Playwright (E2E)  |
+| **Package Manager**      | pnpm                                           |
+| **Linting & Formatting** | ESLint, Prettier, Stylelint, Husky, Commitlint |
 
 ## 📂 프로젝트 구조
 
 ```bash
-├── .github/          # Github Actions & Templates
-├── app/              # Next.js App Router Pages & Templates
-│   ├── layout.tsx    # Root RootLayout (Viewport & Metadata)
-│   └── template.tsx  # Page Transition Template
-├── components/       # Reusable UI Components
-│   └── layout/       # Mobile Layout (MainLayout, BottomNav)
-├── lib/              # Utility functions
-├── public/           # Static assets (Manifest, Icons)
-└── ...
+├── app/                  # Next.js App Router (Pages, API, Layouts)
+│   ├── (auth)/           # 인증 관련 페이지 (Login, Callback 등)
+│   ├── (main)/           # 메인 서비스 페이지 (Home, Bookmark, MyPage 등)
+│   ├── api/              # API Route Handlers (Geocode 등)
+│   ├── globals.css       # Global Styles
+│   └── layout.tsx        # Root Layout
+├── components/           # 재사용 가능한 UI 컴포넌트
+│   ├── common/           # 공통 컴포넌트 (SplashScreen 등)
+│   ├── home/             # 홈 화면 전용 컴포넌트
+│   ├── layout/           # 레이아웃 관련 (Header, BottomNav)
+│   └── ui/               # Shadcn UI (Base Components)
+├── hooks/                # Custom React Hooks
+├── lib/                  # 유틸리티 및 설정
+│   ├── api/              # Axios Instance & API Clients
+│   └── supabase/         # Supabase Client & Middleware Logic
+├── store/                # Zustand State Stores
+├── types/                # TypeScript Type Definitions (API, Model 등)
+├── constants/            # 공통 상수 및 설정
+├── __tests__/            # Unit & Integration Tests (Jest)
+├── e2e/                  # End-to-End Tests (Playwright)
+├── stories/              # Storybook Stories
+└── public/               # Static Assets & PWA Manifest
 ```
 
 ## 🚀 시작하기

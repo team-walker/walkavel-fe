@@ -16,8 +16,6 @@ export const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   async (config: InternalAxiosRequestConfig) => {
-    // Supabase에서 최신 세션(토큰) 가져오기
-    // getSession()은 만료된 경우 내부적으로 자동 리프레시를 시도합니다.
     const {
       data: { session },
     } = await supabase.auth.getSession();
@@ -35,12 +33,10 @@ axiosInstance.interceptors.response.use(
   (response) => response,
   async (error: AxiosError) => {
     if (error.response?.status === 401) {
-      // 401 에러는 세션이 완전히 만료되었거나 로그아웃된 상태를 의미합니다.
-      // Supabase 로그아웃 처리 및 전역 상태 초기화
       await supabase.auth.signOut();
-      useAuthStore.getState().clearAuth();
+      useAuthStore.getState().resetAuth();
 
-      if (typeof window !== 'undefined') {
+      if (typeof window !== 'undefined' && window.location.pathname !== '/') {
         window.location.replace('/login');
       }
     }

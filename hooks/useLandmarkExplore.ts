@@ -3,25 +3,50 @@
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 
-import { STEP, STORAGE_KEYS } from '@/constants/types';
+import { STORAGE_KEYS } from '@/constants/types';
 import { shuffleArray } from '@/lib/shuffle';
 import { useAuthStore } from '@/store/authStore';
+import { useExploreStore } from '@/store/exploreStore';
 import { useRegionStore } from '@/store/regionStore';
 import { AddressResult } from '@/types/address';
 import { getAPIDocumentation } from '@/types/api';
-import { LandmarkDto } from '@/types/model';
 
 export const useLandmarkExplore = () => {
   const router = useRouter();
-  const [step, setStep] = useState<STEP>('SEARCH');
-  const { selectedRegion, setRegion, clearRegion, _hasHydrated } = useRegionStore();
-  const [landmarks, setLandmarks] = useState<LandmarkDto[]>([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const {
+    step,
+    landmarks,
+    currentIndex,
+    setStep,
+    setLandmarks,
+    setCurrentIndex,
+    _hasHydrated: _hasExploreHydrated,
+  } = useExploreStore();
+  const {
+    selectedRegion,
+    setRegion,
+    clearRegion,
+    _hasHydrated: _hasRegionHydrated,
+  } = useRegionStore();
+
   const [direction, setDirection] = useState<'left' | 'right' | null>(null);
   const [showGuide, setShowGuide] = useState(false);
   const [bookmarkedIds, setBookmarkedIds] = useState<Set<number>>(new Set());
-  const { user } = useAuthStore();
+  const { user, pendingAction, setPendingAction } = useAuthStore();
   const { tourControllerGetLandmarksByRegion } = getAPIDocumentation();
+
+  const _hasHydrated = _hasExploreHydrated && _hasRegionHydrated;
+
+  useEffect(() => {
+    if (user && pendingAction && pendingAction.type === 'bookmark') {
+      const { landmarkId } = pendingAction.payload;
+      const timer = setTimeout(() => {
+        setBookmarkedIds((prev) => new Set(prev).add(landmarkId));
+        setPendingAction(null);
+      }, 0);
+      return () => clearTimeout(timer);
+    }
+  }, [user, pendingAction, setPendingAction]);
 
   const handleAddressSelect = useCallback(
     async (address: AddressResult) => {
@@ -46,7 +71,7 @@ export const useLandmarkExplore = () => {
         console.error('Failed to fetch landmarks:', error);
       }
     },
-    [tourControllerGetLandmarksByRegion, setRegion],
+    [tourControllerGetLandmarksByRegion, setRegion, setLandmarks, setCurrentIndex, setStep],
   );
 
   const handleDismissGuide = useCallback(() => {
@@ -73,8 +98,8 @@ export const useLandmarkExplore = () => {
 
   const handleBookmark = (landmarkId: number) => {
     if (!user) {
-      // @TODO: https://github.com/orgs/team-walker/projects/1/views/2?pane=issue&itemId=155013857&issue=team-walker%7Cwalkavel-fe%7C15 로그인 관련 세부 사항은 해당 이슈에서 처리
-      router.push('/login');
+      setPendingAction({ type: 'bookmark', payload: { landmarkId } });
+      router.push(`/login?returnTo=${encodeURIComponent(window.location.pathname)}`);
       return;
     }
 
@@ -115,7 +140,6 @@ export const useLandmarkExplore = () => {
     clearRegion();
   };
 
-  // 가이드 자동 타이머
   useEffect(() => {
     if (showGuide) {
       const timer = setTimeout(handleDismissGuide, 5000);

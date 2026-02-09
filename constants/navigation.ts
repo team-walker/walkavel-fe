@@ -1,8 +1,8 @@
 import { FC, SVGProps } from 'react';
 
-import BookmarkIcon from '@/public/icons/bookmark.svg';
-import HomeIcon from '@/public/icons/home.svg';
-import ProfileIcon from '@/public/icons/profile.svg';
+import BookmarkIcon from '@/public/images/bookmark.svg';
+import HomeIcon from '@/public/images/home.svg';
+import ProfileIcon from '@/public/images/profile.svg';
 
 export interface NavItems {
   href: string;

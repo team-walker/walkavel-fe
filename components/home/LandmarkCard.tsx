@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 
 import { Card } from '@/components/ui/card';
-import BookmarkIcon from '@/public/icons/bookmark.svg';
+import BookmarkIcon from '@/public/images/bookmark.svg';
 import { LandmarkDto } from '@/types/model';
 
 type DIRECTION = 'left' | 'right';
@@ -66,7 +66,7 @@ export default function LandmarkCard({
 
   const variants: Variants = {
     initial: (dir: DIRECTION | null) => ({
-      x: dir === 'right' ? -1000 : 0, // 이전 카드로 돌아올 때 왼쪽에서 들어옴
+      x: dir === 'right' ? -1000 : 0,
       opacity: 0,
       scale: 0.9,
     }),
