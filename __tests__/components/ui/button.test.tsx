@@ -35,4 +35,15 @@ describe('Button Component', () => {
     fireEvent.click(button);
     expect(handleClick).not.toHaveBeenCalled();
   });
+
+  it('renders as a child component when asChild is true', () => {
+    render(
+      <Button asChild>
+        <a href="/test">Link Button</a>
+      </Button>,
+    );
+    const link = screen.getByRole('link', { name: /link button/i });
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveAttribute('href', '/test');
+  });
 });

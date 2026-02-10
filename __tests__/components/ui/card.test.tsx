@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react';
 
 import {
   Card,
+  CardAction,
   CardContent,
   CardDescription,
   CardFooter,
@@ -16,6 +17,7 @@ describe('Card Component', () => {
         <CardHeader>
           <CardTitle>Title</CardTitle>
           <CardDescription>Description</CardDescription>
+          <CardAction>Action</CardAction>
         </CardHeader>
         <CardContent>Content</CardContent>
         <CardFooter>Footer</CardFooter>
@@ -24,6 +26,7 @@ describe('Card Component', () => {
 
     expect(screen.getByText('Title')).toBeInTheDocument();
     expect(screen.getByText('Description')).toBeInTheDocument();
+    expect(screen.getByText('Action')).toBeInTheDocument();
     expect(screen.getByText('Content')).toBeInTheDocument();
     expect(screen.getByText('Footer')).toBeInTheDocument();
   });

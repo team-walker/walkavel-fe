@@ -1,21 +1,23 @@
 'use client';
 
 import { motion, PanInfo, useMotionValue, Variants } from 'framer-motion';
-import Image from 'next/image';
-import { useState } from 'react';
+import { MapPin } from 'lucide-react';
 
+import { ImageWithFallback } from '@/components/common/ImageWithFallback';
 import { Card } from '@/components/ui/card';
 import BookmarkIcon from '@/public/images/bookmark.svg';
 import { LandmarkDto } from '@/types/model';
 
+import { Button } from '../ui/button';
+
 type DIRECTION = 'left' | 'right';
 
-interface LandmarkcardProps {
+interface LandmarkCardProps {
   data: LandmarkDto;
   onSwipe?: (direction: DIRECTION) => void;
   onDragStart?: () => void;
   onClick?: (id: number) => void;
-  onBookmark?: (id: number) => void;
+  onBookmark?: (landmark: LandmarkDto) => void;
   isTop?: boolean;
   isBookmarked?: boolean;
   direction?: DIRECTION | null;
@@ -34,9 +36,8 @@ export default function LandmarkCard({
   direction,
   shouldWiggle,
   isFirstCard,
-}: LandmarkcardProps) {
+}: LandmarkCardProps) {
   const x = useMotionValue(0);
-  const [imageError, setImageError] = useState(false);
 
   const handleDragEnd = (e: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     if (!isTop) return;
@@ -54,7 +55,7 @@ export default function LandmarkCard({
 
   const handleBookmarkClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    onBookmark?.(data.contentid);
+    onBookmark?.(data);
     console.log('Bookmark clicked:', data.contentid);
   };
 
@@ -99,6 +100,8 @@ export default function LandmarkCard({
     }),
   };
 
+  const imageUrl = data.firstimage || data.firstimage2;
+
   return (
     <motion.div
       data-testid="landmark-card"
@@ -124,53 +127,57 @@ export default function LandmarkCard({
       onDragStart={onDragStart}
       onDragEnd={handleDragEnd}
       whileTap={{ scale: isTop ? 1.01 : 1 }}
-      className="flex h-full flex-col py-4"
+      className="flex h-full flex-col"
     >
-      <Card className="pointer-events-none relative flex h-full w-full flex-col overflow-hidden rounded-[40px] border-none p-0 transition-shadow">
-        {!imageError && (data.firstimage || data.firstimage2) ? (
-          <Image
-            src={data.firstimage || data.firstimage2 || ''}
+      <Card className="pointer-events-none relative flex h-full w-full flex-col overflow-hidden rounded-[28px] border-none p-0 shadow-[0px_8px_32px_-8px_rgba(0,0,0,0.12),0px_0px_1px_0px_rgba(0,0,0,0.05)] transition-shadow">
+        {imageUrl ? (
+          <ImageWithFallback
+            src={imageUrl}
             alt={data.title}
             fill
             className="object-cover object-[center_30%]"
             priority={isTop}
             sizes="(max-width: 768px) 100vw, 500px"
             quality={85}
-            onError={() => setImageError(true)}
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center bg-zinc-100">
-            <span className="text-sm font-medium text-zinc-400">이미지를 불러올 수 없습니다</span>
+            <span className="text-sm font-medium text-zinc-400">이미지가 없습니다</span>
           </div>
         )}
-        <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/10 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-b from-transparent via-[rgba(0,0,0,0.2)] via-50% to-[rgba(0,0,0,0.8)]" />
 
-        <div className="pointer-events-auto absolute top-6 right-6 z-20">
-          <button
+        <div className="pointer-events-auto absolute top-5 right-6 z-20">
+          <Button
             onClick={handleBookmarkClick}
-            className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-white/20 p-0 backdrop-blur-xl transition hover:bg-white/40 active:scale-90"
+            className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-white/95 p-0 shadow-[0_10px_15px_0_rgba(0,0,0,0.1),0_4_6px_0_rgba(0,0,0,0.1)] transition-transform active:scale-95"
           >
             <BookmarkIcon
-              className={`h-6 w-6 transition-colors ${
-                isBookmarked ? 'fill-[#3182F6] text-[#3182F6]' : 'text-white'
+              className={`h-5 w-5 transition-colors ${
+                isBookmarked ? 'fill-[#3182F6] text-[#3182F6]' : 'text-[#99A1AF]'
               }`}
             />
-          </button>
+          </Button>
         </div>
 
-        <div className="relative z-10 mt-auto p-10 text-white">
-          <motion.h2
-            layoutId={`title-${data.contentid}`}
-            className="mb-3 text-4xl leading-[1.1] font-bold tracking-tight"
-          >
-            {data.title}
-          </motion.h2>
-          <motion.p
-            layoutId={`addr-${data.contentid}`}
-            className="line-clamp-2 text-lg font-medium text-white/80"
-          >
-            {data.addr1 || '상세 주소 정보가 없습니다.'}
-          </motion.p>
+        <div className="relative z-10 mt-auto px-6 py-6 text-white">
+          <motion.div layoutId={`info-container-${data.contentid}`} className="flex flex-col gap-2">
+            <motion.h2
+              layoutId={`title-${data.contentid}`}
+              className="text-[28px] leading-tight font-bold tracking-[0.38px] drop-shadow-[0_4px_8px_rgba(0,0,0,0.15)]"
+            >
+              {data.title}
+            </motion.h2>
+            <div className="flex items-center gap-1.5 drop-shadow-[0_1px_2px_rgba(0,0,0,0.06)]">
+              <MapPin className="h-4 w-4 text-white/90" />
+              <motion.p
+                layoutId={`addr-${data.contentid}`}
+                className="truncate text-[15px] font-medium tracking-[-0.23px] text-white/90"
+              >
+                {data.addr1 || '상세 주소 정보가 없습니다.'}
+              </motion.p>
+            </div>
+          </motion.div>
         </div>
       </Card>
     </motion.div>

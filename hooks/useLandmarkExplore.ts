@@ -1,15 +1,18 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { toast } from 'sonner';
 
 import { STORAGE_KEYS } from '@/constants/types';
 import { shuffleArray } from '@/lib/shuffle';
 import { useAuthStore } from '@/store/authStore';
+import { useBookmarkStore } from '@/store/bookmarkStore';
 import { useExploreStore } from '@/store/exploreStore';
 import { useRegionStore } from '@/store/regionStore';
 import { AddressResult } from '@/types/address';
 import { getAPIDocumentation } from '@/types/api';
+import { LandmarkDto } from '@/types/model';
 
 export const useLandmarkExplore = () => {
   const router = useRouter();
@@ -31,22 +34,24 @@ export const useLandmarkExplore = () => {
 
   const [direction, setDirection] = useState<'left' | 'right' | null>(null);
   const [showGuide, setShowGuide] = useState(false);
-  const [bookmarkedIds, setBookmarkedIds] = useState<Set<number>>(new Set());
+  const { bookmarks, toggleBookmark } = useBookmarkStore();
+
   const { user, pendingAction, setPendingAction } = useAuthStore();
-  const { tourControllerGetLandmarksByRegion } = getAPIDocumentation();
+  const { tourControllerGetLandmarksByRegion } = useMemo(() => getAPIDocumentation(), []);
 
   const _hasHydrated = _hasExploreHydrated && _hasRegionHydrated;
 
   useEffect(() => {
-    if (user && pendingAction && pendingAction.type === 'bookmark') {
+    if (user && pendingAction?.type === 'bookmark') {
       const { landmarkId } = pendingAction.payload;
-      const timer = setTimeout(() => {
-        setBookmarkedIds((prev) => new Set(prev).add(landmarkId));
-        setPendingAction(null);
-      }, 0);
-      return () => clearTimeout(timer);
+      const landmark = landmarks.find((l) => l.contentid === landmarkId);
+
+      if (landmark) {
+        toggleBookmark(landmark);
+      }
+      setPendingAction(null);
     }
-  }, [user, pendingAction, setPendingAction]);
+  }, [user, pendingAction, landmarks, toggleBookmark, setPendingAction]);
 
   const handleAddressSelect = useCallback(
     async (address: AddressResult) => {
@@ -56,19 +61,24 @@ export const useLandmarkExplore = () => {
           sigugun: address.sigugun,
         });
 
+        if (!data || data.length === 0) {
+          toast.error('해당 지역에 등록된 장소가 없습니다.');
+          return;
+        }
+
         const shuffled = shuffleArray(data);
         setLandmarks(shuffled);
         setRegion(address);
         setCurrentIndex(0);
         setDirection(null);
         setStep('SWIPE');
-        setBookmarkedIds(new Set());
 
         if (!localStorage.getItem(STORAGE_KEYS.ONBOARDING_SEEN)) {
           setShowGuide(true);
         }
       } catch (error) {
         console.error('Failed to fetch landmarks:', error);
+        toast.error('주변 장소 정보를 가져오는 중 오류가 발생했습니다.');
       }
     },
     [tourControllerGetLandmarksByRegion, setRegion, setLandmarks, setCurrentIndex, setStep],
@@ -79,66 +89,75 @@ export const useLandmarkExplore = () => {
     localStorage.setItem(STORAGE_KEYS.ONBOARDING_SEEN, 'true');
   }, []);
 
-  const handleSwipe = (swipeDir: 'left' | 'right') => {
-    setDirection(swipeDir);
-    handleDismissGuide();
-
-    if (swipeDir === 'left') {
-      if (currentIndex < landmarks.length - 1) {
-        setCurrentIndex((prev) => prev + 1);
-      } else {
-        setStep('FINISH');
-      }
+  const moveToNext = useCallback(() => {
+    if (currentIndex < landmarks.length - 1) {
+      setCurrentIndex((prev) => (typeof prev === 'number' ? prev + 1 : prev));
     } else {
-      if (currentIndex > 0) {
-        setCurrentIndex((prev) => prev - 1);
-      }
+      setStep('FINISH');
     }
-  };
+  }, [currentIndex, landmarks.length, setCurrentIndex, setStep]);
 
-  const handleBookmark = (landmarkId: number) => {
-    if (!user) {
-      setPendingAction({ type: 'bookmark', payload: { landmarkId } });
-      router.push(`/login?returnTo=${encodeURIComponent(window.location.pathname)}`);
-      return;
+  const moveToPrevious = useCallback(() => {
+    if (currentIndex > 0) {
+      setCurrentIndex((prev) => (typeof prev === 'number' ? prev - 1 : prev));
     }
+  }, [currentIndex, setCurrentIndex]);
 
-    setBookmarkedIds((prev) => {
-      const next = new Set(prev);
-      if (next.has(landmarkId)) {
-        next.delete(landmarkId);
+  const handleSwipe = useCallback(
+    (swipeDir: 'left' | 'right') => {
+      setDirection(swipeDir);
+      handleDismissGuide();
+
+      if (swipeDir === 'left') {
+        moveToNext();
       } else {
-        next.add(landmarkId);
+        moveToPrevious();
       }
-      return next;
-    });
-  };
+    },
+    [handleDismissGuide, moveToNext, moveToPrevious],
+  );
 
-  const handleReset = () => {
+  const handleBookmark = useCallback(
+    (landmark: LandmarkDto) => {
+      if (!user) {
+        setPendingAction({ type: 'bookmark', payload: { landmarkId: landmark.contentid } });
+        router.push(`/login?returnTo=${encodeURIComponent(window.location.pathname)}`);
+        return;
+      }
+
+      toggleBookmark(landmark);
+    },
+    [user, toggleBookmark, setPendingAction, router],
+  );
+
+  const handleReset = useCallback(() => {
     setStep('SWIPE');
     setCurrentIndex(0);
     setDirection(null);
     if (!localStorage.getItem(STORAGE_KEYS.ONBOARDING_SEEN)) {
       setShowGuide(true);
     }
-  };
+  }, [setStep, setCurrentIndex]);
 
-  const handleResetUnbookmarked = () => {
-    const unbookmarked = landmarks.filter((l) => !bookmarkedIds.has(l.contentid));
+  const handleResetUnbookmarked = useCallback(() => {
+    const bookmarkedIdSet = new Set(bookmarks.map((b: LandmarkDto) => b.contentid));
+    const unbookmarked = landmarks.filter((l) => !bookmarkedIdSet.has(l.contentid));
+
     if (unbookmarked.length === 0) {
-      alert('모든 장소를 북마크하셨습니다!'); // @TODO: 모든 장소를 북마크했을 때 더 나은 UX 고민
+      toast.info('모든 장소를 북마크하셨습니다!');
       return;
     }
+
     setLandmarks(shuffleArray(unbookmarked));
     setStep('SWIPE');
     setCurrentIndex(0);
     setDirection(null);
-  };
+  }, [landmarks, bookmarks, setLandmarks, setStep, setCurrentIndex]);
 
-  const handleReselect = () => {
+  const handleReselect = useCallback(() => {
     setStep('SEARCH');
     clearRegion();
-  };
+  }, [setStep, clearRegion]);
 
   useEffect(() => {
     if (showGuide) {
@@ -153,7 +172,7 @@ export const useLandmarkExplore = () => {
     currentIndex,
     direction,
     showGuide,
-    bookmarkedIds,
+    bookmarks,
     _hasHydrated,
     selectedRegion,
     handleAddressSelect,

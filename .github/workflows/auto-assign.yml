@@ -18,7 +18,7 @@ jobs:
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           assignees: ${{ github.actor }}
-          reviewers: ['jsyoon27', 'JHParrrk', 'YOJIN003']
+          reviewers: 'jsyoon27, JHParrrk, YOJIN003'
           numOfAssignee: 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
