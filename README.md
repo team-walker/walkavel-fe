@@ -28,23 +28,46 @@
 
 ## 🛠 기술 스택
 
-| Category                 | Technology                     |
-| ------------------------ | ------------------------------ |
-| **Framework**            | Next.js 16 (App Router)        |
-| **Language**             | TypeScript                     |
-| **Styling**              | Tailwind CSS 4, PostCSS        |
-| **Package Manager**      | pnpm                           |
-| **Linting & Formatting** | ESLint, Prettier, Stylelint    |
-| **Git Hooks**            | Husky, Commitlint, lint-staged |
+| Category                 | Technology                                     |
+| ------------------------ | ---------------------------------------------- |
+| **Framework**            | Next.js 16 (App Router), React 19              |
+| **Language**             | TypeScript 5                                   |
+| **Auth**                 | Supabase Auth (@supabase/ssr)                  |
+| **State Management**     | Zustand                                        |
+| **Styling**              | Tailwind CSS 4, Radix UI, Lucide React         |
+| **API & Data**           | Axios, Orval (API Code Generation), Zod        |
+| **PWA**                  | @ducanh2912/next-pwa                           |
+| **Animation**            | Framer Motion                                  |
+| **Documentation**        | Storybook                                      |
+| **Testing**              | Jest, React Testing Library, Playwright (E2E)  |
+| **Package Manager**      | pnpm                                           |
+| **Linting & Formatting** | ESLint, Prettier, Stylelint, Husky, Commitlint |
 
 ## 📂 프로젝트 구조
 
 ```bash
-├── .github/          # Github Actions & Templates
-├── app/              # Next.js App Router Pages
-├── lib/              # Utility functions
-├── public/           # Static assets
-└── ...
+├── app/                  # Next.js App Router (Pages, API, Layouts)
+│   ├── (auth)/           # 인증 관련 페이지 (Login, Callback 등)
+│   ├── (main)/           # 메인 서비스 페이지 (Home, Bookmark, MyPage 등)
+│   ├── api/              # API Route Handlers (Geocode 등)
+│   ├── globals.css       # Global Styles
+│   └── layout.tsx        # Root Layout
+├── components/           # 재사용 가능한 UI 컴포넌트
+│   ├── common/           # 공통 컴포넌트 (SplashScreen 등)
+│   ├── home/             # 홈 화면 전용 컴포넌트
+│   ├── layout/           # 레이아웃 관련 (Header, BottomNav)
+│   └── ui/               # Shadcn UI (Base Components)
+├── hooks/                # Custom React Hooks
+├── lib/                  # 유틸리티 및 설정
+│   ├── api/              # Axios Instance & API Clients
+│   └── supabase/         # Supabase Client & Middleware Logic
+├── store/                # Zustand State Stores
+├── types/                # TypeScript Type Definitions (API, Model 등)
+├── constants/            # 공통 상수 및 설정
+├── __tests__/            # Unit & Integration Tests (Jest)
+├── e2e/                  # End-to-End Tests (Playwright)
+├── stories/              # Storybook Stories
+└── public/               # Static Assets & PWA Manifest
 ```
 
 ## 🚀 시작하기
@@ -76,6 +99,19 @@ pnpm dev
 ```bash
 pnpm test
 ```
+
+---
+
+## ✨ 핵심 기능 (Features)
+
+### 📲 Mobile PWA & UI
+
+- **모바일 웹앱 환경**: 홈 화면 추가(A2HS) 지원 및 스탠드얼론 실행 가능
+- **오프라인 지원**: `@ducanh2912/next-pwa`를 통한 서비스 워커 리소스 캐싱
+- **모바일 최적화 UI**:
+  - **Safe Area 대응**: iOS/Android 노치 디자인 및 하단 바 충돌 방지 (`env(safe-area-inset-*)`)
+  - **480px 고정 레이아웃**: 데스크탑에서도 일관된 모바일 경험을 제공하는 중앙 정렬 레이아웃
+- **부드러운 전환**: `framer-motion`과 Next.js `template.tsx`를 결합한 페이지 전환 애니메이션
 
 ---
 
