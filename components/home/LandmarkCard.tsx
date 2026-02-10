@@ -61,7 +61,8 @@ export default function LandmarkCard({
   };
 
   const handleCardClick = () => {
-    if (isTop) {
+    // x축 이동 거리가 일정 수준(5px) 이하인 경우에만 클릭으로 간주합니다.
+    if (isTop && Math.abs(x.get()) < 5) {
       onClick?.(data.contentid);
     }
   };
@@ -138,7 +139,7 @@ export default function LandmarkCard({
             fill
             className="object-cover object-[center_30%]"
             priority={isTop}
-            sizes="(max-width: 768px) 100vw, 500px"
+            sizes="(max-width: 480px) 100vw, 480px"
             quality={85}
           />
         ) : (

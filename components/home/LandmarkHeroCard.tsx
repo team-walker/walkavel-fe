@@ -1,6 +1,7 @@
 'use client';
 
 import { type ClassValue, clsx } from 'clsx';
+import { motion } from 'framer-motion';
 import { MapPin } from 'lucide-react';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
@@ -37,7 +38,7 @@ export default function LandmarkHeroCard({
   style,
 }: LandmarkHeroCardProps) {
   return (
-    <div
+    <motion.div
       className={cn(
         'relative h-full w-full cursor-pointer overflow-hidden rounded-[28px] bg-white select-none',
         className,
@@ -46,12 +47,13 @@ export default function LandmarkHeroCard({
         ...style,
         boxShadow: '0 8px 32px -8px rgba(0, 0, 0, 0.12), 0 0 1px rgba(0, 0, 0, 0.05)',
       }}
-      onClick={onSelect}
+      onTap={onSelect}
     >
       <ImageWithFallback
         src={landmark.image}
         alt={landmark.name}
         fill
+        sizes="(max-width: 480px) 100vw, 480px"
         className="pointer-events-none h-full w-full object-cover object-[center_30%]"
       />
 
@@ -85,6 +87,6 @@ export default function LandmarkHeroCard({
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
