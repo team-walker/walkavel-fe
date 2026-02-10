@@ -188,7 +188,6 @@ export default function ProfileEditPage() {
       }
 
       toast.success('프로필이 성공적으로 저장되었습니다.', {
-        description: '변경된 정보가 안전하게 업데이트되었습니다.',
         icon: <CheckCircle2 className="h-5 w-5 text-[#34C759]" />,
         className: 'bg-white border-2 border-[#F2F2F7] rounded-2xl p-4 shadow-lg',
       });

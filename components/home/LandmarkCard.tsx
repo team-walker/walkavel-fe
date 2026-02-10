@@ -2,9 +2,9 @@
 
 import { motion, PanInfo, useMotionValue, Variants } from 'framer-motion';
 import { MapPin } from 'lucide-react';
-import Image from 'next/image';
 import { useState } from 'react';
 
+import { ImageWithFallback } from '@/components/common/ImageWithFallback';
 import { Card } from '@/components/ui/card';
 import BookmarkIcon from '@/public/images/bookmark.svg';
 import { LandmarkDto } from '@/types/model';
@@ -13,12 +13,12 @@ import { Button } from '../ui/button';
 
 type DIRECTION = 'left' | 'right';
 
-interface LandmarkcardProps {
+interface LandmarkCardProps {
   data: LandmarkDto;
   onSwipe?: (direction: DIRECTION) => void;
   onDragStart?: () => void;
   onClick?: (id: number) => void;
-  onBookmark?: (id: number) => void;
+  onBookmark?: (landmark: LandmarkDto) => void;
   isTop?: boolean;
   isBookmarked?: boolean;
   direction?: DIRECTION | null;
@@ -37,9 +37,8 @@ export default function LandmarkCard({
   direction,
   shouldWiggle,
   isFirstCard,
-}: LandmarkcardProps) {
+}: LandmarkCardProps) {
   const x = useMotionValue(0);
-  const [imageError, setImageError] = useState(false);
 
   const handleDragEnd = (e: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     if (!isTop) return;
@@ -57,7 +56,7 @@ export default function LandmarkCard({
 
   const handleBookmarkClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    onBookmark?.(data.contentid);
+    onBookmark?.(data);
     console.log('Bookmark clicked:', data.contentid);
   };
 
@@ -102,6 +101,8 @@ export default function LandmarkCard({
     }),
   };
 
+  const imageUrl = data.firstimage || data.firstimage2;
+
   return (
     <motion.div
       data-testid="landmark-card"
@@ -130,20 +131,19 @@ export default function LandmarkCard({
       className="flex h-full flex-col"
     >
       <Card className="pointer-events-none relative flex h-full w-full flex-col overflow-hidden rounded-[28px] border-none p-0 shadow-[0px_8px_32px_-8px_rgba(0,0,0,0.12),0px_0px_1px_0px_rgba(0,0,0,0.05)] transition-shadow">
-        {!imageError && (data.firstimage || data.firstimage2) ? (
-          <Image
-            src={data.firstimage || data.firstimage2 || ''}
+        {imageUrl ? (
+          <ImageWithFallback
+            src={imageUrl}
             alt={data.title}
             fill
             className="object-cover object-[center_30%]"
             priority={isTop}
             sizes="(max-width: 768px) 100vw, 500px"
             quality={85}
-            onError={() => setImageError(true)}
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center bg-zinc-100">
-            <span className="text-sm font-medium text-zinc-400">이미지를 불러올 수 없습니다</span>
+            <span className="text-sm font-medium text-zinc-400">이미지가 없습니다</span>
           </div>
         )}
         <div className="absolute inset-0 bg-linear-to-b from-transparent via-[rgba(0,0,0,0.2)] via-50% to-[rgba(0,0,0,0.8)]" />

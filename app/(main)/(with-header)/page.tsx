@@ -1,7 +1,7 @@
 'use client';
 
 import { AnimatePresence } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import SplashScreen from '@/components/common/SplashScreen';
 import AddressSearch from '@/components/home/AddressSearch';
@@ -21,7 +21,7 @@ export default function MainPage() {
     currentIndex,
     direction,
     showGuide,
-    bookmarkedIds,
+    bookmarks,
     _hasHydrated,
     selectedRegion,
     handleAddressSelect,
@@ -52,6 +52,13 @@ export default function MainPage() {
     console.log('Navigate to:', contentId);
   };
 
+  const visibleLandmarks = useMemo(() => {
+    const sliceCount = currentIndex === 0 ? 1 : 2;
+    return landmarks.slice(currentIndex, currentIndex + sliceCount).reverse();
+  }, [landmarks, currentIndex]);
+
+  const bookmarkedIdSet = useMemo(() => new Set(bookmarks.map((b) => b.contentid)), [bookmarks]);
+
   return (
     <div className="h-full w-full bg-white select-none">
       <AnimatePresence>
@@ -69,27 +76,24 @@ export default function MainPage() {
               <div className="flex h-full w-full flex-col p-6">
                 <div className="relative flex-1">
                   <AnimatePresence mode="popLayout" custom={direction}>
-                    {landmarks
-                      .slice(currentIndex, currentIndex + (currentIndex === 0 ? 1 : 2))
-                      .reverse()
-                      .map((landmark, index, arr) => {
-                        const isTop = index === arr.length - 1;
-                        return (
-                          <LandmarkCard
-                            key={landmark.contentid}
-                            data={landmark}
-                            onSwipe={handleSwipe}
-                            onDragStart={handleDismissGuide}
-                            onClick={handleCardClick}
-                            onBookmark={handleBookmark}
-                            isTop={isTop}
-                            isBookmarked={bookmarkedIds.has(landmark.contentid)}
-                            direction={direction}
-                            shouldWiggle={isTop && showGuide}
-                            isFirstCard={currentIndex === 0}
-                          />
-                        );
-                      })}
+                    {visibleLandmarks.map((landmark, index, arr) => {
+                      const isTop = index === arr.length - 1;
+                      return (
+                        <LandmarkCard
+                          key={landmark.contentid}
+                          data={landmark}
+                          onSwipe={handleSwipe}
+                          onDragStart={handleDismissGuide}
+                          onClick={handleCardClick}
+                          onBookmark={handleBookmark}
+                          isTop={isTop}
+                          isBookmarked={bookmarkedIdSet.has(landmark.contentid)}
+                          direction={direction}
+                          shouldWiggle={isTop && showGuide}
+                          isFirstCard={currentIndex === 0}
+                        />
+                      );
+                    })}
                   </AnimatePresence>
                 </div>
 
