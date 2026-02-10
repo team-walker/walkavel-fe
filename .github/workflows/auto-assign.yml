@@ -57,7 +57,7 @@ jobs:
         with:
           repo-token: ${{ github.token }}
           assignees: ${{ github.actor }}
-          reviewers: ['jsyoon27', 'JHParrrk', 'YOJIN003']
+          reviewers: 'jsyoon27, JHParrrk, YOJIN003'
           numOfAssignee: 1
 
       - name: 'Request Review from Gemini'
