@@ -37,16 +37,17 @@ export default function MyPage() {
         .single();
 
       if (!error && data) {
+        const metadata = user.user_metadata;
+        const nicknameFallback = metadata?.full_name || metadata?.name || '사용자';
+        const avatarFallback = metadata?.avatar_url || metadata?.picture || '';
+
         const latestProfile = {
-          nickname: data.nickname || initialNickname,
-          avatar_url: data.avatar_url || initialAvatar,
+          nickname: data.nickname || nicknameFallback,
+          avatar_url: data.avatar_url || avatarFallback,
         };
         setProfile(latestProfile);
 
-        if (
-          data.nickname !== userMetadata?.full_name ||
-          data.avatar_url !== userMetadata?.avatar_url
-        ) {
+        if (data.nickname !== metadata?.full_name || data.avatar_url !== metadata?.avatar_url) {
           const { data: authData } = await supabase.auth.updateUser({
             data: {
               nickname: data.nickname,
@@ -60,14 +61,7 @@ export default function MyPage() {
     };
 
     fetchLatestProfile();
-  }, [
-    user,
-    setUser,
-    initialNickname,
-    initialAvatar,
-    userMetadata?.full_name,
-    userMetadata?.avatar_url,
-  ]);
+  }, [user, setUser]);
 
   const nickname = profile.nickname;
   const avatarUrl = profile.avatar_url;
@@ -120,7 +114,9 @@ export default function MyPage() {
           </Button>
 
           <div className="mt-6 text-center">
-            <p className="text-[13px] text-gray-400">버전 1.0.0</p>
+            <p className="text-[13px] text-gray-400">
+              버전 {process.env.NEXT_PUBLIC_APP_VERSION || '1.0.0'}
+            </p>
           </div>
         </div>
       </div>

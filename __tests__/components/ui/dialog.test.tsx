@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 
 import {
   Dialog,
@@ -63,8 +63,8 @@ describe('Dialog Component', () => {
 
     // Content should eventually disappear
     // Using queryByText since it will be removed
-    setTimeout(() => {
+    await waitFor(() => {
       expect(screen.queryByText('Visible Dialog')).not.toBeInTheDocument();
-    }, 100);
+    });
   });
 });

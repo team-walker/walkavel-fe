@@ -44,6 +44,7 @@ export default function ProfileEditPage() {
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const previewUrlRef = useRef<string | null>(null);
 
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileSchema),
@@ -52,6 +53,21 @@ export default function ProfileEditPage() {
       avatar_url: '',
     },
   });
+
+  useEffect(() => {
+    return () => {
+      if (previewUrlRef.current) {
+        URL.revokeObjectURL(previewUrlRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (previewUrlRef.current && avatarUrl !== previewUrlRef.current) {
+      URL.revokeObjectURL(previewUrlRef.current);
+      previewUrlRef.current = null;
+    }
+  }, [avatarUrl]);
 
   useEffect(() => {
     if (!user) {
@@ -95,7 +111,13 @@ export default function ProfileEditPage() {
     const file = e.target.files?.[0];
     if (!file || !user) return;
 
+    if (previewUrlRef.current) {
+      URL.revokeObjectURL(previewUrlRef.current);
+      previewUrlRef.current = null;
+    }
+
     const objectUrl = URL.createObjectURL(file);
+    previewUrlRef.current = objectUrl;
     setAvatarUrl(objectUrl);
 
     try {
