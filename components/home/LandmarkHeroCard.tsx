@@ -62,12 +62,12 @@ export default function LandmarkHeroCard({
           e.stopPropagation();
           onToggleBookmark?.(e);
         }}
-        className="absolute top-5 right-6 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-white/95 shadow-[0_10px_15px_0_rgba(0,0,0,0.1),0_4_6px_0_rgba(0,0,0,0.1)] transition-all active:scale-95"
+        className="absolute top-5 right-6 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-white/95 shadow-[0_10px_15px_0_rgba(0,0,0,0.1),0_4_6px_0_rgba(0,0,0,0.1)] transition-all hover:bg-white/70 active:scale-95"
       >
         <BookmarkIcon
           className={cn(
-            'h-5 w-5 transition-colors',
-            isBookmarked ? 'fill-[#3182F6] text-[#3182F6]' : 'text-[#99A1AF]',
+            'stroke-2.5 h-5 w-5 transition-colors',
+            isBookmarked ? 'fill-[#3182F6] text-[#3182F6]' : 'text-gray-700',
           )}
         />
       </Button>

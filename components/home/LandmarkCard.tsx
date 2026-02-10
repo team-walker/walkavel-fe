@@ -5,6 +5,7 @@ import { MapPin } from 'lucide-react';
 
 import { ImageWithFallback } from '@/components/common/ImageWithFallback';
 import { Card } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 import BookmarkIcon from '@/public/images/bookmark.svg';
 import { LandmarkDto } from '@/types/model';
 
@@ -150,12 +151,13 @@ export default function LandmarkCard({
         <div className="pointer-events-auto absolute top-5 right-6 z-20">
           <Button
             onClick={handleBookmarkClick}
-            className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-white/95 p-0 shadow-[0_10px_15px_0_rgba(0,0,0,0.1),0_4_6px_0_rgba(0,0,0,0.1)] transition-transform active:scale-95"
+            className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-white/95 p-0 shadow-[0_10px_15px_0_rgba(0,0,0,0.1),0_4_6px_0_rgba(0,0,0,0.1)] transition-transform hover:bg-white/70 active:scale-95"
           >
             <BookmarkIcon
-              className={`h-5 w-5 transition-colors ${
-                isBookmarked ? 'fill-[#3182F6] text-[#3182F6]' : 'text-[#99A1AF]'
-              }`}
+              className={cn(
+                'stroke-2.5 h-5 w-5 transition-colors',
+                isBookmarked ? 'fill-[#3182F6] text-[#3182F6]' : 'text-gray-700',
+              )}
             />
           </Button>
         </div>
