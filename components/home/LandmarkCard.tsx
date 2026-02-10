@@ -2,7 +2,6 @@
 
 import { motion, PanInfo, useMotionValue, Variants } from 'framer-motion';
 import { MapPin } from 'lucide-react';
-import { useState } from 'react';
 
 import { ImageWithFallback } from '@/components/common/ImageWithFallback';
 import { Card } from '@/components/ui/card';

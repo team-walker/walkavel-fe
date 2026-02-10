@@ -127,7 +127,7 @@ export const useLandmarkExplore = () => {
 
       toggleBookmark(landmark);
     },
-    [user, bookmarks, toggleBookmark, setPendingAction, router],
+    [user, toggleBookmark, setPendingAction, router],
   );
 
   const handleReset = useCallback(() => {
