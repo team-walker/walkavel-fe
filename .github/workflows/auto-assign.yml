@@ -5,15 +5,15 @@ on:
     types: [opened, reopened, ready_for_review]
 
 jobs:
-  run:
+  auto-assign-main:
+    if: github.base_ref == 'main'
     runs-on: ubuntu-latest
     permissions:
       contents: read
       issues: write
       pull-requests: write
     steps:
-      - name: 'Auto PR Assignment & Reviewers (for main)'
-        if: github.base_ref == 'main'
+      - name: 'Auto PR Assignment & Reviewers'
         uses: pozil/auto-assign-issue@v1
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
@@ -25,8 +25,48 @@ jobs:
           GH_REPO: ${{ github.repository }}
           PR_NUMBER: ${{ github.event.number }}
 
-      - name: 'Request Review from Gemini (for develop)'
-        if: github.base_ref == 'develop'
+      - name: 'Request Review from Gemini'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            try {
+              const botName = 'gemini-code-assist[bot]';
+              console.log(`🤖 Requesting review from: ${botName}`);
+
+              await github.rest.pulls.requestReviewers({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: context.payload.pull_request.number,
+                reviewers: [botName]
+              });
+
+              console.log('✅ Gemini bot added as a reviewer');
+            } catch (error) {
+              console.log('❌ Failed to add Gemini reviewer. Check if the App is installed.');
+              console.log('Error:', error.message);
+            }
+
+  auto-assign-develop:
+    if: github.base_ref == 'develop'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: write
+    steps:
+      - name: 'Auto PR Assignment'
+        uses: pozil/auto-assign-issue@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          assignees: ${{ github.actor }}
+          numOfAssignee: 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.number }}
+
+      - name: 'Request Review from Gemini'
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
