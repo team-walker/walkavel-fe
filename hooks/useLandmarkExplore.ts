@@ -7,13 +7,12 @@ import { toast } from 'sonner';
 import { STORAGE_KEYS } from '@/constants/types';
 import { shuffleArray } from '@/lib/shuffle';
 import { useAuthStore } from '@/store/authStore';
+import { useBookmarkStore } from '@/store/bookmarkStore';
 import { useExploreStore } from '@/store/exploreStore';
 import { useRegionStore } from '@/store/regionStore';
 import { AddressResult } from '@/types/address';
 import { getAPIDocumentation } from '@/types/api';
 import { LandmarkDto } from '@/types/model';
-
-import { useBookmarkStore } from '../store/bookmarkStore';
 
 export const useLandmarkExplore = () => {
   const router = useRouter();
