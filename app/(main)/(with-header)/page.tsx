@@ -10,6 +10,7 @@ import LandmarkCard from '@/components/home/LandmarkCard';
 import Overlay from '@/components/home/Overlay';
 import { useLandmarkExplore } from '@/hooks/useLandmarkExplore';
 import { useSplashStore } from '@/store/splash';
+import { LandmarkDto } from '@/types/model';
 
 export default function MainPage() {
   const { isVisible, hideSplash } = useSplashStore();
@@ -57,7 +58,10 @@ export default function MainPage() {
     return landmarks.slice(currentIndex, currentIndex + sliceCount).reverse();
   }, [landmarks, currentIndex]);
 
-  const bookmarkedIdSet = useMemo(() => new Set(bookmarks.map((b) => b.contentid)), [bookmarks]);
+  const bookmarkedIdSet = useMemo(
+    () => new Set(bookmarks.map((b: LandmarkDto) => b.contentid)),
+    [bookmarks],
+  );
 
   return (
     <div className="h-full w-full bg-white select-none">
