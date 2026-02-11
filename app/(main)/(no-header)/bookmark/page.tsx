@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 
 import { BookmarkItem } from '@/components/bookmark/BookmarkItem';
 import EmptyView from '@/components/bookmark/EmptyView';
+import { ROUTES } from '@/constants/navigation';
 import { useBookmarkStore } from '@/store/bookmarkStore';
 
 export default function BookmarkPage() {
@@ -17,7 +18,7 @@ export default function BookmarkPage() {
   }, [fetchBookmarks]);
 
   const onDeleteBookmark = (id: number) => removeBookmark(id);
-  const navigateToDetail = (id: number) => router.push(`/landmark/${id}`);
+  const navigateToDetail = (id: number) => router.push(ROUTES.LANDMARK_DETAIL(id));
 
   if (isLoading && bookmarks.length === 0) {
     return (
@@ -44,10 +45,7 @@ export default function BookmarkPage() {
         <EmptyView />
       ) : (
         <div className="space-y-3 pb-24">
-          <AnimatePresence
-            mode="popLayout"
-            initial={false} // [개선 1] 처음 렌더링 시에는 애니메이션을 생략하여 불필요한 움직임 방지
-          >
+          <AnimatePresence mode="popLayout" initial={false}>
             {bookmarks.map((landmark) => (
               <BookmarkItem
                 key={landmark.contentid}

@@ -22,17 +22,16 @@ export const BookmarkItem = memo(function BookmarkItem({
 
   return (
     <motion.div
-      layout // 리스트 재정렬 애니메이션 활성화
+      layout
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{
         opacity: 0,
-        x: -200, // 왼쪽으로 사라짐
+        x: -200,
         transition: { duration: 0.2 },
       }}
       className="relative overflow-hidden rounded-4xl bg-white"
     >
-      {/* 배경 레이어 (삭제 아이콘) */}
       <motion.div
         style={{ opacity }}
         className="absolute inset-0.5 flex items-center justify-end rounded-[inherit] bg-red-400 px-8"
@@ -40,7 +39,6 @@ export const BookmarkItem = memo(function BookmarkItem({
         <TrashIcon className="text-white" size={22} />
       </motion.div>
 
-      {/* 실질적인 카드 컨텐츠 */}
       <motion.div
         layout
         style={{ x }}

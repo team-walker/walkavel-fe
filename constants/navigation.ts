@@ -10,6 +10,13 @@ export interface NavItems {
   icon: FC<SVGProps<SVGSVGElement>>;
 }
 
+export const ROUTES = {
+  HOME: '/',
+  BOOKMARK: '/bookmark',
+  MYPAGE: '/mypage',
+  LANDMARK_DETAIL: (id: number | string) => `/landmark/${id}`,
+} as const;
+
 export const NAV_ITEMS: NavItems[] = [
   {
     href: '/',

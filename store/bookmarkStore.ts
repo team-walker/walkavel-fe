@@ -2,6 +2,7 @@ import { toast } from 'sonner';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
+import { STORAGE_KEYS } from '@/constants/types';
 import { getAPIDocumentation } from '@/types/api';
 import { LandmarkDto, LandmarkSummaryDto } from '@/types/model';
 
@@ -9,14 +10,13 @@ interface BookmarkState {
   bookmarks: LandmarkDto[];
   isLoading: boolean;
   fetchBookmarks: () => Promise<void>;
-  addBookmark: (landmark: LandmarkDto) => void;
-  removeBookmark: (id: number) => void;
-  toggleBookmark: (landmark: LandmarkDto) => void;
+  addBookmark: (landmark: LandmarkDto) => Promise<void>;
+  removeBookmark: (id: number) => Promise<void>;
+  toggleBookmark: (landmark: LandmarkDto) => Promise<void>;
   isBookmarked: (id: number) => boolean;
   clearBookmarks: () => void;
 }
 
-// LandmarkSummaryDto를 LandmarkDto로 변환하는 헬퍼 함수
 const mapSummaryToDto = (summary: LandmarkSummaryDto): LandmarkDto => {
   return {
     contentid: summary.contentId,
@@ -35,13 +35,12 @@ export const useBookmarkStore = create<BookmarkState>()(
       bookmarks: [],
       isLoading: false,
       fetchBookmarks: async () => {
-        if (get().bookmarks.length > 0) return; // 이미 북마크가 있으면 다시 불러오지 않음
+        if (get().isLoading) return;
         const { bookmarkControllerGetBookmarks } = getAPIDocumentation();
         set({ isLoading: true });
 
         try {
           const response = await bookmarkControllerGetBookmarks({ offset: 0 });
-          // 유효한 랜드마크 데이터만 추출 및 변환
           const validBookmarks = response
             .map((bookmark) => bookmark.landmark)
             .filter((l): l is LandmarkSummaryDto => l !== null)
@@ -55,9 +54,10 @@ export const useBookmarkStore = create<BookmarkState>()(
         }
       },
       addBookmark: async (landmark) => {
+        if (get().isBookmarked(landmark.contentid)) return;
+
         const { bookmarkControllerAddBookmark } = getAPIDocumentation();
 
-        // 낙관적 업데이트: 서버 요청 전 미리 UI 반영
         set((state) => ({ bookmarks: [landmark, ...state.bookmarks] }));
 
         try {
@@ -66,7 +66,6 @@ export const useBookmarkStore = create<BookmarkState>()(
           console.error('Failed to add bookmark:', error);
           toast.error('북마크 추가에 실패했습니다.');
 
-          // 실패 시 롤백
           set((state) => ({
             bookmarks: state.bookmarks.filter((b) => b.contentid !== landmark.contentid),
           }));
@@ -76,7 +75,6 @@ export const useBookmarkStore = create<BookmarkState>()(
         const { bookmarkControllerRemoveBookmark } = getAPIDocumentation();
         const previousBookmarks = get().bookmarks;
 
-        // 낙관적 업데이트: 서버 요청 전 미리 UI 반영
         set((state) => ({
           bookmarks: state.bookmarks.filter((b) => b.contentid !== id),
         }));
@@ -87,7 +85,6 @@ export const useBookmarkStore = create<BookmarkState>()(
           console.error('Failed to remove bookmark:', error);
           toast.error('북마크 해제에 실패했습니다.');
 
-          // 실패 시 롤백
           set({ bookmarks: previousBookmarks });
         }
       },
@@ -105,7 +102,7 @@ export const useBookmarkStore = create<BookmarkState>()(
       clearBookmarks: () => set({ bookmarks: [] }),
     }),
     {
-      name: 'walkavel-bookmark-storage',
+      name: STORAGE_KEYS.BOOKMARK_STORAGE,
     },
   ),
 );
