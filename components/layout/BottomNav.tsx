@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 
 import { NAV_ITEMS } from '@/constants/navigation';
-import { cn } from '@/lib/cn';
+import { cn } from '@/lib/utils';
 import { useAuthStore } from '@/store/authStore';
 
 export default function BottomNav() {

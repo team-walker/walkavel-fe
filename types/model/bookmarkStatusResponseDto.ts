@@ -6,7 +6,7 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export type TourControllerGetLandmarksByRegionParams = {
-  sido: string;
-  sigugun: string;
-};
+export interface BookmarkStatusResponseDto {
+  /** 북마크 여부 */
+  isBookmarked: boolean;
+}

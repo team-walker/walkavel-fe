@@ -6,7 +6,10 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export type TourControllerGetLandmarksByRegionParams = {
-  sido: string;
-  sigugun: string;
-};
+export interface CreateBookmarkDto {
+  /**
+   * 관광지 콘텐츠 ID
+   * @minimum 1
+   */
+  contentId: number;
+}
