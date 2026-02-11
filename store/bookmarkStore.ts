@@ -49,6 +49,7 @@ export const useBookmarkStore = create<BookmarkState>()(
           set({ bookmarks: validBookmarks });
         } catch (error) {
           console.error('Failed to fetch bookmarks:', error);
+          toast.error('북마크를 불러오는 데 실패했습니다.');
         } finally {
           set({ isLoading: false });
         }
@@ -67,16 +68,18 @@ export const useBookmarkStore = create<BookmarkState>()(
           toast.error('북마크 추가에 실패했습니다.');
 
           set((state) => ({
-            bookmarks: state.bookmarks.filter((b) => b.contentid !== landmark.contentid),
+            bookmarks: state.bookmarks.filter(
+              (bookmark) => bookmark.contentid !== landmark.contentid,
+            ),
           }));
         }
       },
       removeBookmark: async (id) => {
         const { bookmarkControllerRemoveBookmark } = getAPIDocumentation();
-        const previousBookmarks = get().bookmarks;
+        const previousBookmarks = [...get().bookmarks];
 
         set((state) => ({
-          bookmarks: state.bookmarks.filter((b) => b.contentid !== id),
+          bookmarks: state.bookmarks.filter((bookmark) => bookmark.contentid !== id),
         }));
 
         try {
@@ -97,7 +100,7 @@ export const useBookmarkStore = create<BookmarkState>()(
         }
       },
       isBookmarked: (id) => {
-        return get().bookmarks.some((b) => b.contentid === id);
+        return get().bookmarks.some((bookmark) => bookmark.contentid === id);
       },
       clearBookmarks: () => set({ bookmarks: [] }),
     }),
