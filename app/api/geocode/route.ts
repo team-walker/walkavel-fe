@@ -39,12 +39,24 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'Query is required.' }, { status: 400 });
   }
 
-  const clientId = process.env.NAVER_CLIENT_ID;
+  const clientId = process.env.NEXT_PUBLIC_NAVER_MAPS_CLIENT_ID || process.env.NAVER_CLIENT_ID;
   const clientSecret = process.env.NAVER_CLIENT_SECRET;
 
   if (!clientId || !clientSecret) {
-    console.error('Naver API credentials are not set in environment variables.');
-    return NextResponse.json({ error: 'Server configuration error.' }, { status: 500 });
+    const missing = [];
+    if (!clientId) missing.push('NAVER_CLIENT_ID');
+    if (!clientSecret) missing.push('NAVER_CLIENT_SECRET');
+
+    console.error('Naver API configuration error. Missing variables:', missing.join(', '));
+
+    return NextResponse.json(
+      {
+        error: 'Server configuration error.',
+        details: `Missing environment variables: ${missing.join(', ')}`,
+        timestamp: new Date().toISOString(),
+      },
+      { status: 500 },
+    );
   }
 
   const SEOUL_COORDINATE = '126.978388,37.566610';
