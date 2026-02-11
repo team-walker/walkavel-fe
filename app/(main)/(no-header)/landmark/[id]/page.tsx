@@ -45,12 +45,12 @@ export default function LandmarkDetailPage() {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center bg-white p-6 text-center">
         <p className="mb-4 text-gray-500">장소 정보를 찾을 수 없습니다.</p>
-        <button
+        <Button
           onClick={handleBack}
           className="rounded-full bg-blue-500 px-6 py-2 font-semibold text-white"
         >
           뒤로 가기
-        </button>
+        </Button>
       </div>
     );
   }
@@ -59,6 +59,9 @@ export default function LandmarkDetailPage() {
 
   const handleOpenMap = () => {
     const { title, mapy, mapx } = detail;
+
+    if (mapy == null || mapx == null) return;
+
     const url = `https://map.naver.com/v5/search/${encodeURIComponent(title)}?c=${mapx},${mapy},15,0,0,0,dh`;
     window.open(url, '_blank');
   };

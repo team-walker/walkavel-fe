@@ -84,7 +84,7 @@ export function LandmarkImageGallery({ images, title, onBack }: LandmarkImageGal
             >
               <ImageWithFallback
                 src={images[currentSlide]}
-                alt=""
+                alt={`${title} 이미지 ${currentSlide + 1}`}
                 fill
                 className="object-cover"
                 priority

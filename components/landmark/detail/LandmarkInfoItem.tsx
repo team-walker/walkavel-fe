@@ -1,3 +1,6 @@
+'use client';
+
+import DOMPurify from 'dompurify';
 import { ReactNode } from 'react';
 
 interface LandmarkInfoItemProps {
@@ -20,7 +23,7 @@ export function LandmarkInfoItem({ icon, label, content, isHtml }: LandmarkInfoI
         {isHtml ? (
           <div
             className="text-[15px] leading-relaxed font-medium break-all whitespace-pre-wrap text-gray-900"
-            dangerouslySetInnerHTML={{ __html: content }}
+            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(content) }}
           />
         ) : (
           <div className="text-[15px] font-medium text-gray-900">{content}</div>
