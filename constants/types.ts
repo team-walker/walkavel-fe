@@ -6,7 +6,7 @@ export const STORAGE_KEYS = {
 } as const;
 
 export const SWIPE_CONFIG = {
-  THRESHOLD: -100, // 삭제 트리거 거리
-  VELOCITY: -400, // 삭제 트리거 속도
-  VISIBLE_RANGE: [0, -60], // 배경 아이콘 표시 범위
+  THRESHOLD: -100,
+  VELOCITY: -400,
+  VISIBLE_RANGE: [0, -60],
 } as const;

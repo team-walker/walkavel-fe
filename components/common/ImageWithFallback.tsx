@@ -11,6 +11,12 @@ import Logo from '@/public/images/foot-logo.svg';
 
 export const ImageWithFallback = ({ src, alt, className, ...props }: ImageWithFallbackProps) => {
   const [error, setError] = useState(false);
+  const [prevSrc, setPrevSrc] = useState(src);
+
+  if (src !== prevSrc) {
+    setPrevSrc(src);
+    setError(false);
+  }
 
   if (!src || error) {
     return (
