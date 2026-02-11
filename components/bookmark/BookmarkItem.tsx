@@ -1,0 +1,77 @@
+import { motion } from 'framer-motion';
+import { TrashIcon } from 'lucide-react';
+import { memo } from 'react';
+
+import { ImageWithFallback } from '@/components/common/ImageWithFallback';
+import { useSwipeAction } from '@/hooks/useSwipeAction';
+import ChevronRightIcon from '@/public/images/chevron-right.svg';
+import { LandmarkDto } from '@/types/model';
+
+export const BookmarkItem = memo(function BookmarkItem({
+  landmark,
+  onRemove,
+  onSelect,
+}: {
+  landmark: LandmarkDto;
+  onRemove: (id: number) => void;
+  onSelect: (id: number) => void;
+}) {
+  const { x, opacity, isDragging, DragStart, DragEnd } = useSwipeAction(() =>
+    onRemove(landmark.contentid),
+  );
+
+  return (
+    <motion.div
+      layout // 리스트 재정렬 애니메이션 활성화
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{
+        opacity: 0,
+        x: -200, // 왼쪽으로 사라짐
+        transition: { duration: 0.2 },
+      }}
+      className="relative overflow-hidden rounded-4xl bg-white"
+    >
+      {/* 배경 레이어 (삭제 아이콘) */}
+      <motion.div
+        style={{ opacity }}
+        className="absolute inset-0.5 flex items-center justify-end rounded-[inherit] bg-red-400 px-8"
+      >
+        <TrashIcon className="text-white" size={22} />
+      </motion.div>
+
+      {/* 실질적인 카드 컨텐츠 */}
+      <motion.div
+        layout
+        style={{ x }}
+        drag="x"
+        dragConstraints={{ left: -300, right: 0 }}
+        dragElastic={{ left: 0.1, right: 0 }}
+        dragDirectionLock
+        onDragStart={DragStart}
+        onDragEnd={DragEnd}
+        onClick={() => {
+          if (!isDragging.current) onSelect(landmark.contentid);
+        }}
+        className="relative z-10 flex cursor-pointer touch-pan-y items-center space-x-4 rounded-4xl border border-gray-100 bg-white p-4 shadow-sm transition-colors active:bg-gray-50"
+      >
+        <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-3xl border border-gray-100">
+          <ImageWithFallback
+            src={landmark.firstimage || ''}
+            alt={landmark.title}
+            width={80}
+            height={80}
+            className="h-full w-full object-cover"
+          />
+        </div>
+        <div className="min-w-0 flex-1">
+          <h3 className="mb-1 truncate text-[17px] font-bold text-gray-900">{landmark.title}</h3>
+          <p className="truncate text-[14px] text-gray-500">
+            {landmark.addr1 || '상세 주소 정보가 없습니다.'}
+          </p>
+        </div>
+        <ChevronRightIcon width={22} height={22} className="shrink-0 text-gray-300" />
+      </motion.div>
+    </motion.div>
+  );
+});

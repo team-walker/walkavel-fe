@@ -35,6 +35,7 @@ export const useBookmarkStore = create<BookmarkState>()(
       bookmarks: [],
       isLoading: false,
       fetchBookmarks: async () => {
+        if (get().bookmarks.length > 0) return; // 이미 북마크가 있으면 다시 불러오지 않음
         const { bookmarkControllerGetBookmarks } = getAPIDocumentation();
         set({ isLoading: true });
 
@@ -57,7 +58,7 @@ export const useBookmarkStore = create<BookmarkState>()(
         const { bookmarkControllerAddBookmark } = getAPIDocumentation();
 
         // 낙관적 업데이트: 서버 요청 전 미리 UI 반영
-        set((state) => ({ bookmarks: [...state.bookmarks, landmark] }));
+        set((state) => ({ bookmarks: [landmark, ...state.bookmarks] }));
 
         try {
           await bookmarkControllerAddBookmark({ contentId: landmark.contentid });
