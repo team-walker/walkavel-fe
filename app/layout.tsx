@@ -1,6 +1,7 @@
 import './globals.css';
 import 'pretendard/dist/web/static/pretendard.css';
 
+import { Analytics } from '@vercel/analytics/next';
 import type { Metadata, Viewport } from 'next';
 import { Inter, Outfit } from 'next/font/google';
 import Script from 'next/script';
@@ -50,6 +51,7 @@ export default function RootLayout({
     <html lang="ko-KR">
       <body className={`${inter.variable} ${outfit.variable} font-sans antialiased`}>
         <AuthProvider>{children}</AuthProvider>
+        <Analytics />
         <Toaster position="top-center" />
         <Script
           strategy="afterInteractive"
