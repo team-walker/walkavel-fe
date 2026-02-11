@@ -101,13 +101,13 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'http',
-        hostname: 'k.kakaocdn.net',
+        hostname: '*.kakaocdn.net',
         port: '',
         pathname: '/**',
       },
       {
         protocol: 'https',
-        hostname: 'k.kakaocdn.net',
+        hostname: '*.kakaocdn.net',
         port: '',
         pathname: '/**',
       },
