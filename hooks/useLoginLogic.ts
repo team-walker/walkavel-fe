@@ -20,11 +20,14 @@ export const useLoginLogic = () => {
     setLoading(true);
     setError(null);
 
+    const siteUrl =
+      typeof window !== 'undefined' ? window.location.origin : 'https://walkavel.vercel.app';
+
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
         options: {
-          redirectTo: `${window.location.origin}/callback?returnTo=${encodeURIComponent(returnTo || '/')}`,
+          redirectTo: `${siteUrl}/callback?returnTo=${encodeURIComponent(returnTo || '/')}`,
           queryParams: {
             access_type: 'offline',
             prompt: 'consent',

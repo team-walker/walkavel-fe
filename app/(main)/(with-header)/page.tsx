@@ -9,6 +9,7 @@ import AddressSearch from '@/components/home/AddressSearch';
 import FinishSection from '@/components/home/FinishSection';
 import LandmarkCard from '@/components/home/LandmarkCard';
 import Overlay from '@/components/home/Overlay';
+import { ROUTES } from '@/constants/navigation';
 import { useLandmarkExplore } from '@/hooks/useLandmarkExplore';
 import { useSplashStore } from '@/store/splash';
 import { LandmarkDto } from '@/types/model';
@@ -51,7 +52,7 @@ export default function MainPage() {
   }, [selectedRegion, handleAddressSelect, _hasHydrated, landmarks.length]);
 
   const handleCardClick = (contentId: number) => {
-    router.push(`/landmark/${contentId}`);
+    router.push(ROUTES.LANDMARK_DETAIL(contentId));
   };
 
   const visibleLandmarks = useMemo(() => {

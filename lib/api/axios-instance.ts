@@ -6,7 +6,10 @@ import { useAuthStore } from '@/store/authStore';
 const DEFAULT_TIMEOUT = 10000;
 
 export const axiosInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000',
+  baseURL:
+    process.env.NODE_ENV === 'development'
+      ? 'http://localhost:3001'
+      : process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001',
   timeout: DEFAULT_TIMEOUT,
   headers: {
     'Content-Type': 'application/json',
