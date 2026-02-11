@@ -52,7 +52,7 @@ export default function RootLayout({
         <AuthProvider>{children}</AuthProvider>
         <Toaster position="top-center" />
         <Script
-          strategy="afterInteractive" // 명시적으로 설정
+          strategy="afterInteractive"
           src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=${process.env.NEXT_PUBLIC_NAVER_MAPS_CLIENT_ID}`}
         />
       </body>
