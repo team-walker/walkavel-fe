@@ -50,6 +50,7 @@ export const useBookmarkStore = create<BookmarkState>()(
         } catch (error) {
           console.error('Failed to fetch bookmarks:', error);
         } finally {
+          set({ isLoading: false });
         }
       },
       addBookmark: async (landmark) => {
