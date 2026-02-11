@@ -90,6 +90,9 @@ devDependencies:
   '@commitlint/config-conventional':
     specifier: ^20.3.1
     version: 20.3.1
+  '@next/env':
+    specifier: ^16.1.6
+    version: 16.1.6
   '@playwright/test':
     specifier: ^1.58.2
     version: 1.58.2
@@ -2755,6 +2758,10 @@ packages:
 
   /@next/env@16.1.4:
     resolution: {integrity: sha512-gkrXnZyxPUy0Gg6SrPQPccbNVLSP3vmW8LU5dwEttEEC1RwDivk8w4O+sZIjFvPrSICXyhQDCG+y3VmjlJf+9A==}
+
+  /@next/env@16.1.6:
+    resolution: {integrity: sha512-N1ySLuZjnAtN3kFnwhAwPvZah8RJxKasD7x1f8shFqhncnWZn4JMfg37diLNuoHsLAlrDfM3g4mawVdtAG8XLQ==}
+    dev: true
 
   /@next/eslint-plugin-next@16.1.4:
     resolution: {integrity: sha512-38WMjGP8y+1MN4bcZFs+GTcBe0iem5GGTzFE5GWW/dWdRKde7LOXH3lQT2QuoquVWyfl2S0fQRchGmeacGZ4Wg==}
