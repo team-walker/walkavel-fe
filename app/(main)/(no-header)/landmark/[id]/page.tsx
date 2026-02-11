@@ -99,11 +99,17 @@ export default function LandmarkDetailPage() {
             <div className="mb-8 rounded-4xl bg-linear-to-br from-[#3182F6]/5 to-[#3182F6]/10">
               <div className="mb-4 overflow-hidden rounded-3xl bg-white shadow-sm">
                 <div className="relative h-50">
-                  <NaverMap
-                    lat={Number(detail.mapy)}
-                    lng={Number(detail.mapx)}
-                    className="h-full w-full"
-                  />
+                  {detail.mapy != null && detail.mapx != null ? (
+                    <NaverMap
+                      lat={Number(detail.mapy)}
+                      lng={Number(detail.mapx)}
+                      className="h-full w-full"
+                    />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center bg-gray-100 text-sm text-gray-500">
+                      위치 정보가 없습니다.
+                    </div>
+                  )}
                   <Button
                     onClick={handleOpenMap}
                     aria-label="네이버 지도에서 보기 (새 창 열림)"
