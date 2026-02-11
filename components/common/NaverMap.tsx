@@ -1,8 +1,10 @@
 'use client';
 
-import { Locate } from 'lucide-react';
+import { Locate, Minus, Plus } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
+
+import { Button } from '@/components/ui/button';
 
 interface NaverMapProps {
   lat: number;
@@ -27,7 +29,6 @@ export const NaverMap = ({
     if (!mapElement.current) return;
 
     const initMap = () => {
-      // naver 객체가 존재하는지 확인 (타입 안전성 확보)
       if (typeof naver === 'undefined' || !mapElement.current) return;
 
       const location = new naver.maps.LatLng(lat, lng);
@@ -36,9 +37,13 @@ export const NaverMap = ({
         const mapOptions: naver.maps.MapOptions = {
           center: location,
           zoom: 16,
-          zoomControl: true,
+          zoomControl: false,
+          zoomControlOptions: {
+            style: naver.maps.ZoomControlStyle.SMALL,
+            position: naver.maps.Position.RIGHT_CENTER,
+          },
           scrollWheel: false,
-          draggable: true, // 드래그 가능하게 변경 (지도 탐색 용이)
+          draggable: true,
           scaleControl: false,
           logoControl: false,
           mapDataControl: false,
@@ -70,7 +75,6 @@ export const NaverMap = ({
     if (typeof naver !== 'undefined' && naver.maps) {
       initMap();
     } else {
-      // 스크립트가 아직 로드되지 않았을 경우를 대비해 일정 시간마다 체크
       const timer = setInterval(() => {
         if (typeof naver !== 'undefined' && naver.maps) {
           initMap();
@@ -81,6 +85,12 @@ export const NaverMap = ({
     }
   }, [lat, lng]);
 
+  const handleZoom = (delta: number) => {
+    if (!mapRef.current) return;
+    const currentZoom = mapRef.current.getZoom();
+    mapRef.current.setZoom(currentZoom + delta);
+  };
+
   const handleCurrentLocation = () => {
     if (!mapRef.current || isLocating) return;
 
@@ -90,14 +100,13 @@ export const NaverMap = ({
     }
 
     setIsLocating(true);
-    toast.info('내 위치를 확인하는 중입니다...');
+    toast.info('현재 위치를 확인하는 중입니다.');
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
         const userLocation = new naver.maps.LatLng(latitude, longitude);
 
-        // 내 위치 마커 생성 또는 이동
         if (!userMarkerRef.current) {
           userMarkerRef.current = new naver.maps.Marker({
             position: userLocation,
@@ -123,7 +132,6 @@ export const NaverMap = ({
           userMarkerRef.current.setPosition(userLocation);
         }
 
-        // 지도 중심 이동
         mapRef.current?.panTo(userLocation);
         setIsLocating(false);
       },
@@ -139,18 +147,39 @@ export const NaverMap = ({
   return (
     <div className={`relative ${className}`}>
       <div ref={mapElement} style={{ width: '100%', height: '100%' }} />
-      {showCurrentLocationButton && (
-        <button
-          onClick={handleCurrentLocation}
-          className="absolute top-3 right-3 z-10 flex h-9 w-9 items-center justify-center rounded-lg bg-white shadow-md transition-colors hover:bg-gray-50 active:bg-gray-100"
-          aria-label="내 위치 찾기"
-        >
-          <Locate
-            size={20}
-            className={`${isLocating ? 'animate-spin text-blue-500' : 'text-gray-700'}`}
-          />
-        </button>
-      )}
+
+      <div className="absolute top-3 right-3 z-10 flex flex-col gap-2">
+        {showCurrentLocationButton && (
+          <Button
+            onClick={handleCurrentLocation}
+            className="flex h-9 w-9 items-center justify-center rounded-lg bg-white shadow-md transition-colors hover:bg-gray-50 active:bg-gray-100"
+            aria-label="내 위치 찾기"
+          >
+            <Locate
+              size={20}
+              className={`${isLocating ? 'animate-spin text-blue-500' : 'text-gray-700'}`}
+            />
+          </Button>
+        )}
+
+        <div className="flex flex-col overflow-hidden rounded-lg bg-white shadow-md">
+          <Button
+            onClick={() => handleZoom(1)}
+            className="flex h-9 w-9 items-center justify-center rounded-none bg-white p-0 hover:bg-gray-50 active:bg-gray-100"
+            aria-label="지도 확대"
+          >
+            <Plus size={20} className="text-gray-700" />
+          </Button>
+          <div className="h-px w-full bg-gray-100" />
+          <Button
+            onClick={() => handleZoom(-1)}
+            className="flex h-9 w-9 items-center justify-center rounded-none bg-white p-0 hover:bg-gray-50 active:bg-gray-100"
+            aria-label="지도 축소"
+          >
+            <Minus size={20} className="text-gray-700" />
+          </Button>
+        </div>
+      </div>
     </div>
   );
 };

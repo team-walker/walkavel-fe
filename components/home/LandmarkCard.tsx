@@ -61,7 +61,6 @@ export default function LandmarkCard({
   };
 
   const handleCardClick = () => {
-    // x축 이동 거리가 일정 수준(5px) 이하인 경우에만 클릭으로 간주합니다.
     if (isTop && Math.abs(x.get()) < 5) {
       onClick?.(data.contentid);
     }
