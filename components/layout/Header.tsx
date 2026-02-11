@@ -5,7 +5,6 @@ import Logo from '@/public/images/foot-logo.svg';
 export default function Header() {
   return (
     <header className="fixed top-0 left-1/2 z-50 flex w-full max-w-120 -translate-x-1/2 flex-col border-b-[0.5px] border-[#F3F4F6]/50 bg-white/90 backdrop-blur-xl">
-      {/* 상태바 안전 영역 대응을 위한 패딩 */}
       <div className="h-[env(safe-area-inset-top)] w-full" />
 
       <div className="flex h-16 items-center gap-2 px-5 sm:h-20">
