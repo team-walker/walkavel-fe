@@ -1,8 +1,10 @@
 import './globals.css';
 import 'pretendard/dist/web/static/pretendard.css';
 
+import { Analytics } from '@vercel/analytics/next';
 import type { Metadata, Viewport } from 'next';
 import { Inter, Outfit } from 'next/font/google';
+import Script from 'next/script';
 
 import { Toaster } from '@/components/ui/sonner';
 
@@ -49,7 +51,12 @@ export default function RootLayout({
     <html lang="ko-KR">
       <body className={`${inter.variable} ${outfit.variable} font-sans antialiased`}>
         <AuthProvider>{children}</AuthProvider>
+        <Analytics />
         <Toaster position="top-center" />
+        <Script
+          strategy="afterInteractive"
+          src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=${process.env.NEXT_PUBLIC_NAVER_MAPS_CLIENT_ID}`}
+        />
       </body>
     </html>
   );

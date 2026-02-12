@@ -1,6 +1,7 @@
 'use client';
 
 import { AnimatePresence } from 'framer-motion';
+import { useRouter } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 
 import SplashScreen from '@/components/common/SplashScreen';
@@ -8,11 +9,13 @@ import AddressSearch from '@/components/home/AddressSearch';
 import FinishSection from '@/components/home/FinishSection';
 import LandmarkCard from '@/components/home/LandmarkCard';
 import Overlay from '@/components/home/Overlay';
+import { ROUTES } from '@/constants/navigation';
 import { useLandmarkExplore } from '@/hooks/useLandmarkExplore';
 import { useSplashStore } from '@/store/splash';
 import { LandmarkDto } from '@/types/model';
 
 export default function MainPage() {
+  const router = useRouter();
   const { isVisible, hideSplash } = useSplashStore();
   const [isAppReady, setIsAppReady] = useState(false);
 
@@ -49,8 +52,7 @@ export default function MainPage() {
   }, [selectedRegion, handleAddressSelect, _hasHydrated, landmarks.length]);
 
   const handleCardClick = (contentId: number) => {
-    // @TODO: 상세 페이지 이동 로직 (Link 또는 router.push)
-    console.log('Navigate to:', contentId);
+    router.push(ROUTES.LANDMARK_DETAIL(contentId));
   };
 
   const visibleLandmarks = useMemo(() => {

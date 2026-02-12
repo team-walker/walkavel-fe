@@ -1,0 +1,19 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "handoff",
+      "type": "shell",
+      "command": "mkdir -p ./.handoff && DATE=$(date +'%Y-%m-%d') && NEXT_VER=$(ls ./.handoff/${DATE}_v*.md 2>/dev/null | wc -l | xargs -I {} expr {} + 1) && FILENAME=\".handoff/${DATE}_v${NEXT_VER}.md\" && printf \"# 📝 HANDOFF REPORT (v${NEXT_VER})\n\n## ✅ 지금까지 진행 상황\n- \n\n## 🚀 다음에 해야 할 일\n- \n\n## ⚠️ 주의 사항 및 컨텍스트\n- \n\n---\n*생성일: $(date +'%Y-%m-%d %H:%M:%S')*\" > \"$FILENAME\" && code \"$FILENAME\"",
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "silent",
+        "focus": true,
+        "panel": "shared",
+        "showReuseMessage": false,
+        "clear": false
+      }
+    }
+  ]
+}

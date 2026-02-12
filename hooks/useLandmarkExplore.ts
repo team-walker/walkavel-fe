@@ -5,7 +5,6 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { toast } from 'sonner';
 
 import { STORAGE_KEYS } from '@/constants/types';
-import { shuffleArray } from '@/lib/shuffle';
 import { useAuthStore } from '@/store/authStore';
 import { useBookmarkStore } from '@/store/bookmarkStore';
 import { useExploreStore } from '@/store/exploreStore';
@@ -66,8 +65,7 @@ export const useLandmarkExplore = () => {
           return;
         }
 
-        const shuffled = shuffleArray(data);
-        setLandmarks(shuffled);
+        setLandmarks(data);
         setRegion(address);
         setCurrentIndex(0);
         setDirection(null);
@@ -148,7 +146,7 @@ export const useLandmarkExplore = () => {
       return;
     }
 
-    setLandmarks(shuffleArray(unbookmarked));
+    setLandmarks(unbookmarked);
     setStep('SWIPE');
     setCurrentIndex(0);
     setDirection(null);

@@ -1,8 +1,11 @@
+import { loadEnvConfig } from '@next/env';
 import { defineConfig } from 'orval';
+
+loadEnvConfig(process.cwd());
 
 export default defineConfig({
   api: {
-    input: 'http://localhost:3001/docs/json',
+    input: `${process.env.NEXT_PUBLIC_API_URL}/docs/json`,
     output: {
       mode: 'split',
       target: './types/api.ts',

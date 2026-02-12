@@ -1,6 +1,7 @@
 'use client';
 
 import { type ClassValue, clsx } from 'clsx';
+import { motion } from 'framer-motion';
 import { MapPin } from 'lucide-react';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
@@ -37,7 +38,7 @@ export default function LandmarkHeroCard({
   style,
 }: LandmarkHeroCardProps) {
   return (
-    <div
+    <motion.div
       className={cn(
         'relative h-full w-full cursor-pointer overflow-hidden rounded-[28px] bg-white select-none',
         className,
@@ -46,12 +47,13 @@ export default function LandmarkHeroCard({
         ...style,
         boxShadow: '0 8px 32px -8px rgba(0, 0, 0, 0.12), 0 0 1px rgba(0, 0, 0, 0.05)',
       }}
-      onClick={onSelect}
+      onTap={onSelect}
     >
       <ImageWithFallback
         src={landmark.image}
         alt={landmark.name}
         fill
+        sizes="(max-width: 480px) 100vw, 480px"
         className="pointer-events-none h-full w-full object-cover object-[center_30%]"
       />
 
@@ -62,12 +64,12 @@ export default function LandmarkHeroCard({
           e.stopPropagation();
           onToggleBookmark?.(e);
         }}
-        className="absolute top-5 right-6 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-white/95 shadow-[0_10px_15px_0_rgba(0,0,0,0.1),0_4_6px_0_rgba(0,0,0,0.1)] transition-all active:scale-95"
+        className="absolute top-5 right-6 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-white/95 shadow-[0_10px_15px_0_rgba(0,0,0,0.1),0_4_6px_0_rgba(0,0,0,0.1)] transition-all hover:bg-white/70 active:scale-95"
       >
         <BookmarkIcon
           className={cn(
-            'h-5 w-5 transition-colors',
-            isBookmarked ? 'fill-[#3182F6] text-[#3182F6]' : 'text-[#99A1AF]',
+            'stroke-2.5 h-5 w-5 transition-colors',
+            isBookmarked ? 'fill-[#3182F6] text-[#3182F6]' : 'text-gray-700',
           )}
         />
       </Button>
@@ -85,6 +87,6 @@ export default function LandmarkHeroCard({
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
