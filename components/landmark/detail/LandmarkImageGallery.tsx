@@ -68,27 +68,28 @@ export function LandmarkImageGallery({ images, title, onBack }: LandmarkImageGal
               }}
               drag="x"
               dragConstraints={{ left: 0, right: 0 }}
-              dragElastic={1}
+              dragElastic={0.2}
               onDragEnd={(e, info) => {
-                const offset = info.offset.x;
-                const velocity = info.velocity.x;
-                const swipe = swipePower(offset, velocity);
+                const threshold = 50;
+                const velocityThreshold = 500;
 
-                if (swipe < -swipeConfidenceThreshold) {
+                if (info.offset.x < -threshold || info.velocity.x < -velocityThreshold) {
                   paginate(1);
-                } else if (swipe > swipeConfidenceThreshold) {
+                } else if (info.offset.x > threshold || info.velocity.x > velocityThreshold) {
                   paginate(-1);
                 }
               }}
-              className="absolute inset-0 h-full w-full touch-pan-y"
+              className="absolute inset-0 h-full w-full cursor-grab touch-pan-y active:cursor-grabbing"
             >
               <ImageWithFallback
                 src={images[currentSlide]}
                 alt={`${title} 이미지 ${currentSlide + 1}`}
                 fill
-                className="object-cover"
+                className="object-cover select-none"
                 priority
+                unoptimized={images[currentSlide]?.includes('visitkorea.or.kr')}
                 sizes="(max-width: 480px) 100vw, 480px"
+                onDragStart={(e) => e.preventDefault()}
               />
             </motion.div>
           </AnimatePresence>
