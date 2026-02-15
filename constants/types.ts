@@ -3,6 +3,7 @@ export type STEP = 'SEARCH' | 'SWIPE' | 'FINISH';
 export const STORAGE_KEYS = {
   ONBOARDING_SEEN: 'walkavel_onboarding_seen',
   BOOKMARK_STORAGE: 'walkavel-bookmark-storage',
+  STAMP_STORAGE: 'walkavel-stamp-storage',
 } as const;
 
 export const SWIPE_CONFIG = {
