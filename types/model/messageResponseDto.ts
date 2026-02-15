@@ -6,7 +6,7 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export interface BookmarkStatusResponseDto {
-  /** 북마크 등록 여부 */
-  isBookmarked: boolean;
+export interface MessageResponseDto {
+  /** 응답 메시지 */
+  message: string;
 }

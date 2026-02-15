@@ -6,7 +6,9 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export interface LandmarkSummaryDto {
+export interface LandmarkDetail {
+  /** 획득 일시 */
+  obtainedAt: string;
   /** 콘텐츠 ID */
   contentid: number;
   /** 제목 */
@@ -16,24 +18,4 @@ export interface LandmarkSummaryDto {
    * @nullable
    */
   firstimage?: string | null;
-  /**
-   * 주소1
-   * @nullable
-   */
-  addr1?: string | null;
-  /**
-   * 대분류
-   * @nullable
-   */
-  cat1?: string | null;
-  /**
-   * 중분류
-   * @nullable
-   */
-  cat2?: string | null;
-  /**
-   * 소분류
-   * @nullable
-   */
-  cat3?: string | null;
 }
