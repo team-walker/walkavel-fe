@@ -46,9 +46,9 @@ export default function BookmarkPage() {
       ) : (
         <div className="space-y-3 pb-24">
           <AnimatePresence mode="popLayout" initial={false}>
-            {bookmarks.map((landmark) => (
+            {bookmarks.map((landmark, index) => (
               <BookmarkItem
-                key={landmark.contentid}
+                key={landmark.contentid || `bookmark-${index}`}
                 landmark={landmark}
                 onRemove={onDeleteBookmark}
                 onSelect={navigateToDetail}

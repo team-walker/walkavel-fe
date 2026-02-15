@@ -10,7 +10,7 @@ import { useBookmarkStore } from '@/store/bookmarkStore';
 import { useExploreStore } from '@/store/exploreStore';
 import { useRegionStore } from '@/store/regionStore';
 import { AddressResult } from '@/types/address';
-import { getAPIDocumentation } from '@/types/api';
+import { getApi } from '@/types/api';
 import { LandmarkDto } from '@/types/model';
 
 export const useLandmarkExplore = () => {
@@ -36,7 +36,7 @@ export const useLandmarkExplore = () => {
   const { bookmarks, toggleBookmark } = useBookmarkStore();
 
   const { user, pendingAction, setPendingAction } = useAuthStore();
-  const { tourControllerGetLandmarksByRegion } = useMemo(() => getAPIDocumentation(), []);
+  const { tourControllerGetLandmarksByRegion } = useMemo(() => getApi(), []);
 
   const _hasHydrated = _hasExploreHydrated && _hasRegionHydrated;
 
@@ -153,9 +153,9 @@ export const useLandmarkExplore = () => {
   }, [landmarks, bookmarks, setLandmarks, setStep, setCurrentIndex]);
 
   const handleReselect = useCallback(() => {
-    setStep('SEARCH');
+    router.push('/search');
     clearRegion();
-  }, [setStep, clearRegion]);
+  }, [router, clearRegion]);
 
   useEffect(() => {
     if (showGuide) {

@@ -27,13 +27,6 @@ export const ImageWithFallback = ({ src, alt, className, ...props }: ImageWithFa
   }
 
   return (
-    <Image
-      {...props}
-      key={src?.toString()}
-      src={src}
-      alt={alt}
-      className={className}
-      onError={() => setError(true)}
-    />
+    <Image {...props} src={src} alt={alt} className={className} onError={() => setError(true)} />
   );
 };

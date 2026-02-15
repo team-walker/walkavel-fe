@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 
-import { getAPIDocumentation } from '@/types/api';
+import { getApi } from '@/types/api';
 import { LandmarkDetailResponseDto } from '@/types/model';
 
 export function useLandmarkDetail(id: number | null) {
@@ -8,7 +8,7 @@ export function useLandmarkDetail(id: number | null) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
-  const { tourControllerGetLandmarkDetail } = useMemo(() => getAPIDocumentation(), []);
+  const { tourControllerGetLandmarkDetail } = useMemo(() => getApi(), []);
 
   useEffect(() => {
     if (!id) return;

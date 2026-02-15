@@ -3,7 +3,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 import { STORAGE_KEYS } from '@/constants/types';
-import { getAPIDocumentation } from '@/types/api';
+import { getApi } from '@/types/api';
 import { LandmarkDto, LandmarkSummaryDto } from '@/types/model';
 
 interface BookmarkState {
@@ -19,9 +19,9 @@ interface BookmarkState {
 
 const mapSummaryToDto = (summary: LandmarkSummaryDto): LandmarkDto => {
   return {
-    contentid: summary.contentId,
+    contentid: summary.contentid || 0,
     title: summary.title,
-    firstimage: summary.firstImage,
+    firstimage: summary.firstimage,
     addr1: summary.addr1,
     cat1: summary.cat1,
     cat2: summary.cat2,
@@ -36,7 +36,7 @@ export const useBookmarkStore = create<BookmarkState>()(
       isLoading: false,
       fetchBookmarks: async () => {
         if (get().isLoading) return;
-        const { bookmarkControllerGetBookmarks } = getAPIDocumentation();
+        const { bookmarkControllerGetBookmarks } = getApi();
         set({ isLoading: true });
 
         try {
@@ -57,7 +57,7 @@ export const useBookmarkStore = create<BookmarkState>()(
       addBookmark: async (landmark) => {
         if (get().isBookmarked(landmark.contentid)) return;
 
-        const { bookmarkControllerAddBookmark } = getAPIDocumentation();
+        const { bookmarkControllerAddBookmark } = getApi();
 
         set((state) => ({ bookmarks: [landmark, ...state.bookmarks] }));
 
@@ -75,7 +75,7 @@ export const useBookmarkStore = create<BookmarkState>()(
         }
       },
       removeBookmark: async (id) => {
-        const { bookmarkControllerRemoveBookmark } = getAPIDocumentation();
+        const { bookmarkControllerRemoveBookmark } = getApi();
         const previousBookmarks = [...get().bookmarks];
 
         set((state) => ({
