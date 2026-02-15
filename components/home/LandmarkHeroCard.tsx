@@ -1,19 +1,14 @@
 'use client';
 
-import { type ClassValue, clsx } from 'clsx';
 import { motion } from 'framer-motion';
 import { MapPin } from 'lucide-react';
 import React from 'react';
-import { twMerge } from 'tailwind-merge';
 
 import { ImageWithFallback } from '@/components/common/ImageWithFallback';
+import { cn } from '@/lib/utils';
 import BookmarkIcon from '@/public/images/bookmark.svg';
 
 import { Button } from '../ui/button';
-
-function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
 
 interface LandmarkHeroCardProps {
   landmark: {
