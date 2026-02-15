@@ -58,12 +58,21 @@ export default function LandmarkDetailPage() {
   const { detail, intro } = landmarkData;
 
   const handleOpenMap = () => {
-    const { title, mapy, mapx } = detail;
-
+    const { title, addr1, mapy, mapx } = detail;
     if (mapy == null || mapx == null) return;
 
-    const url = `https://map.naver.com/v5/search/${encodeURIComponent(title)}?c=${mapx},${mapy},15,0,0,0,dh`;
-    window.open(url, '_blank');
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    const searchKeyword = addr1 ? `${addr1} ${title}` : title;
+
+    if (isMobile) {
+      // 모바일: 좌표 기반으로 정확한 지점에 핀을 꽂고 이름을 표시 (앱 유도 최적화)
+      const mobileUrl = `https://m.map.naver.com/map.naver?lat=${mapy}&lng=${mapx}&pinTitle=${encodeURIComponent(title)}&pinType=site&dlevel=11`;
+      window.open(mobileUrl, '_blank');
+    } else {
+      // PC: 최신 인터페이스에서 상세 정보 사이드바를 자동으로 활성화
+      const desktopUrl = `https://map.naver.com/p/search/${encodeURIComponent(searchKeyword)}?c=${mapx},${mapy},15,0,0,0,dh`;
+      window.open(desktopUrl, '_blank');
+    }
   };
 
   return (
