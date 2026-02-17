@@ -58,13 +58,13 @@ export default function LandmarkDetailPage() {
   useEffect(() => {
     if (
       distanceToTarget !== null &&
+      distanceToTarget > 0 &&
       distanceToTarget <= STAMP_CONFIG.DISCOVERY_DISTANCE &&
       !isExploring &&
       !collected &&
       !hasNotifiedRef.current
     ) {
       if ('vibrate' in navigator) navigator.vibrate(200);
-      shouldOpenMissionRef.current = true;
       hasNotifiedRef.current = true;
       // 동기적 상태 업데이트로 인한 Cascading Render 방지를 위해 비동기 처리
       setTimeout(() => setIsMissionSheetOpen(true), 0);
@@ -72,8 +72,10 @@ export default function LandmarkDetailPage() {
       distanceToTarget !== null &&
       distanceToTarget > STAMP_CONFIG.DISCOVERY_DISTANCE + 30
     ) {
-      // 사용자가 범위를 벗어나면 다시 트리거될 수 있도록 리셋 (경계면에서 반복 오픈 방지)
+      // 사용자가 범위를 완전히 벗어나면(180m 이상) 다시 트리거될 수 있도록 리셋
       hasNotifiedRef.current = false;
+      // 동기적 상태 업데이트로 인한 Cascading Render 방지를 위해 비동기 처리
+      setTimeout(() => setIsMissionSheetOpen(false), 0);
     }
   }, [distanceToTarget, isExploring, collected]);
 
@@ -141,6 +143,7 @@ export default function LandmarkDetailPage() {
 
   console.log('Landmark Coord:', landmarkData?.detail.mapy, landmarkData?.detail.mapx);
   console.log('User Coord:', userLocation?.latitude, userLocation?.longitude);
+  console.log('distanceToTarget: ', distanceToTarget);
 
   return (
     <motion.main
@@ -233,7 +236,7 @@ export default function LandmarkDetailPage() {
               </div>
             )}
 
-            <div className="-mx-6 mb-8 h-2 rounded-sm bg-[#F2F4F6]"></div>
+            <div className="-mx-6 mb-8 h-2 rounded-sm bg-[#F2F4F6]" />
 
             <div className="mb-8">
               <h2 className="mb-4 text-[18px] font-semibold text-gray-900">운영 정보</h2>
@@ -296,46 +299,35 @@ export default function LandmarkDetailPage() {
       {/* 5. 레이더 시트 (실제 탐험 진행) */}
       <RadarSheet id={Number(id)} />
 
-      {/* 6. 하단 고정 액션 버튼 영역 (UI/UX 개선) */}
-      <div className="fixed right-0 bottom-0 left-0 z-50 flex justify-center bg-linear-to-t from-white via-white/95 to-transparent px-6 pt-10 pb-[calc(env(safe-area-inset-bottom)+1.5rem)]">
-        {collected ? (
-          <Button
-            disabled
-            className="h-15 w-full max-w-120 rounded-2xl bg-gray-100 text-[17px] font-bold text-gray-400 opacity-80"
-          >
-            수집 완료 ✅
-          </Button>
-        ) : isExploring ? (
-          <Button
-            onClick={() => setIsExploring(false)}
-            className="h-15 w-full max-w-120 rounded-2xl border-2 border-blue-100 bg-blue-50 text-[17px] font-bold text-blue-600 shadow-sm transition-all active:scale-[0.98]"
-          >
-            탐험 중...
-          </Button>
-        ) : (
-          <Button
-            onClick={() => {
-              if (distanceToTarget && distanceToTarget <= STAMP_CONFIG.DISCOVERY_DISTANCE) {
-                setIsMissionSheetOpen(true);
-              } else {
-                toast.info(
-                  `${STAMP_CONFIG.DISCOVERY_DISTANCE}m 이내로 이동하면 탐험을 시작할 수 있어요!`,
-                );
-              }
-            }}
-            className={cn(
-              'h-15 w-full max-w-120 rounded-2xl text-[17px] font-bold text-white shadow-lg transition-all active:scale-[0.98]',
-              distanceToTarget !== null && distanceToTarget <= STAMP_CONFIG.DISCOVERY_DISTANCE
-                ? 'bg-blue-600 shadow-blue-200'
-                : 'pointer-events-none bg-gray-200 text-gray-400',
-            )}
-          >
-            {distanceToTarget !== null && distanceToTarget <= STAMP_CONFIG.DISCOVERY_DISTANCE
-              ? '스탬프 발견! 탐험 시작하기'
-              : '스탬프 탐험 구역 아님'}
-          </Button>
-        )}
-      </div>
+      {/* 6. 하단 고정 액션 버튼 영역 (상태별 대응) */}
+      {(collected ||
+        isExploring ||
+        (distanceToTarget !== null && distanceToTarget <= STAMP_CONFIG.DISCOVERY_DISTANCE)) && (
+        <div className="fixed right-0 bottom-0 left-0 z-50 flex justify-center bg-linear-to-t from-white via-white/95 to-transparent px-6 pt-10 pb-[calc(env(safe-area-inset-bottom)+1.5rem)]">
+          {collected ? (
+            <Button
+              disabled
+              className="h-15 w-full max-w-120 rounded-2xl bg-gray-100 text-[17px] font-bold text-gray-400 opacity-80"
+            >
+              수집 완료 ✅
+            </Button>
+          ) : isExploring ? (
+            <Button
+              onClick={() => setIsExploring(false)}
+              className="h-15 w-full max-w-120 rounded-2xl border-2 border-blue-100 bg-blue-50 text-[17px] font-bold text-blue-600 shadow-sm transition-all active:scale-[0.98]"
+            >
+              탐험 중...
+            </Button>
+          ) : (
+            <Button
+              onClick={() => setIsMissionSheetOpen(true)}
+              className="h-15 w-full max-w-120 rounded-2xl bg-blue-600 text-[17px] font-bold text-white shadow-lg shadow-blue-200 transition-all active:scale-[0.98]"
+            >
+              스탬프 발견! 탐험 시작하기
+            </Button>
+          )}
+        </div>
+      )}
     </motion.main>
   );
 }

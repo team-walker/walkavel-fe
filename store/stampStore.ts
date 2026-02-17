@@ -4,9 +4,11 @@ import { persist } from 'zustand/middleware';
 
 import { STORAGE_KEYS } from '@/constants/types';
 import { getApi } from '@/types/api';
+import { StampSummaryDto } from '@/types/model';
 
 interface StampState {
   collectedIds: Record<number, boolean>; // O(1) 조회를 위해 객체 맵 사용
+  summary: StampSummaryDto | null; // 전체 요약 데이터 저장
   isSyncing: boolean; // API 동기화 상태
   requestingIds: Set<number>; // 중복 요청 방지를 위한 상태 추가
   failedIds: Set<number>; // 500 에러 등 실패한 ID 기록 (무한 재요청 방지)
@@ -23,6 +25,7 @@ export const useStampStore = create<StampState>()(
   persist(
     (set, get) => ({
       collectedIds: {},
+      summary: null,
       isSyncing: false,
       requestingIds: new Set(),
       failedIds: new Set(),
@@ -36,7 +39,7 @@ export const useStampStore = create<StampState>()(
           response.landmarks.forEach((landmark) => {
             idMap[landmark.contentid] = true;
           });
-          set({ collectedIds: idMap });
+          set({ collectedIds: idMap, summary: response });
         } catch (error) {
           console.error('스탬프 목록 로드 실패:', error);
         } finally {
