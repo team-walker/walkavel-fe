@@ -106,10 +106,11 @@ export const useStampStore = create<StampState>()(
           collectedIds: { ...state.collectedIds, [landmarkId]: true },
         }));
       },
-      // persist 복원 시 키가 문자열로 바뀔 수 있음을 고려하여 number 캐스팅
-      isCollected: (landmarkId) =>
-        !!get().collectedIds[landmarkId] ||
-        !!get().collectedIds[String(landmarkId) as unknown as number],
+      // persist 복원 시 키가 문자열로 바뀔 수 있음을 고려하여 타입 단언 사용
+      isCollected: (landmarkId) => {
+        const ids = get().collectedIds as Record<string | number, boolean>;
+        return !!ids[landmarkId] || !!ids[String(landmarkId)];
+      },
       resetFailedState: (landmarkId) => {
         set((state) => {
           const newFailed = new Set(state.failedIds);
