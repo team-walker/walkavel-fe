@@ -87,6 +87,7 @@ export function LandmarkImageGallery({ images, title, onBack }: LandmarkImageGal
                 fill
                 className="object-cover select-none"
                 priority
+                loading="eager"
                 unoptimized={images[currentSlide]?.includes('visitkorea.or.kr')}
                 sizes="(max-width: 480px) 100vw, 480px"
                 onDragStart={(e) => e.preventDefault()}
@@ -105,7 +106,7 @@ export function LandmarkImageGallery({ images, title, onBack }: LandmarkImageGal
       <Button
         onClick={onBack}
         aria-label="이전 페이지로 돌아가기"
-        className="absolute top-6 left-6 z-10 flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-white p-0 text-gray-900 shadow-md backdrop-blur-sm transition-transform hover:bg-white/70 active:scale-95"
+        className="absolute top-[calc(env(safe-area-inset-top)+1.5rem)] left-6 z-10 flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-white p-0 text-gray-900 shadow-md backdrop-blur-sm transition-transform hover:bg-white/70 active:scale-95"
       >
         <ChevronLeft size={24} strokeWidth={2.5} />
       </Button>

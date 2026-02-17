@@ -33,7 +33,7 @@ export default function BookmarkPage() {
   }
 
   return (
-    <div className="flex min-h-full w-full flex-col bg-white px-6 pt-8">
+    <div className="flex min-h-full w-full flex-col bg-white px-6 pt-[calc(env(safe-area-inset-top)+2rem)]">
       <div className="mb-6 shrink-0">
         <h1 className="text-[28px] leading-tight font-bold text-gray-900">나의 워커블</h1>
         <p className="mt-2 text-[16px] text-gray-500">

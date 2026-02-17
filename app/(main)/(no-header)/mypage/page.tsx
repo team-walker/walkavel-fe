@@ -68,7 +68,7 @@ export default function MyPage() {
   const email = user?.email || '';
 
   return (
-    <div className="w-full flex-1 overflow-y-auto bg-[#FAFBFC] pb-24">
+    <div className="w-full flex-1 overflow-y-auto bg-[#FAFBFC] pt-[env(safe-area-inset-top)] pb-24">
       <div className="bg-white px-6 pt-8 pb-6">
         <h1 className="mb-6 text-[28px] font-bold text-gray-900">마이페이지</h1>
 
