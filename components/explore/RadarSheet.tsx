@@ -1,6 +1,7 @@
 'use client';
 
 import { AnimatePresence, motion } from 'framer-motion';
+import { Check } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 import { useExploreStore } from '@/store/exploreStore';
@@ -9,7 +10,7 @@ import { useStampStore } from '@/store/stampStore';
 import { Button } from '../ui/button';
 import { RadarAnimation } from './RadarAnimation';
 
-// 성공 시 나타나는 스탬프 컴포넌트 (Figma 110:1318 스타일 + 숏폼 세대 타겟 도파민 연출)
+// 성공 시 나타나는 스탬프 컴포넌트 (Figma 1.5안 스타일)
 function StampSuccessUI() {
   return (
     <div className="relative flex flex-col items-center">
@@ -18,7 +19,7 @@ function StampSuccessUI() {
         animate={{ opacity: 1, y: 0 }}
         className="mb-8 w-full text-center"
       >
-        <h2 className="mb-2 text-xl font-bold tracking-tight text-[#101828]">스탬프 획득!</h2>
+        <h2 className="mb-2 text-xl font-bold tracking-tight text-[#101828]">스탬프 획득 중!</h2>
         <p className="text-[15px] text-[#4a5565]">성공적으로 스탬프를 획득했어요!</p>
       </motion.div>
 
@@ -72,31 +73,10 @@ function StampSuccessUI() {
           />
         ))}
 
-        {/* 장식용 도트들 (회전 애니메이션 추가) */}
+        {/* 메인 스탬프 (피그마 이미지처럼 체크 아이콘) */}
         <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
-          className="absolute h-52 w-52"
-        >
-          {[0, 45, 90, 135, 180, 225, 270, 315].map((angle, i) => (
-            <motion.div
-              key={i}
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.3 + i * 0.05 }}
-              className="absolute h-2 w-2 rounded-full bg-blue-500/40"
-              style={{
-                top: `${50 + 45 * Math.sin((angle * Math.PI) / 180)}%`,
-                left: `${50 + 45 * Math.cos((angle * Math.PI) / 180)}%`,
-              }}
-            />
-          ))}
-        </motion.div>
-
-        {/* 메인 스탬프 (임팩트 있는 등장) */}
-        <motion.div
-          initial={{ scale: 0, rotate: -45 }}
-          animate={{ scale: 1, rotate: -3.5 }}
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
           transition={{
             type: 'spring',
             damping: 12,
@@ -105,12 +85,12 @@ function StampSuccessUI() {
           className="relative z-10 flex h-36 w-36 items-center justify-center overflow-hidden rounded-full bg-linear-to-br from-[#3182f6] to-[#00d2ff] shadow-[0_30px_60px_rgba(49,130,246,0.4)]"
         >
           <motion.div
-            initial={{ opacity: 0, scale: 0.5, rotate: 10 }}
-            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.3, type: 'spring' }}
             className="text-white drop-shadow-md"
           >
-            <RadarAnimation.Icon size={70} />
+            <Check size={70} strokeWidth={3} />
           </motion.div>
 
           {/* 하이라이트 광택 모션 (고품질 글린트 효과) */}
@@ -133,37 +113,35 @@ function StampSuccessUI() {
 
 // 유저 시나리오의 "하단에서 부드럽게 올라오며"를 구현하기 위해 AnimatePresence를 사용한 커스텀 시트
 export function RadarSheet({ id }: { id: string | number }) {
-  const { isExploring, setIsExploring, distanceToTarget } = useExploreStore();
-  // // [수정] 함수 대신 '수집 여부'라는 값(Boolean)을 직접 구독
-  const collected = useStampStore((state) => state.collectedIds.includes(Number(id)));
+  const { distanceToTarget, isExploring, setIsExploring } = useExploreStore();
+  const isCollected = useStampStore((state) => !!state.collectedIds[Number(id)]);
+
   const [showSuccess, setShowSuccess] = useState(false);
 
   // 스탬프가 찍혔을 때의 연출과 1초 후 시트가 닫히는 로직
   useEffect(() => {
     // 스탬프가 찍히면 성공 연출 시작
-    if (collected && isExploring) {
-      // UX 개선: 시트가 열리자마자 바로 성공창이 뜨면 당황스러울 수 있으므로
-      // 최소 0.8초 정도는 레이더 애니메이션을 보여준 뒤 성공 연출로 전환
+    if (isCollected && isExploring) {
+      // 획득 즉시 성공 연출로 전환
       const successTimer = setTimeout(() => {
         setShowSuccess(true);
-        // [숏폼 도파민] 진동 효과 피드백
-        if (typeof window !== 'undefined' && 'vibrate' in navigator) {
-          navigator.vibrate([15, 30, 15, 60]);
-        }
-      }, 800);
+      }, 0);
 
-      // 3.5초 후 자동으로 탐험 종료 (성공 연출을 충분히 즐길 수 있도록 시간 연장)
+      // 1초간의 축하 연출 후 자동으로 탐험 종료 (Figma 1.5안 요구사항)
       const closeTimer = setTimeout(() => {
         setIsExploring(false);
-        setShowSuccess(false);
-      }, 3500);
+        // setShowSuccess(false); // 리셋은 시트가 완전히 닫힌 후 하거나 AnimatePresence가 처리
+      }, 1500); // 연출 시간을 고려하여 1.5초 정도로 설정 (등장 0.5s + 축하 1s)
 
       return () => {
         clearTimeout(successTimer);
         clearTimeout(closeTimer);
       };
+    } else {
+      // 동기적 상태 업데이트로 인한 Cascading Render 방지를 위해 비동기 처리
+      setTimeout(() => setShowSuccess(false), 0);
     }
-  }, [id, collected, isExploring, setIsExploring]);
+  }, [isCollected, isExploring, setIsExploring]);
 
   return (
     <AnimatePresence>

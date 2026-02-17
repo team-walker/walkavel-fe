@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Footprints } from 'lucide-react';
+import { Navigation } from 'lucide-react';
 
 interface RadarAnimationProps {
   distance: number | null;
@@ -41,10 +41,10 @@ export function RadarAnimation({ distance }: RadarAnimationProps) {
 
       {/* 중앙 아이콘 (내 위치) - Figma: #3182f6 shadow-lg */}
       <div className="relative z-10 flex h-24 w-24 items-center justify-center rounded-full bg-[#3182f6] shadow-[0_10px_15px_rgba(0,0,0,0.1),0_4px_6px_rgba(0,0,0,0.1)]">
-        <Footprints size={40} className="text-white" />
+        <Navigation size={40} className="fill-white text-white" />
       </div>
     </div>
   );
 }
 
-RadarAnimation.Icon = Footprints;
+RadarAnimation.Icon = Navigation;
