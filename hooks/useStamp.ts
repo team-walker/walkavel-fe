@@ -21,7 +21,6 @@ export const useStamp = () => {
   const setFailed = useStampStore((s) => s.setFailed);
 
   const fetchStamps = useCallback(async () => {
-    // 이미 동기화 중이면 중복 요청 방지
     if (useStampStore.getState().isSyncing) return;
 
     setSyncing(true);

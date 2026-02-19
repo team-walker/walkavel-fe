@@ -30,7 +30,6 @@ export const useAddressSearch = ({
       try {
         const addresses = await searchAddressAction(searchQuery, defaultRegion);
 
-        // 유효한 결과만 업데이트 (최신 쿼리와 일치하는지 확인)
         if (currentQueryRef.current === searchQuery) {
           setResults(addresses);
           setIsOpen(true);

@@ -10,10 +10,6 @@ interface ToastOptions {
   variant?: 'success' | 'error' | 'info';
 }
 
-/**
- * 선언적인 토스트 호출을 위한 커스텀 훅입니다.
- * UI 컴포넌트와의 결합도가 높은 로직을 hooks 레이어로 이동시켰습니다.
- */
 export const useCustomToast = () => {
   const showCustomToast = useCallback((message: string, options?: ToastOptions) => {
     const { variant = 'success' } = options || {};

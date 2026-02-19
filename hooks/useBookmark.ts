@@ -32,7 +32,6 @@ export const useBookmark = () => {
   const isBookmarked = useBookmarkStore((s) => s.isBookmarked);
 
   const fetchBookmarks = useCallback(async () => {
-    // isLoading을 직접 스토어에서 확인하여 dependency loop를 방지합니다.
     if (useBookmarkStore.getState().isLoading) return;
 
     setIsLoading(true);
@@ -63,12 +62,10 @@ export const useBookmark = () => {
       try {
         const response = await bookmarkRepository.add(landmark.contentid);
 
-        // 백엔드 응답에서 ID 확인
         if (!response || typeof response.id === 'undefined') {
           throw new Error('Invalid response from server: missing bookmark ID');
         }
 
-        // 성공 시 실제 ID로 업데이트
         const currentBookmarks = useBookmarkStore.getState().bookmarks;
         const updatedBookmarks = currentBookmarks.map((b) =>
           b.contentid === landmark.contentid ? { ...b, bookmarkId: response.id } : b,
@@ -88,16 +85,13 @@ export const useBookmark = () => {
       const bookmarks = useBookmarkStore.getState().bookmarks;
       const previousBookmarks = [...bookmarks];
 
-      // 낙관적 업데이트: 먼저 로컬 상태에서 제거
       removeBookmarkLocally(contentId);
 
       try {
-        // API 호출 시 contentId 사용 (백엔드 스펙에 따름)
         await bookmarkRepository.remove(contentId);
       } catch (error) {
         console.error('Failed to remove bookmark:', error);
         showErrorToast('북마크 해제에 실패했습니다.');
-        // 실패 시 롤백
         setBookmarks(previousBookmarks);
       }
     },

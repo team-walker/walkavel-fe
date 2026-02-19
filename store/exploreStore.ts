@@ -14,9 +14,9 @@ interface ExploreState {
   landmarks: LandmarkDto[];
   currentIndex: number;
   _hasHydrated: boolean;
-  isExploring: boolean; // 탐험 시트가 열려있는지 여부
-  userLocation: Location | null; // 실시간 유저 위치
-  distanceToTarget: number | null; // 타겟 랜드마크와의 거리 (미터 단위)
+  isExploring: boolean;
+  userLocation: Location | null;
+  distanceToTarget: number | null;
   setStep: (step: STEP) => void;
   setLandmarks: (landmarks: LandmarkDto[]) => void;
   setCurrentIndex: (index: number | ((prev: number) => number)) => void;

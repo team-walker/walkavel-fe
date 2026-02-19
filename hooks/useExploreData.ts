@@ -33,7 +33,6 @@ export const useExploreData = () => {
 
   const _hasHydrated = _hasExploreHydrated && _hasRegionHydrated;
 
-  // 로그인 후 펜딩된 북마크 액션 처리
   useEffect(() => {
     if (user && pendingAction?.type === 'bookmark') {
       const { landmarkId } = pendingAction.payload;

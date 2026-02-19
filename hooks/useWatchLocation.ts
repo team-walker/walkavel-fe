@@ -6,7 +6,6 @@ import { triggerVibration, VIBRATION_PATTERNS } from '@/lib/utils/pwa';
 import { showErrorToast } from '@/lib/utils/toast';
 import { useExploreStore } from '@/store/exploreStore';
 
-// 순수하게 현재 위치 업데이트 및 대상과의 거리 계산만 담당
 export const useWatchLocation = (targetLat?: number, targetLng?: number) => {
   const { setUserLocation, setDistanceToTarget, isExploring } = useExploreStore();
   const watchId = useRef<number | null>(null);
@@ -30,7 +29,6 @@ export const useWatchLocation = (targetLat?: number, targetLng?: number) => {
         }
       },
       (error) => {
-        // PERMISSION_DENIED (1), POSITION_UNAVAILABLE (2), TIMEOUT (3)
         if (error.code === 1) {
           showErrorToast('위치 권한을 허용해주세요.');
           triggerVibration([...VIBRATION_PATTERNS.ERROR]);

@@ -40,7 +40,6 @@ axiosInstance.interceptors.response.use(
     if (error.response?.status === 401) {
       console.error('Authentication required. Session may have expired.');
 
-      // 클라이언트 측에서 세션 만료 시 로그아웃 처리 및 리다이렉트
       if (typeof window !== 'undefined') {
         const { supabase } = await import('@/lib/supabase/client');
         await supabase.auth.signOut();

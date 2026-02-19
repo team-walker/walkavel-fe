@@ -28,10 +28,6 @@ interface NaverGeocodeResponse {
   errorMessage: string;
 }
 
-/**
- * 서버 측에서 직접 네이버 Geocode API를 호출하는 서비스 로직입니다.
- * API Route와 Server Action 양쪽에서 재사용할 수 있습니다.
- */
 export async function getGeocodeAction(query: string, region?: string): Promise<AddressResult[]> {
   const clientId = process.env.NEXT_PUBLIC_NAVER_MAPS_CLIENT_ID || process.env.NAVER_CLIENT_ID;
   const clientSecret = process.env.NAVER_CLIENT_SECRET;

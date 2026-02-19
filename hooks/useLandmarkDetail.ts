@@ -11,7 +11,7 @@ export function useLandmarkDetail(id: number | null, initialData?: LandmarkDetai
     queryKey: ['landmark', id],
     queryFn: () => tourControllerGetLandmarkDetail(id!),
     enabled: !!id,
-    initialData, // 서버에서 넘겨준 초기 데이터 사용
+    initialData,
   });
 
   const galleryImages = useMemo(() => {

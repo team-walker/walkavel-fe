@@ -1,6 +1,3 @@
-/**
- * 두 좌표 사이의 거리를 미터(m) 단위로 계산합니다.
- */
 export function calculateHaversineDistance(
   lat1: number,
   lon1: number,
@@ -21,9 +18,6 @@ export function calculateHaversineDistance(
   return Math.round(earthRadiusMeters * c);
 }
 
-/**
- * 배열의 요소를 무작위로 섞습니다.
- */
 export const shuffleArray = <T>(array: T[]): T[] => {
   const shuffled = [...array];
   for (let i = shuffled.length - 1; i > 0; i--) {
