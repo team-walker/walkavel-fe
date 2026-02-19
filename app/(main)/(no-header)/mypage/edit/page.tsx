@@ -1,12 +1,11 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { AlertCircle, CheckCircle2, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
 import * as z from 'zod';
 
 import { Button } from '@/components/ui/button';
@@ -21,6 +20,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { supabase } from '@/lib/supabase/client';
+import { showErrorToast, showSuccessToast } from '@/lib/toast';
 import ArrowLeftIcon from '@/public/images/arrow-left.svg';
 import CameraIcon from '@/public/images/camera.svg';
 import ProfileIcon from '@/public/images/profile.svg';
@@ -142,11 +142,9 @@ export default function ProfileEditPage() {
       const fallbackAvatar = user.user_metadata?.avatar_url || user.user_metadata?.picture || '';
       setAvatarUrl(fallbackAvatar);
 
-      toast.error('이미지 업로드에 실패했습니다.', {
-        description: '네트워크 연결을 확인하거나 나중에 다시 시도해주세요.',
-        icon: <AlertCircle className="h-5 w-5 text-[#FF3B30]" />,
-        className: 'bg-white border-2 border-[#F2F2F7] rounded-2xl p-4 shadow-lg',
-      });
+      showErrorToast(
+        '이미지 업로드에 실패했습니다. 네트워크 연결을 확인하거나 나중에 다시 시도해주세요.',
+      );
     } finally {
       setUploading(false);
     }
@@ -187,18 +185,12 @@ export default function ProfileEditPage() {
         setUser(authData.user);
       }
 
-      toast.success('프로필이 성공적으로 저장되었습니다.', {
-        icon: <CheckCircle2 className="h-5 w-5 text-[#34C759]" />,
-        className: 'bg-white border-2 border-[#F2F2F7] rounded-2xl p-4 shadow-lg',
-      });
+      showSuccessToast('프로필이 성공적으로 저장되었습니다.');
+
       router.back();
     } catch (error) {
       console.error('Profile update error:', error);
-      toast.error('저장에 실패했습니다.', {
-        description: error instanceof Error ? error.message : '알 수 없는 오류가 발생했습니다.',
-        icon: <AlertCircle className="h-5 w-5 text-[#FF3B30]" />,
-        className: 'bg-white border-2 border-[#F2F2F7] rounded-2xl p-4 shadow-lg',
-      });
+      showErrorToast('저장에 실패했습니다.');
     } finally {
       setLoading(false);
     }

@@ -2,7 +2,6 @@
 
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { toast } from 'sonner';
 
 import { STORAGE_KEYS } from '@/constants/types';
 import { useAuthStore } from '@/store/authStore';
@@ -61,7 +60,7 @@ export const useLandmarkExplore = () => {
         });
 
         if (!data || data.length === 0) {
-          toast.error('해당 지역에 등록된 장소가 없습니다.');
+          showErrorToast('해당 지역에 등록된 장소가 없습니다.');
           return;
         }
 
@@ -76,7 +75,7 @@ export const useLandmarkExplore = () => {
         }
       } catch (error) {
         console.error('Failed to fetch landmarks:', error);
-        toast.error('주변 장소 정보를 가져오는 중 오류가 발생했습니다.');
+        showErrorToast('주변 장소 정보를 가져오는 중 오류가 발생했습니다.');
       }
     },
     [tourControllerGetLandmarksByRegion, setRegion, setLandmarks, setCurrentIndex, setStep],
@@ -142,7 +141,7 @@ export const useLandmarkExplore = () => {
     const unbookmarked = landmarks.filter((l) => !bookmarkedIdSet.has(l.contentid));
 
     if (unbookmarked.length === 0) {
-      toast.info('모든 장소를 북마크하셨습니다!');
+      showInfoToast('모든 장소를 북마크하셨습니다!');
       return;
     }
 

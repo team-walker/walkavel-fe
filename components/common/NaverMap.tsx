@@ -2,9 +2,9 @@
 
 import { Locate, Minus, Plus } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
-import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';
+import { showErrorToast, showInfoToast } from '@/lib/toast';
 
 interface NaverMapProps {
   lat: number;
@@ -95,12 +95,12 @@ export const NaverMap = ({
     if (!mapRef.current || isLocating) return;
 
     if (!navigator.geolocation) {
-      toast.error('GPS를 지원하지 않는 브라우저입니다.');
+      showErrorToast('GPS를 지원하지 않는 브라우저입니다.');
       return;
     }
 
     setIsLocating(true);
-    toast.info('현재 위치를 확인하는 중입니다.');
+    showInfoToast('현재 위치를 확인하는 중입니다.');
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -137,7 +137,7 @@ export const NaverMap = ({
       },
       (error) => {
         console.error(error);
-        toast.error('위치 정보를 가져올 수 없습니다.');
+        showErrorToast('위치 정보를 가져올 수 없습니다.');
         setIsLocating(false);
       },
       { enableHighAccuracy: true, timeout: 5000 },

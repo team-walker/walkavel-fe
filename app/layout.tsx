@@ -52,7 +52,13 @@ export default function RootLayout({
       <body className={`${inter.variable} ${outfit.variable} font-sans antialiased`}>
         <AuthProvider>{children}</AuthProvider>
         <Analytics />
-        <Toaster position="top-center" />
+        <Toaster
+          position="top-center"
+          toastOptions={{
+            unstyled: true,
+          }}
+          className="flex w-full justify-center"
+        />
         <Script
           strategy="afterInteractive"
           src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=${process.env.NEXT_PUBLIC_NAVER_MAPS_CLIENT_ID}`}

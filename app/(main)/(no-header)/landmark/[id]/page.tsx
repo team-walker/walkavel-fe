@@ -4,7 +4,6 @@ import { motion } from 'framer-motion';
 import { Calendar, Car, Clock, ExternalLink, Globe, MapPin, Phone, Sparkles } from 'lucide-react';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
-import { toast } from 'sonner';
 
 import { NaverMap } from '@/components/common/NaverMap';
 import { RadarSheet } from '@/components/explore/RadarSheet';
@@ -16,7 +15,6 @@ import { STAMP_CONFIG } from '@/constants/config';
 import { useLandmarkDetail } from '@/hooks/useLandmarkDetail';
 import { useStampAcquisition } from '@/hooks/useStampAcquisition';
 import { useWatchLocation } from '@/hooks/useWatchLocation';
-import { cn } from '@/lib/utils';
 import { useExploreStore } from '@/store/exploreStore';
 import { useStampStore } from '@/store/stampStore';
 

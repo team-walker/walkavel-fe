@@ -1,8 +1,8 @@
-import { toast } from 'sonner';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 import { STORAGE_KEYS } from '@/constants/types';
+import { showErrorToast } from '@/lib/toast';
 import { getApi } from '@/types/api';
 import { LandmarkDto, LandmarkSummaryDto } from '@/types/model';
 
@@ -49,7 +49,7 @@ export const useBookmarkStore = create<BookmarkState>()(
           set({ bookmarks: validBookmarks });
         } catch (error) {
           console.error('Failed to fetch bookmarks:', error);
-          toast.error('북마크를 불러오는 데 실패했습니다.');
+          showErrorToast('북마크를 불러오는 데 실패했습니다.');
         } finally {
           set({ isLoading: false });
         }
@@ -65,7 +65,7 @@ export const useBookmarkStore = create<BookmarkState>()(
           await bookmarkControllerAddBookmark({ contentId: landmark.contentid });
         } catch (error) {
           console.error('Failed to add bookmark:', error);
-          toast.error('북마크 추가에 실패했습니다.');
+          showErrorToast('북마크 추가에 실패했습니다.');
 
           set((state) => ({
             bookmarks: state.bookmarks.filter(
@@ -86,7 +86,7 @@ export const useBookmarkStore = create<BookmarkState>()(
           await bookmarkControllerRemoveBookmark(id);
         } catch (error) {
           console.error('Failed to remove bookmark:', error);
-          toast.error('북마크 해제에 실패했습니다.');
+          showErrorToast('북마크 해제에 실패했습니다.');
 
           set({ bookmarks: previousBookmarks });
         }

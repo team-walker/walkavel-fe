@@ -1,8 +1,8 @@
-import { toast } from 'sonner';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 import { STORAGE_KEYS } from '@/constants/types';
+import { showErrorToast, showSuccessToast } from '@/lib/toast';
 import { getApi } from '@/types/api';
 import { StampSummaryDto } from '@/types/model';
 
@@ -75,12 +75,12 @@ export const useStampStore = create<StampState>()(
           set((state) => ({
             collectedIds: { ...state.collectedIds, [landmarkId]: true },
           }));
-          toast.success('스탬프를 획득했습니다!');
+          showSuccessToast('스탬프를 획득했습니다!');
         } catch (error) {
           const err = error as { response?: { status: number; data?: { message: string } } };
           console.error('스탬프 획득 실패:', error);
           const errorMessage = err.response?.data?.message || '서버 오류가 발생했습니다.';
-          toast.error(`스탬프 획득 실패: ${errorMessage}`);
+          showErrorToast(`스탬프 획득 실패: ${errorMessage}`);
 
           // 만약 이미 획득한 스탬프라는 에러라면 (예: 409 Conflict) 상태에 반영 시도
           if (err.response?.status === 409 || errorMessage.includes('already')) {
