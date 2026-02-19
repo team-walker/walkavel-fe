@@ -67,7 +67,7 @@ export default function LandmarkHeroCard({
         <BookmarkIcon
           className={cn(
             'stroke-2.5 h-5 w-5 transition-colors',
-            isBookmarked ? 'fill-[#3182F6] text-[#3182F6]' : 'text-gray-700',
+            isBookmarked ? 'fill-brand-blue text-brand-blue' : 'text-walkavel-gray-700',
           )}
         />
       </Button>

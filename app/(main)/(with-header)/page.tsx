@@ -1,18 +1,21 @@
 'use client';
 
 import { AnimatePresence } from 'framer-motion';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 
-import SplashScreen from '@/components/common/SplashScreen';
 import AddressSearch from '@/components/home/AddressSearch';
-import FinishSection from '@/components/home/FinishSection';
 import LandmarkCard from '@/components/home/LandmarkCard';
-import Overlay from '@/components/home/Overlay';
 import { ROUTES } from '@/constants/navigation';
 import { useLandmarkExplore } from '@/hooks/useLandmarkExplore';
 import { useSplashStore } from '@/store/splash';
 import { LandmarkDto } from '@/types/model';
+
+// 동적 임포트 (초기 번들 크기 최적화)
+const SplashScreen = dynamic(() => import('@/components/common/SplashScreen'), { ssr: false });
+const Overlay = dynamic(() => import('@/components/home/Overlay'));
+const FinishSection = dynamic(() => import('@/components/home/FinishSection'));
 
 export default function MainPage() {
   const router = useRouter();
@@ -33,7 +36,6 @@ export default function MainPage() {
     handleSwipe,
     handleBookmark,
     handleReset,
-    handleResetUnbookmarked,
     handleReselect,
   } = useLandmarkExplore();
 
@@ -72,7 +74,11 @@ export default function MainPage() {
       </AnimatePresence>
 
       <main className="relative h-full w-full overflow-hidden">
-        {(!isAppReady || !_hasHydrated) && null}
+        {(!isAppReady || !_hasHydrated) && (
+          <div className="flex h-full w-full items-center justify-center bg-white p-6">
+            <div className="bg-walkavel-gray-100 h-64 w-full animate-pulse rounded-4xl" />
+          </div>
+        )}
 
         {isAppReady && _hasHydrated && (
           <>
@@ -110,11 +116,7 @@ export default function MainPage() {
             )}
 
             {step === 'FINISH' && (
-              <FinishSection
-                onReset={handleReset}
-                onResetUnbookmarked={handleResetUnbookmarked}
-                onReselect={handleReselect}
-              />
+              <FinishSection onReset={handleReset} onReselect={handleReselect} />
             )}
           </>
         )}

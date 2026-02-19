@@ -40,13 +40,8 @@ export function LandmarkImageGallery({ images, title, onBack }: LandmarkImageGal
     }),
   };
 
-  const swipeConfidenceThreshold = 1000;
-  const swipePower = (offset: number, velocity: number) => {
-    return Math.abs(offset) * velocity;
-  };
-
   return (
-    <div className="relative h-full w-full overflow-hidden bg-gray-100">
+    <div className="bg-walkavel-gray-100 relative h-full w-full overflow-hidden">
       <div className="sr-only" aria-live="polite" aria-atomic="true">
         {images.length > 0
           ? `${images.length}장 중 ${currentSlide + 1}번째 이미지: ${title}`
@@ -96,7 +91,7 @@ export function LandmarkImageGallery({ images, title, onBack }: LandmarkImageGal
           </AnimatePresence>
         </div>
       ) : (
-        <div className="flex h-full w-full items-center justify-center bg-gray-200 text-gray-400">
+        <div className="bg-walkavel-gray-200 text-walkavel-gray-400 flex h-full w-full items-center justify-center">
           이미지가 없습니다
         </div>
       )}
@@ -106,7 +101,7 @@ export function LandmarkImageGallery({ images, title, onBack }: LandmarkImageGal
       <Button
         onClick={onBack}
         aria-label="이전 페이지로 돌아가기"
-        className="absolute top-[calc(env(safe-area-inset-top)+1.5rem)] left-6 z-10 flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-white p-0 text-gray-900 shadow-md backdrop-blur-sm transition-transform hover:bg-white/70 active:scale-95"
+        className="text-walkavel-gray-900 absolute top-[calc(env(safe-area-inset-top)+1.5rem)] left-6 z-10 flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-white p-0 shadow-md backdrop-blur-sm transition-transform hover:bg-white/70 active:scale-95"
       >
         <ChevronLeft size={24} strokeWidth={2.5} />
       </Button>
