@@ -6,6 +6,8 @@ import { BookmarkResponseDto } from '@/types/model';
 
 import { BookmarkListClient } from './BookmarkListClient';
 
+export const dynamic = 'force-dynamic';
+
 const mapToBookmarkedLandmark = (bookmark: BookmarkResponseDto): BookmarkedLandmark | null => {
   if (!bookmark.landmark) return null;
   return {
