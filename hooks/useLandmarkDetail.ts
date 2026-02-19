@@ -1,36 +1,22 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useMemo } from 'react';
 
 import { getApi } from '@/types/api';
 import { LandmarkDetailResponseDto } from '@/types/model';
 
-export function useLandmarkDetail(id: number | null) {
-  const [data, setData] = useState<LandmarkDetailResponseDto | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<Error | null>(null);
+export function useLandmarkDetail(id: number | null, initialData?: LandmarkDetailResponseDto) {
+  const { tourControllerGetLandmarkDetail } = getApi();
 
-  const { tourControllerGetLandmarkDetail } = useMemo(() => getApi(), []);
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['landmark', id],
+    queryFn: () => tourControllerGetLandmarkDetail(id!),
+    enabled: !!id,
+    initialData, // 서버에서 넘겨준 초기 데이터 사용
+  });
 
-  useEffect(() => {
-    if (!id) return;
-
-    const fetchDetail = async () => {
-      setLoading(true);
-      try {
-        const response = await tourControllerGetLandmarkDetail(id);
-        setData(response);
-      } catch (error) {
-        console.error('Failed to fetch landmark detail:', error);
-        setError(error instanceof Error ? error : new Error(String(error)));
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchDetail();
-  }, [id, tourControllerGetLandmarkDetail]);
-
-  const galleryImages = useMemo<string[]>(() => {
+  const galleryImages = useMemo(() => {
     if (!data) return [];
+
     const { detail, images } = data;
     const imgs =
       images && images.length > 0
@@ -39,5 +25,5 @@ export function useLandmarkDetail(id: number | null) {
     return imgs.filter((url): url is string => !!url);
   }, [data]);
 
-  return { data, galleryImages, loading, error };
+  return { data, galleryImages, loading: isLoading, error };
 }
