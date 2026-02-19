@@ -2,7 +2,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import { supabase } from '@/lib/supabase/client';
-import { showErrorToast, showSuccessToast } from '@/lib/toast';
+import { showErrorToast, showSuccessToast } from '@/lib/utils/toast';
 import { useAuthStore } from '@/store/authStore';
 import { useExploreStore } from '@/store/exploreStore';
 import { useRegionStore } from '@/store/regionStore';
