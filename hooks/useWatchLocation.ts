@@ -1,19 +1,25 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
-import { calculateHaversineDistance } from '@/lib/haversine';
+import { GEOLOCATION_CONFIG } from '@/constants/config';
+import { calculateHaversineDistance } from '@/lib/utils/math';
+import { triggerVibration, VIBRATION_PATTERNS } from '@/lib/utils/pwa';
+import { showErrorToast } from '@/lib/utils/toast';
 import { useExploreStore } from '@/store/exploreStore';
 
 // 순수하게 현재 위치 업데이트 및 대상과의 거리 계산만 담당
 export const useWatchLocation = (targetLat?: number, targetLng?: number) => {
   const { setUserLocation, setDistanceToTarget, isExploring } = useExploreStore();
+  const watchId = useRef<number | null>(null);
 
-  useEffect(() => {
-    if (!navigator.geolocation) {
-      console.error('Geolocation is not supported');
+  const startWatching = useCallback(() => {
+    if (typeof window === 'undefined' || !('geolocation' in navigator)) {
+      showErrorToast('GPS를 지원하지 않는 브라우저입니다.');
       return;
     }
 
-    const watchId = navigator.geolocation.watchPosition(
+    if (watchId.current !== null) return;
+
+    watchId.current = navigator.geolocation.watchPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
         setUserLocation({ latitude, longitude });
@@ -24,23 +30,45 @@ export const useWatchLocation = (targetLat?: number, targetLng?: number) => {
         }
       },
       (error) => {
-        if (error.code !== 2) {
+        // PERMISSION_DENIED (1), POSITION_UNAVAILABLE (2), TIMEOUT (3)
+        if (error.code === 1) {
+          showErrorToast('위치 권한을 허용해주세요.');
+          triggerVibration([...VIBRATION_PATTERNS.ERROR]);
+        } else if (error.code !== 2) {
           console.error('GPS Error: ', error);
         }
       },
       {
-        enableHighAccuracy: isExploring, // 탐험 중에는 고정밀 모드 사용
-        maximumAge: isExploring ? 0 : 3000,
-        timeout: 10000,
+        enableHighAccuracy: isExploring,
+        maximumAge: isExploring ? GEOLOCATION_CONFIG.MAX_AGE_HIGH : GEOLOCATION_CONFIG.MAX_AGE_LOW,
+        timeout: GEOLOCATION_CONFIG.SEARCH_TIMEOUT,
       },
     );
+  }, [targetLat, targetLng, isExploring, setUserLocation, setDistanceToTarget]);
 
-    return () => navigator.geolocation.clearWatch(watchId);
-  }, [
-    targetLat,
-    targetLng,
-    isExploring, // isExploring이 변할 때마다 watch 설정 다시 함 (정확도 변경 목적)
-    setUserLocation,
-    setDistanceToTarget,
-  ]);
+  const stopWatching = useCallback(() => {
+    if (watchId.current !== null) {
+      navigator.geolocation.clearWatch(watchId.current);
+      watchId.current = null;
+    }
+  }, []);
+
+  useEffect(() => {
+    startWatching();
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        stopWatching();
+      } else {
+        startWatching();
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      stopWatching();
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, [startWatching, stopWatching]);
 };

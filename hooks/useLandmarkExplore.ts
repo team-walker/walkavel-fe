@@ -1,184 +1,26 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-
 import { STORAGE_KEYS } from '@/constants/types';
-import { showErrorToast, showInfoToast } from '@/lib/toast';
-import { useAuthStore } from '@/store/authStore';
-import { useBookmarkStore } from '@/store/bookmarkStore';
-import { useExploreStore } from '@/store/exploreStore';
-import { useRegionStore } from '@/store/regionStore';
 import { AddressResult } from '@/types/address';
-import { getApi } from '@/types/api';
-import { LandmarkDto } from '@/types/model';
+
+import { useExploreActions } from './useExploreActions';
+import { useExploreData } from './useExploreData';
 
 export const useLandmarkExplore = () => {
-  const router = useRouter();
-  const {
-    step,
-    landmarks,
-    currentIndex,
-    setStep,
-    setLandmarks,
-    setCurrentIndex,
-    _hasHydrated: _hasExploreHydrated,
-  } = useExploreStore();
-  const {
-    selectedRegion,
-    setRegion,
-    clearRegion,
-    _hasHydrated: _hasRegionHydrated,
-  } = useRegionStore();
+  const data = useExploreData();
+  const actions = useExploreActions();
 
-  const [direction, setDirection] = useState<'left' | 'right' | null>(null);
-  const [showGuide, setShowGuide] = useState(false);
-  const { bookmarks, toggleBookmark } = useBookmarkStore();
-
-  const { user, pendingAction, setPendingAction } = useAuthStore();
-  const { tourControllerGetLandmarksByRegion } = useMemo(() => getApi(), []);
-
-  const _hasHydrated = _hasExploreHydrated && _hasRegionHydrated;
-
-  useEffect(() => {
-    if (user && pendingAction?.type === 'bookmark') {
-      const { landmarkId } = pendingAction.payload;
-      const landmark = landmarks.find((l) => l.contentid === landmarkId);
-
-      if (landmark) {
-        toggleBookmark(landmark);
-      }
-      setPendingAction(null);
+  // 인터렉션과 데이터가 만나는 지점만 가공
+  const onAddressSelect = async (address: AddressResult) => {
+    const success = await data.handleAddressSelect(address);
+    if (success && !localStorage.getItem(STORAGE_KEYS.ONBOARDING_SEEN)) {
+      actions.setShowGuide(true);
     }
-  }, [user, pendingAction, landmarks, toggleBookmark, setPendingAction]);
-
-  const handleAddressSelect = useCallback(
-    async (address: AddressResult) => {
-      try {
-        const data = await tourControllerGetLandmarksByRegion({
-          sido: address.sido,
-          sigugun: address.sigugun,
-        });
-
-        if (!data || data.length === 0) {
-          showErrorToast('해당 지역에 등록된 장소가 없습니다.');
-          return;
-        }
-
-        setLandmarks(data);
-        setRegion(address);
-        setCurrentIndex(0);
-        setDirection(null);
-        setStep('SWIPE');
-
-        if (!localStorage.getItem(STORAGE_KEYS.ONBOARDING_SEEN)) {
-          setShowGuide(true);
-        }
-      } catch (error) {
-        console.error('Failed to fetch landmarks:', error);
-        showErrorToast('주변 장소 정보를 가져오는 중 오류가 발생했습니다.');
-      }
-    },
-    [tourControllerGetLandmarksByRegion, setRegion, setLandmarks, setCurrentIndex, setStep],
-  );
-
-  const handleDismissGuide = useCallback(() => {
-    setShowGuide(false);
-    localStorage.setItem(STORAGE_KEYS.ONBOARDING_SEEN, 'true');
-  }, []);
-
-  const moveToNext = useCallback(() => {
-    if (currentIndex < landmarks.length - 1) {
-      setCurrentIndex((prev) => (typeof prev === 'number' ? prev + 1 : prev));
-    } else {
-      setStep('FINISH');
-    }
-  }, [currentIndex, landmarks.length, setCurrentIndex, setStep]);
-
-  const moveToPrevious = useCallback(() => {
-    if (currentIndex > 0) {
-      setCurrentIndex((prev) => (typeof prev === 'number' ? prev - 1 : prev));
-    }
-  }, [currentIndex, setCurrentIndex]);
-
-  const handleSwipe = useCallback(
-    (swipeDir: 'left' | 'right') => {
-      setDirection(swipeDir);
-      handleDismissGuide();
-
-      if (swipeDir === 'left') {
-        moveToNext();
-      } else {
-        moveToPrevious();
-      }
-    },
-    [handleDismissGuide, moveToNext, moveToPrevious],
-  );
-
-  const handleBookmark = useCallback(
-    (landmark: LandmarkDto) => {
-      if (!user) {
-        setPendingAction({ type: 'bookmark', payload: { landmarkId: landmark.contentid } });
-        router.push(`/login?returnTo=${encodeURIComponent(window.location.pathname)}`);
-        return;
-      }
-
-      toggleBookmark(landmark);
-    },
-    [user, toggleBookmark, setPendingAction, router],
-  );
-
-  const handleReset = useCallback(() => {
-    setStep('SWIPE');
-    setCurrentIndex(0);
-    setDirection(null);
-    if (!localStorage.getItem(STORAGE_KEYS.ONBOARDING_SEEN)) {
-      setShowGuide(true);
-    }
-  }, [setStep, setCurrentIndex]);
-
-  const handleResetUnbookmarked = useCallback(() => {
-    const bookmarkedIdSet = new Set(bookmarks.map((b: LandmarkDto) => b.contentid));
-    const unbookmarked = landmarks.filter((l) => !bookmarkedIdSet.has(l.contentid));
-
-    if (unbookmarked.length === 0) {
-      showInfoToast('모든 장소를 북마크하셨습니다!');
-      return;
-    }
-
-    setLandmarks(unbookmarked);
-    setStep('SWIPE');
-    setCurrentIndex(0);
-    setDirection(null);
-  }, [landmarks, bookmarks, setLandmarks, setStep, setCurrentIndex]);
-
-  const handleReselect = useCallback(() => {
-    router.push('/search');
-    clearRegion();
-  }, [router, clearRegion]);
-
-  useEffect(() => {
-    if (showGuide) {
-      const timer = setTimeout(handleDismissGuide, 5000);
-      return () => clearTimeout(timer);
-    }
-  }, [showGuide, handleDismissGuide]);
+  };
 
   return {
-    step,
-    landmarks,
-    currentIndex,
-    direction,
-    showGuide,
-    bookmarks,
-    _hasHydrated,
-    selectedRegion,
-    handleAddressSelect,
-    handleDismissGuide,
-    handleSwipe,
-    handleBookmark,
-    handleReset,
-    handleResetUnbookmarked,
-    handleReselect,
+    ...data,
+    ...actions,
+    handleAddressSelect: onAddressSelect,
   };
 };

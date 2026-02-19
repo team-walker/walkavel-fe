@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-import { STEP } from '@/constants/types';
+import { STEP, STORAGE_KEYS } from '@/constants/types';
 import { LandmarkDto } from '@/types/model';
 
 interface Location {
@@ -50,7 +50,7 @@ export const useExploreStore = create<ExploreState>()(
       setDistanceToTarget: (distance) => set({ distanceToTarget: distance }),
     }),
     {
-      name: 'walkavel-explore-storage',
+      name: STORAGE_KEYS.EXPLORE_STORAGE,
       onRehydrateStorage: () => (state) => {
         state?.setHasHydrated(true);
       },
