@@ -91,7 +91,7 @@ export default function AddressSearch({ onSelectAddress }: AddressSearchProps) {
           <Input
             type="text"
             className="h-14.5 w-full rounded-3xl border-none bg-[#F2F4F7] px-5 pl-13 text-[17px] font-medium transition-all outline-none placeholder:text-[#99A1AF]"
-            placeholder="동 이름으로 검색 (예: 강남동, 명동)"
+            placeholder="동 이름으로 검색 (예: 인사동, 명동)"
             readOnly
             data-testid="address-search-input"
           />
@@ -122,7 +122,7 @@ export default function AddressSearch({ onSelectAddress }: AddressSearchProps) {
                   : 'bg-[#F2F4F7]'
               }`}
               style={{ borderRadius: '16px' }}
-              placeholder="동 이름으로 검색 (예: 강남동, 명동)"
+              placeholder="동 이름으로 검색 (예: 인사동, 명동)"
               value={query}
               onChange={(e) => {
                 setQuery(e.target.value);
