@@ -75,8 +75,13 @@ export default function LandmarkDetailClient({ id, initialData }: LandmarkDetail
 
   const landmarkCoords = useMemo(() => {
     if (!displayData?.detail) return { lat: undefined, lng: undefined };
-    const lat = Number(displayData.detail.mapy);
-    const lng = Number(displayData.detail.mapx);
+
+    const mapx = displayData.detail.mapx;
+    const mapy = displayData.detail.mapy;
+
+    const lat = mapy ? Number(mapy) : undefined;
+    const lng = mapx ? Number(mapx) : undefined;
+
     return { lat, lng };
   }, [displayData]);
 
@@ -305,35 +310,6 @@ export default function LandmarkDetailClient({ id, initialData }: LandmarkDetail
       />
 
       <RadarSheet id={id} />
-
-      {(collected ||
-        isExploring ||
-        (distanceToTarget !== null && distanceToTarget <= STAMP_CONFIG.DISCOVERY_DISTANCE)) && (
-        <div className="fixed right-0 bottom-0 left-0 z-50 flex justify-center bg-linear-to-t from-white via-white/95 to-transparent px-6 pt-10 pb-[calc(env(safe-area-inset-bottom)+1.5rem)]">
-          {collected ? (
-            <Button
-              disabled
-              className="bg-walkavel-gray-100 text-walkavel-gray-400 h-15 w-full max-w-120 rounded-2xl text-[17px] font-bold opacity-80"
-            >
-              수집 완료 ✅
-            </Button>
-          ) : isExploring ? (
-            <Button
-              onClick={() => setIsExploring(false)}
-              className="border-brand-blue-light bg-brand-blue-light text-brand-blue h-15 w-full max-w-120 rounded-2xl border-2 text-[17px] font-bold shadow-sm transition-all active:scale-[0.98]"
-            >
-              탐험 중...
-            </Button>
-          ) : (
-            <Button
-              onClick={() => setIsMissionSheetOpen(true)}
-              className="bg-brand-blue shadow-brand-blue/20 h-15 w-full max-w-120 rounded-2xl text-[17px] font-bold text-white shadow-lg transition-all active:scale-[0.98]"
-            >
-              스탬프 발견! 탐험 시작하기
-            </Button>
-          )}
-        </div>
-      )}
     </motion.main>
   );
 }
