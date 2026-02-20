@@ -1,4 +1,4 @@
-import axios, { AxiosError, type AxiosRequestConfig, type InternalAxiosRequestConfig } from 'axios';
+import axios, { AxiosError, type InternalAxiosRequestConfig } from 'axios';
 
 import { supabase } from '@/lib/supabase/client';
 
@@ -49,9 +49,5 @@ axiosInstance.interceptors.response.use(
     return Promise.reject(error);
   },
 );
-
-export const customInstance = <T>(config: AxiosRequestConfig): Promise<T> => {
-  return axiosInstance(config).then((response) => response.data);
-};
 
 export default axiosInstance;

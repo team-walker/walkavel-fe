@@ -5,7 +5,7 @@
  * Walkavel API 명세서입니다.
  * OpenAPI spec version: 1.0.0
  */
-import { customInstance } from '../lib/api/axios-instance';
+import { customInstance } from '../lib/api/mutator';
 import type {
   AuthMeResponseDto,
   BookmarkControllerGetBookmarksParams,

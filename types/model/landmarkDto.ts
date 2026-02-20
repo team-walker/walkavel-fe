@@ -126,4 +126,14 @@ export interface LandmarkDto {
    * @nullable
    */
   lclssystm3?: string | null;
+  /**
+   * 홈페이지 주소
+   * @nullable
+   */
+  homepage?: string | null;
+  /**
+   * 개요
+   * @nullable
+   */
+  overview?: string | null;
 }

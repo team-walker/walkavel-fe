@@ -14,7 +14,7 @@ export default defineConfig({
       prettier: true,
       override: {
         mutator: {
-          path: './lib/api/axios-instance.ts',
+          path: './lib/api/mutator.ts',
           name: 'customInstance',
         },
       },

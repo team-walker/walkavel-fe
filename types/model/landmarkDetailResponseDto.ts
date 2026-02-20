@@ -5,13 +5,13 @@
  * Walkavel API 명세서입니다.
  * OpenAPI spec version: 1.0.0
  */
-import type { LandmarkDetailDto } from './landmarkDetailDto';
+import type { LandmarkDto } from './landmarkDto';
 import type { LandmarkImageDto } from './landmarkImageDto';
 import type { LandmarkIntroDto } from './landmarkIntroDto';
 
 export interface LandmarkDetailResponseDto {
-  /** 랜드마크 상세 정보 */
-  detail: LandmarkDetailDto;
+  /** 랜드마크 상세 정보 (기본 정보 + 개요) */
+  detail: LandmarkDto;
   /** 랜드마크 이미지 목록 */
   images: LandmarkImageDto[];
   /** 랜드마크 소개 정보 */
