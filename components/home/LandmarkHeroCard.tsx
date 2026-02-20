@@ -49,7 +49,6 @@ export default function LandmarkHeroCard({
         alt={landmark.name}
         fill
         priority
-        loading="eager"
         unoptimized={landmark.image.includes('visitkorea.or.kr')}
         sizes="(max-width: 480px) 100vw, 480px"
         className="pointer-events-none h-full w-full object-cover object-[center_30%]"

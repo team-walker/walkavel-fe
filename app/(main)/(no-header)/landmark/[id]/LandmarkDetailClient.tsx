@@ -47,12 +47,20 @@ export default function LandmarkDetailClient({ id, initialData }: LandmarkDetail
   // Tanstack Query의 initialData 활용
   const { data: landmarkData, galleryImages } = useLandmarkDetail(id, initialData);
 
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setMounted(true);
+    }, 0);
+    return () => clearTimeout(timer);
+  }, []);
+
   // landmarkData가 로딩 중이어도 initialData(서버에서 온 데이터)를 우선 표시하도록 보완 가능하지만
   // 현재 hooks 구조상 data를 직접 사용함.
   const displayData = landmarkData || initialData;
 
   const { isCollected, setCollectedLocally } = useStamp();
-  const collected = isCollected(id);
+  const collected = mounted ? isCollected(id) : false;
 
   useEffect(() => {
     if (displayData?.isStamped && !collected) {
@@ -60,7 +68,14 @@ export default function LandmarkDetailClient({ id, initialData }: LandmarkDetail
     }
   }, [displayData?.isStamped, collected, id, setCollectedLocally]);
 
-  const { isExploring, setIsExploring, distanceToTarget } = useExploreStore();
+  const {
+    isExploring: rawIsExploring,
+    setIsExploring,
+    distanceToTarget: rawDistanceToTarget,
+  } = useExploreStore();
+
+  const isExploring = mounted ? rawIsExploring : false;
+  const distanceToTarget = mounted ? rawDistanceToTarget : null;
 
   const landmarkCoords = useMemo(() => {
     if (!displayData?.detail) return { lat: undefined, lng: undefined };

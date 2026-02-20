@@ -145,7 +145,6 @@ export default function LandmarkCard({
             fill
             className="object-cover object-[center_30%]"
             priority={isTop}
-            loading={isTop ? 'eager' : 'lazy'}
             unoptimized={imageUrl.includes('visitkorea.or.kr')}
             sizes="(max-width: 480px) 100vw, 480px"
             quality={85}

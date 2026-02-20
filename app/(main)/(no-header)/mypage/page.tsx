@@ -105,6 +105,7 @@ export default function MyPage() {
                   className="h-full w-full object-cover"
                   width={52}
                   height={52}
+                  priority
                 />
               ) : (
                 <ProfileIcon width={28} height={28} className="text-walkavel-gray-400" />
@@ -169,7 +170,7 @@ export default function MyPage() {
 
         {displayStamps.length > 0 ? (
           <div className="grid grid-cols-3 gap-3">
-            {displayStamps.map((stamp) => (
+            {displayStamps.map((stamp, index) => (
               <motion.div
                 key={stamp.contentid}
                 layout
@@ -186,6 +187,7 @@ export default function MyPage() {
                     width={122}
                     height={122}
                     className="h-full w-full object-cover"
+                    priority={index === 0}
                   />
                 ) : (
                   <div className="bg-walkavel-gray-200 flex h-full w-full items-center justify-center">

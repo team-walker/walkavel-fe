@@ -82,7 +82,6 @@ export function LandmarkImageGallery({ images, title, onBack }: LandmarkImageGal
                 fill
                 className="object-cover select-none"
                 priority
-                loading="eager"
                 unoptimized={images[currentSlide]?.includes('visitkorea.or.kr')}
                 sizes="(max-width: 480px) 100vw, 480px"
                 onDragStart={(e) => e.preventDefault()}

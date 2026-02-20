@@ -11,10 +11,12 @@ export const BookmarkItem = memo(function BookmarkItem({
   landmark,
   onRemove,
   onSelect,
+  priority = false,
 }: {
   landmark: LandmarkDto;
   onRemove: (id: number) => void;
   onSelect: (id: number) => void;
+  priority?: boolean;
 }) {
   const { x, opacity, isDragging, DragStart, DragEnd } = useSwipeAction(() =>
     onRemove(landmark.contentid),
@@ -60,6 +62,7 @@ export const BookmarkItem = memo(function BookmarkItem({
             width={80}
             height={80}
             className="h-full w-full object-cover"
+            priority={priority}
           />
         </div>
         <div className="min-w-0 flex-1">

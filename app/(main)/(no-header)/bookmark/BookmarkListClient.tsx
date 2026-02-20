@@ -66,6 +66,7 @@ export function BookmarkListClient({ initialBookmarks }: BookmarkListClientProps
             landmark={landmark}
             onRemove={handleDelete}
             onSelect={navigateToDetail}
+            priority={index === 0}
           />
         ))}
       </AnimatePresence>
