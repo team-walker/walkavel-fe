@@ -26,13 +26,21 @@ export const viewport: Viewport = {
   maximumScale: 1,
   userScalable: false,
   viewportFit: 'cover',
-  themeColor: '#ffffff',
+  themeColor: '#3182f6',
 };
 
 export const metadata: Metadata = {
   title: 'Walkavel - 여행을 걷다',
   description: 'Walk your way, Travel your story - 걷기 좋은 여행지 발견, 워커블(Walkavel)',
   manifest: '/manifest.json',
+  icons: {
+    icon: [
+      { url: '/icons/favicon.ico' },
+      { url: '/icons/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/icons/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: [{ url: '/icons/apple-touch-icon.png' }],
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
