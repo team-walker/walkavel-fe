@@ -1,13 +1,13 @@
 export const STAMP_CONFIG = {
-  DISCOVERY_DISTANCE: 150, // 스탬프 미션 시작 가능 거리 (미터 단위)
-  ACQUISITION_DISTANCE: 50, // 스탬프 자동 획득 허용 거리 (미터 단위)
+  DISCOVERY_DISTANCE: 150,
+  ACQUISITION_DISTANCE: 50,
 } as const;
 
 export const GEOLOCATION_CONFIG = {
-  HIGH_ACCURACY_THRESHOLD: 3000, // 고정밀 모드 유지 시간 (ms)
-  SEARCH_TIMEOUT: 10000, // 위치 조회 타임아웃 (ms)
-  MAX_AGE_HIGH: 0, // 고정밀 모드 시 위치 캐시 수명
-  MAX_AGE_LOW: 3000, // 일반 모드 시 위치 캐시 수명
+  HIGH_ACCURACY_THRESHOLD: 3000,
+  SEARCH_TIMEOUT: 10000,
+  MAX_AGE_HIGH: 0,
+  MAX_AGE_LOW: 3000,
 } as const;
 
 export const API_CONFIG = {

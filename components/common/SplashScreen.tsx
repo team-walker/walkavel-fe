@@ -20,24 +20,21 @@ export default function SplashScreen({
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
-    // 모바일 환경이 아니면 즉시 완료 처리 (데스크탑 대응)
     if (window.innerWidth >= 768) {
       onComplete();
       return;
     }
 
     const timer = setTimeout(() => {
-      // 로딩이 완료되었을 때만 시작
       if (isAppReady) {
         setIsVisible(false);
-        setTimeout(onComplete, 800); // exit 애니메이션 시간 대기
+        setTimeout(onComplete, 800);
       }
     }, minDisplayTime);
 
     return () => clearTimeout(timer);
   }, [isAppReady, minDisplayTime, onComplete]);
 
-  // isAppReady가 나중에 true가 되었을 때를 대비한 effect
   useEffect(() => {
     if (isAppReady && isVisible) {
       const checkTimer = setTimeout(() => {

@@ -76,7 +76,6 @@ export default function MyPage() {
   const avatarUrl = profile.avatar_url;
   const email = user?.email || '';
 
-  // 최근 획득한 스탬프 (기본 9개, 펼치면 전체)
   const allStamps = summary?.landmarks || [];
   const displayStamps = isExpanded ? allStamps : allStamps.slice(0, 9);
   const totalCollected = summary?.totalCount || 0;
@@ -84,13 +83,11 @@ export default function MyPage() {
 
   return (
     <div className="bg-walkavel-gray-50 w-full flex-1 overflow-y-auto pb-24">
-      {/* 상단 프로필 및 스탬프 활동 영역 (통합 블록) */}
       <div className="bg-white px-6 pt-12 pb-10">
         <h1 className="text-walkavel-gray-900 mb-6 text-[28px] font-bold tracking-tight">
           마이페이지
         </h1>
 
-        {/* 유저 프로필 카드 */}
         <Button
           variant="ghost"
           onClick={() => router.push('/mypage/edit')}
@@ -123,7 +120,6 @@ export default function MyPage() {
           <ChevronRightIcon width={20} height={20} className="text-walkavel-gray-400 shrink-0" />
         </Button>
 
-        {/* 스탬프 요약 카드 */}
         <div className="from-brand-blue to-brand-blue-dark relative mb-10 h-48.5 w-full overflow-hidden rounded-[24px] bg-linear-to-b shadow-xl">
           <div className="pointer-events-none absolute inset-0 opacity-12">
             <Trophy className="absolute top-4 right-8 -rotate-12 text-white/80" size={40} />
@@ -158,7 +154,6 @@ export default function MyPage() {
           </div>
         </div>
 
-        {/* 최근 획득한 스탬프 그리드 */}
         <div className="mb-4 flex items-center justify-between">
           <h3 className="text-walkavel-gray-900 text-[18px] font-bold tracking-tight">
             최근 획득한 스탬프
@@ -188,6 +183,7 @@ export default function MyPage() {
                     height={122}
                     className="h-full w-full object-cover"
                     priority={index === 0}
+                    unoptimized={stamp.firstimage?.includes('visitkorea.or.kr')}
                   />
                 ) : (
                   <div className="bg-walkavel-gray-200 flex h-full w-full items-center justify-center">
@@ -230,10 +226,8 @@ export default function MyPage() {
         )}
       </div>
 
-      {/* 회색 분리 영역 1 (스탬프와 설정 사이) */}
       <div className="border-walkavel-gray-50 bg-walkavel-gray-50 h-2 border-y" />
 
-      {/* 설정 영역 */}
       <div className="bg-white px-6 pt-8 pb-8">
         <h2 className="text-walkavel-gray-600 mb-4 text-[15px] font-bold tracking-tight">설정</h2>
 
@@ -253,7 +247,6 @@ export default function MyPage() {
         </div>
       </div>
 
-      {/* 회색 분리 영역 2 (설정 영역 하단) */}
       <div className="border-walkavel-gray-50 bg-walkavel-gray-50 h-2 border-t" />
     </div>
   );

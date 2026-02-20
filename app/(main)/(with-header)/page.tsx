@@ -12,7 +12,6 @@ import { useLandmarkExplore } from '@/hooks/useLandmarkExplore';
 import { useSplashStore } from '@/store/splash';
 import { LandmarkDto } from '@/types/model';
 
-// 동적 임포트 (초기 번들 크기 최적화)
 const SplashScreen = dynamic(() => import('@/components/common/SplashScreen'), { ssr: false });
 const Overlay = dynamic(() => import('@/components/home/Overlay'));
 const FinishSection = dynamic(() => import('@/components/home/FinishSection'));

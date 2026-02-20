@@ -22,9 +22,7 @@ export default function Overlay({ onDismiss }: OverlayProps) {
         className="relative mx-6 flex w-full max-w-[320px] flex-col items-center overflow-hidden rounded-[40px] bg-white px-8 pt-12 pb-10 shadow-[0_30px_60px_-12px_rgba(0,0,0,0.25)]"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* 상단 일러스트레이션 영역: 피그마 스타일의 스와이프 미리보기 */}
         <div className="bg-walkavel-gray-50 relative mb-10 flex h-36 w-full items-center justify-center overflow-hidden rounded-[24px]">
-          {/* 가상 카드 뭉치: 손가락 움직임에 맞춰 반대로 슬라이딩 */}
           <motion.div
             animate={{ x: [40, -40, 40] }}
             transition={{
@@ -39,7 +37,6 @@ export default function Overlay({ onDismiss }: OverlayProps) {
             <div className="bg-walkavel-gray-200 h-28 w-24 shrink-0 rounded-2xl" />
           </motion.div>
 
-          {/* 스와이프하는 손 가이드: 카드 위에서 좌우로 이동 */}
           <motion.div
             animate={{
               x: [-60, 60, -60],
@@ -56,16 +53,12 @@ export default function Overlay({ onDismiss }: OverlayProps) {
           </motion.div>
         </div>
 
-        {/* 텍스트 영역: 피그마 타이포그래피 반영 */}
         <div className="text-center">
           <p className="text-walkavel-gray-900 text-[18px] leading-tight font-bold tracking-tight">
             옆으로 밀어서
             <br />
             랜드마크를 둘러보세요
           </p>
-          {/* <div className="mt-4 inline-flex items-center rounded-full bg-walkavel-gray-100 px-4 py-1.5 text-[13px] font-medium text-walkavel-gray-500">
-            좌우 스와이프 가이드
-          </div> */}
         </div>
       </motion.div>
     </motion.div>

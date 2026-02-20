@@ -10,14 +10,14 @@ export const STORAGE_KEYS = {
 } as const;
 
 export const SWIPE_CONFIG = {
-  SWIPE_THRESHOLD: 100, // 스와이프 판정 거리 (px)
-  VELOCITY_THRESHOLD: 500, // 스와이프 판정 속도
-  EXIT_X: 1000, // 화면 밖으로 나가는 거리
+  SWIPE_THRESHOLD: 100,
+  VELOCITY_THRESHOLD: 500,
+  EXIT_X: 1000,
   WIGGLE_DELAY: 0.5,
   WIGGLE_DURATION: 0.6,
-  VISIBLE_RANGE: [-200, 0], // 스와이프 가이드/배경 가시 거리
-  THRESHOLD: -100, // 삭제 판정 기준 (왼쪽으로 100px)
-  VELOCITY: -500, // 삭제 판정 속도
+  VISIBLE_RANGE: [-200, 0],
+  THRESHOLD: -100,
+  VELOCITY: -500,
 } as const;
 
 /**

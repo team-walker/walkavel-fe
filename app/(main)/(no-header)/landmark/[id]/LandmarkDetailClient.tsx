@@ -22,7 +22,6 @@ import { triggerVibration, VIBRATION_PATTERNS } from '@/lib/utils/pwa';
 import { useExploreStore } from '@/store/exploreStore';
 import { LandmarkDetailResponseDto } from '@/types/model';
 
-// NaverMap 지연 로딩 (성능 최적화)
 const DynamicNaverMap = dynamic(
   () => import('@/components/common/NaverMap').then((mod) => mod.NaverMap),
   {
@@ -44,7 +43,6 @@ export default function LandmarkDetailClient({ id, initialData }: LandmarkDetail
   const router = useRouter();
   const [isMissionSheetOpen, setIsMissionSheetOpen] = useState(false);
 
-  // Tanstack Query의 initialData 활용
   const { data: landmarkData, galleryImages } = useLandmarkDetail(id, initialData);
 
   const [mounted, setMounted] = useState(false);
@@ -55,8 +53,6 @@ export default function LandmarkDetailClient({ id, initialData }: LandmarkDetail
     return () => clearTimeout(timer);
   }, []);
 
-  // landmarkData가 로딩 중이어도 initialData(서버에서 온 데이터)를 우선 표시하도록 보완 가능하지만
-  // 현재 hooks 구조상 data를 직접 사용함.
   const displayData = landmarkData || initialData;
 
   const { isCollected, setCollectedLocally } = useStamp();

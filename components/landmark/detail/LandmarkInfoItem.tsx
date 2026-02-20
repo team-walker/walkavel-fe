@@ -14,8 +14,6 @@ export function LandmarkInfoItem({ icon, label, content, isHtml }: LandmarkInfoI
 
   useEffect(() => {
     if (isHtml && content) {
-      // 서버 사이드 렌더링 시 dompurify가 window를 참조하여 발생하는 에러를 방지하기 위해
-      // 클라이언트 사이드에서만 다이내믹하게 임포트합니다.
       import('dompurify').then((mod) => {
         const DOMPurify = mod.default || mod;
         if (DOMPurify && typeof DOMPurify.sanitize === 'function') {

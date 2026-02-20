@@ -18,7 +18,7 @@ interface BookmarkListClientProps {
 
 export function BookmarkListClient({ initialBookmarks }: BookmarkListClientProps) {
   const router = useRouter();
-  const [isPending, startTransition] = useTransition();
+  const [, startTransition] = useTransition();
   const removeBookmarkLocally = useBookmarkStore((s) => s.removeBookmarkLocally);
 
   const [optimisticBookmarks, removeOptimisticBookmark] = useOptimistic(
@@ -28,13 +28,10 @@ export function BookmarkListClient({ initialBookmarks }: BookmarkListClientProps
 
   const handleDelete = (contentId: number) => {
     startTransition(async () => {
-      // 1. 낙관적 업데이트 수행 (transition 내부에서 호출)
       removeOptimisticBookmark(contentId);
 
-      // 2. Zustand 스토어 업데이트 (클라이언트 글로벌 상태 동기화)
       removeBookmarkLocally(contentId);
 
-      // 3. 서버 액션 실행 (contentId를 사용하도록 수정)
       const result = await removeBookmarkAction(contentId);
       if (!result.success) {
         showErrorToast(result.error || '삭제에 실패했습니다.');
@@ -73,7 +70,7 @@ export function BookmarkListClient({ initialBookmarks }: BookmarkListClientProps
 
       <div className="pt-4 pb-2 text-center">
         <p className="text-walkavel-gray-400 text-[13px]">
-          {isPending ? '처리 중...' : '카드를 왼쪽으로 밀어서 삭제할 수 있어요'}
+          카드를 왼쪽으로 밀어서 삭제할 수 있어요
         </p>
       </div>
     </div>

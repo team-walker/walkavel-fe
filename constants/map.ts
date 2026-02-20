@@ -6,7 +6,7 @@ export const MAP_CONFIG = {
   MIN_ZOOM: 6,
   MAX_ZOOM: 19,
   DEFAULT_CENTER: {
-    lat: 37.5665, // 서울 시청 기준
+    lat: 37.5665,
     lng: 126.978,
   },
 } as const;

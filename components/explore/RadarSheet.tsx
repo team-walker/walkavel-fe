@@ -10,7 +10,6 @@ import { useExploreStore } from '@/store/exploreStore';
 import { Button } from '../ui/button';
 import { RadarAnimation } from './RadarAnimation';
 
-// 성공 시 나타나는 스탬프 컴포넌트 (Figma 1.5안 스타일)
 function StampSuccessUI() {
   return (
     <div className="relative flex flex-col items-center">
@@ -26,7 +25,6 @@ function StampSuccessUI() {
       </motion.div>
 
       <div className="relative flex h-64 w-full items-center justify-center overflow-visible">
-        {/* 화려한 배경 파티클 (꽃가루 효과) */}
         <div className="absolute inset-0 flex items-center justify-center overflow-visible">
           {[...Array(24)].map((_, i) => {
             const randomX = (Math.sin(i * 12.9898) * 43758.5453) % 1;
@@ -60,7 +58,6 @@ function StampSuccessUI() {
           })}
         </div>
 
-        {/* 충격파 (Multiple Impact Rings) */}
         {[1, 2, 3].map((i) => (
           <motion.div
             key={i}
@@ -75,7 +72,6 @@ function StampSuccessUI() {
           />
         ))}
 
-        {/* 메인 스탬프 (피그마 이미지처럼 체크 아이콘) */}
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
@@ -95,7 +91,6 @@ function StampSuccessUI() {
             <Check size={70} strokeWidth={3} />
           </motion.div>
 
-          {/* 하이라이트 광택 모션 (고품질 글린트 효과) */}
           <motion.div
             animate={{ x: ['-250%', '250%'] }}
             transition={{
@@ -113,7 +108,6 @@ function StampSuccessUI() {
   );
 }
 
-// 유저 시나리오의 "하단에서 부드럽게 올라오며"를 구현하기 위해 AnimatePresence를 사용한 커스텀 시트
 export function RadarSheet({ id }: { id: string | number }) {
   const { distanceToTarget, isExploring, setIsExploring } = useExploreStore();
   const { isCollected: checkCollected } = useStamp();
@@ -121,27 +115,21 @@ export function RadarSheet({ id }: { id: string | number }) {
 
   const [showSuccess, setShowSuccess] = useState(false);
 
-  // 스탬프가 찍혔을 때의 연출과 1초 후 시트가 닫히는 로직
   useEffect(() => {
-    // 스탬프가 찍히면 성공 연출 시작
     if (isCollected && isExploring) {
-      // 획득 즉시 성공 연출로 전환
       const successTimer = setTimeout(() => {
         setShowSuccess(true);
       }, 0);
 
-      // 1초간의 축하 연출 후 자동으로 탐험 종료 (Figma 1.5안 요구사항)
       const closeTimer = setTimeout(() => {
         setIsExploring(false);
-        // setShowSuccess(false); // 리셋은 시트가 완전히 닫힌 후 하거나 AnimatePresence가 처리
-      }, 1500); // 연출 시간을 고려하여 1.5초 정도로 설정 (등장 0.5s + 축하 1s)
+      }, 1500);
 
       return () => {
         clearTimeout(successTimer);
         clearTimeout(closeTimer);
       };
     } else {
-      // 동기적 상태 업데이트로 인한 Cascading Render 방지를 위해 비동기 처리
       setTimeout(() => setShowSuccess(false), 0);
     }
   }, [isCollected, isExploring, setIsExploring]);
@@ -150,7 +138,6 @@ export function RadarSheet({ id }: { id: string | number }) {
     <AnimatePresence>
       {isExploring && (
         <div key="radar-sheet-wrapper" className="relative z-10000">
-          {/* 어두운 배경 (Overlay) */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -161,7 +148,6 @@ export function RadarSheet({ id }: { id: string | number }) {
             }}
             className="fixed inset-y-0 left-1/2 z-10000 w-full max-w-120 -translate-x-1/2 bg-black/60 backdrop-blur-sm"
           />
-          {/* 바텀 시트 (Sheet) */}
           <motion.div
             initial={{ y: '100%', x: '-50%' }}
             animate={{ y: 0, x: '-50%' }}
@@ -170,10 +156,8 @@ export function RadarSheet({ id }: { id: string | number }) {
             onClick={(e) => e.stopPropagation()}
             className="fixed bottom-0 left-1/2 z-10001 flex w-full max-w-120 flex-col items-center rounded-t-[24px] bg-white px-6 pt-3 pb-12 shadow-[0_-10px_40px_rgba(0,0,0,0.1)]"
           >
-            {/* 드래그 핸들 (Figma: #d1d5dc) */}
             <div className="bg-walkavel-gray-300 mb-8 h-1.5 w-12 rounded-full" />
 
-            {/* 성공 연출 */}
             {showSuccess ? (
               <StampSuccessUI />
             ) : (
@@ -191,7 +175,6 @@ export function RadarSheet({ id }: { id: string | number }) {
 
                 <RadarAnimation distance={distanceToTarget} />
 
-                {/* 하단 진행 바 (Figma 스타일) */}
                 <div className="mt-8 w-full space-y-2 px-4">
                   <div className="bg-walkavel-gray-100 h-2 w-full overflow-hidden rounded-full">
                     <motion.div
@@ -210,7 +193,6 @@ export function RadarSheet({ id }: { id: string | number }) {
               </>
             )}
 
-            {/* 닫기 버튼 (기존 기능 유지하되 Figma의 절제된 느낌으로 수정) */}
             {!showSuccess && (
               <Button
                 variant="ghost"

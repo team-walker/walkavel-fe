@@ -22,7 +22,6 @@ export function StampMissionSheet({
   distance,
   isCollected,
 }: StampMissionSheetProps) {
-  // 발견 시 햅틱 피드백 (Figma 요구사항)
   useEffect(() => {
     if (isOpen && !isCollected) {
       triggerVibration([...VIBRATION_PATTERNS.SUCCESS]);
@@ -35,7 +34,6 @@ export function StampMissionSheet({
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* 배후 레이어 (Dimmed) */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -44,7 +42,6 @@ export function StampMissionSheet({
             className="fixed inset-y-0 left-1/2 z-10001 w-full max-w-120 -translate-x-1/2 bg-black/60 backdrop-blur-[2px]"
           />
 
-          {/* 바텀 시트 (토스 스타일) */}
           <motion.div
             initial={{ y: '100%', x: '-50%' }}
             animate={{ y: 0, x: '-50%' }}
@@ -52,11 +49,9 @@ export function StampMissionSheet({
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
             className="fixed bottom-0 left-1/2 z-10002 flex w-full max-w-120 flex-col items-center rounded-t-[32px] bg-white px-6 pt-3 pb-[calc(env(safe-area-inset-bottom)+24px)] shadow-[0_-10px_40px_rgba(0,0,0,0.1)]"
           >
-            {/* 드래그 핸들 */}
             <div className="bg-walkavel-gray-200 mb-8 h-1.5 w-12 rounded-full" />
 
             <div className="flex w-full flex-col items-center text-center">
-              {/* 메인 아이콘/일러스트 영역 */}
               <div className="bg-brand-blue-light text-brand-blue relative mb-8 flex h-24 w-24 items-center justify-center rounded-3xl shadow-inner">
                 <Sparkles size={48} strokeWidth={1.5} />
                 <motion.div
@@ -76,7 +71,6 @@ export function StampMissionSheet({
                 탐험을 시작해서 스탬프를 획득해보세요!
               </p>
 
-              {/* 가이드 카드 */}
               <div className="bg-walkavel-gray-50 mb-8 flex w-full items-center gap-3 rounded-2xl p-4 text-left">
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white shadow-sm">
                   <MapPin size={20} className="text-brand-blue" />
@@ -88,7 +82,6 @@ export function StampMissionSheet({
                 </div>
               </div>
 
-              {/* 실행 버튼 */}
               <Button
                 onClick={() => {
                   onStart();
