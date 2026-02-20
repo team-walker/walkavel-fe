@@ -159,12 +159,12 @@ export default function LandmarkDetailClient({ id, initialData }: LandmarkDetail
         <div className="bg-white">
           <div className="px-6 pt-6 pb-48">
             <div className="border-walkavel-gray-100 mb-6 rounded-4xl border-2 bg-white p-5 shadow-sm">
-              <div className="mb-3 flex items-center justify-between">
-                <h1 className="text-walkavel-gray-900 text-[24px] leading-tight font-bold">
+              <div className="mb-3 flex items-start justify-between gap-4">
+                <h1 className="text-walkavel-gray-900 flex-1 text-[24px] leading-tight font-bold">
                   {detail.title}
                 </h1>
                 {collected && (
-                  <div className="bg-brand-blue-light text-brand-blue flex items-center gap-1 rounded-full px-3 py-1 text-[12px] font-bold">
+                  <div className="bg-brand-blue-light text-brand-blue mt-1 flex shrink-0 items-center gap-1 rounded-full px-3 py-1 text-[12px] font-bold">
                     <Sparkles size={14} className="fill-brand-blue" />
                     수집 완료
                   </div>
