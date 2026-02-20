@@ -11,8 +11,8 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 
-describe('Dialog Component', () => {
-  it('opens when trigger is clicked and displays content', async () => {
+describe('Dialog 컴포넌트', () => {
+  it('트리거를 클릭하면 다이얼로그가 열리고 콘텐츠를 표시해야 한다', async () => {
     render(
       <Dialog>
         <DialogTrigger>Open Dialog</DialogTrigger>
@@ -44,7 +44,7 @@ describe('Dialog Component', () => {
     expect(screen.getByText('Cancel')).toBeInTheDocument();
   });
 
-  it('closes when the close button is clicked', async () => {
+  it('닫기 버튼을 클릭하면 다이얼로그가 닫혀야 한다', async () => {
     render(
       <Dialog defaultOpen>
         <DialogContent>

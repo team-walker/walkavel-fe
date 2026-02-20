@@ -54,3 +54,19 @@ next-env.d.ts
 /coverage
 /playwright-report
 /test-results
+
+# ---------------------------------------------------------
+# Local Temporary Ignore (병합 등을 위해 임시로 무시)
+# ---------------------------------------------------------
+.handoff/
+.storybook/
+stories/
+playwright/
+__tests__/
+e2e/
+*.test.tsx
+*.test.ts
+jest.config.ts
+jest.setup.ts
+playwright.config.ts
+*.bak

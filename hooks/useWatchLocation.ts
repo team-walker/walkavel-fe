@@ -11,7 +11,7 @@ export const useWatchLocation = (targetLat?: number, targetLng?: number) => {
   const watchId = useRef<number | null>(null);
 
   const startWatching = useCallback(() => {
-    if (typeof window === 'undefined' || !('geolocation' in navigator)) {
+    if (typeof window === 'undefined' || !navigator.geolocation) {
       showErrorToast('GPS를 지원하지 않는 브라우저입니다.');
       return;
     }
