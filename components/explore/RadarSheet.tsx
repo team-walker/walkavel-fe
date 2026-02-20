@@ -153,8 +153,16 @@ export function RadarSheet({ id }: { id: string | number }) {
             animate={{ y: 0, x: '-50%' }}
             exit={{ y: '100%', x: '-50%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+            drag="y"
+            dragConstraints={{ top: 0, bottom: 0 }}
+            dragElastic={{ top: 0, bottom: 0.8 }}
+            onDragEnd={(_, info) => {
+              if (info.offset.y > 100) {
+                setIsExploring(false);
+              }
+            }}
             onClick={(e) => e.stopPropagation()}
-            className="fixed bottom-0 left-1/2 z-10001 flex w-full max-w-120 flex-col items-center rounded-t-[24px] bg-white px-6 pt-3 pb-12 shadow-[0_-10px_40px_rgba(0,0,0,0.1)]"
+            className="fixed bottom-0 left-1/2 z-10001 flex min-h-[500px] w-full max-w-120 flex-col items-center rounded-t-[24px] bg-white px-6 pt-3 pb-12 shadow-[0_-10px_40px_rgba(0,0,0,0.1)]"
           >
             <div className="bg-walkavel-gray-300 mb-8 h-1.5 w-12 rounded-full" />
 

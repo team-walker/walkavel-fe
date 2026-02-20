@@ -47,7 +47,15 @@ export function StampMissionSheet({
             animate={{ y: 0, x: '-50%' }}
             exit={{ y: '100%', x: '-50%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed bottom-0 left-1/2 z-10002 flex w-full max-w-120 flex-col items-center rounded-t-[32px] bg-white px-6 pt-3 pb-[calc(env(safe-area-inset-bottom)+24px)] shadow-[0_-10px_40px_rgba(0,0,0,0.1)]"
+            drag="y"
+            dragConstraints={{ top: 0, bottom: 0 }}
+            dragElastic={{ top: 0, bottom: 0.8 }}
+            onDragEnd={(_, info) => {
+              if (info.offset.y > 100) {
+                onClose();
+              }
+            }}
+            className="fixed bottom-0 left-1/2 z-10002 flex min-h-[450px] w-full max-w-120 flex-col items-center rounded-t-[32px] bg-white px-6 pt-3 pb-[calc(env(safe-area-inset-bottom)+24px)] shadow-[0_-10px_40px_rgba(0,0,0,0.1)]"
           >
             <div className="bg-walkavel-gray-200 mb-8 h-1.5 w-12 rounded-full" />
 
