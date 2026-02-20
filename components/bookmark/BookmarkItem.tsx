@@ -63,6 +63,7 @@ export const BookmarkItem = memo(function BookmarkItem({
             height={80}
             className="h-full w-full object-cover"
             priority={priority}
+            unoptimized={landmark.firstimage?.includes('visitkorea.or.kr')}
           />
         </div>
         <div className="min-w-0 flex-1">
