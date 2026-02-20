@@ -1,7 +1,6 @@
-import axios, { AxiosError, type AxiosRequestConfig, type InternalAxiosRequestConfig } from 'axios';
+import axios, { AxiosError, type InternalAxiosRequestConfig } from 'axios';
 
 import { supabase } from '@/lib/supabase/client';
-import { useAuthStore } from '@/store/authStore';
 
 const DEFAULT_TIMEOUT = 10000;
 
@@ -19,13 +18,16 @@ export const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   async (config: InternalAxiosRequestConfig) => {
-    const {
-      data: { session },
-    } = await supabase.auth.getSession();
-    const token = session?.access_token;
+    try {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
 
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+      if (session?.access_token) {
+        config.headers.Authorization = `Bearer ${session.access_token}`;
+      }
+    } catch (error) {
+      console.error('Failed to get session for axios request:', error);
     }
     return config;
   },
@@ -36,19 +38,16 @@ axiosInstance.interceptors.response.use(
   (response) => response,
   async (error: AxiosError) => {
     if (error.response?.status === 401) {
-      await supabase.auth.signOut();
-      useAuthStore.getState().resetAuth();
+      console.error('Authentication required. Session may have expired.');
 
-      if (typeof window !== 'undefined' && window.location.pathname !== '/') {
-        window.location.replace('/login');
+      if (typeof window !== 'undefined') {
+        const { supabase } = await import('@/lib/supabase/client');
+        await supabase.auth.signOut();
+        window.location.href = `/login?returnTo=${encodeURIComponent(window.location.pathname)}&expired=true`;
       }
     }
     return Promise.reject(error);
   },
 );
-
-export const customInstance = <T>(config: AxiosRequestConfig): Promise<T> => {
-  return axiosInstance(config).then((response) => response.data);
-};
 
 export default axiosInstance;

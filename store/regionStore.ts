@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
+import { STORAGE_KEYS } from '@/constants/types';
 import { AddressResult } from '@/types/address';
 
 interface RegionState {
@@ -21,7 +22,7 @@ export const useRegionStore = create<RegionState>()(
       setHasHydrated: (state) => set({ _hasHydrated: state }),
     }),
     {
-      name: 'walkavel-region-storage',
+      name: STORAGE_KEYS.REGION_STORAGE,
       onRehydrateStorage: () => (state) => {
         state?.setHasHydrated(true);
       },

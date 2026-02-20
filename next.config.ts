@@ -119,7 +119,13 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'http',
-        hostname: 'tong.visitkorea.or.kr',
+        hostname: '**.visitkorea.or.kr',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.visitkorea.or.kr',
         port: '',
         pathname: '/**',
       },

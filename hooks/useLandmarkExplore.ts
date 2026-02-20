@@ -1,54 +1,19 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { toast } from 'sonner';
-
 import { STORAGE_KEYS } from '@/constants/types';
-import { useAuthStore } from '@/store/authStore';
-import { useBookmarkStore } from '@/store/bookmarkStore';
-import { useExploreStore } from '@/store/exploreStore';
-import { useRegionStore } from '@/store/regionStore';
 import { AddressResult } from '@/types/address';
-import { getAPIDocumentation } from '@/types/api';
-import { LandmarkDto } from '@/types/model';
+
+import { useExploreActions } from './useExploreActions';
+import { useExploreData } from './useExploreData';
 
 export const useLandmarkExplore = () => {
-  const router = useRouter();
-  const {
-    step,
-    landmarks,
-    currentIndex,
-    setStep,
-    setLandmarks,
-    setCurrentIndex,
-    _hasHydrated: _hasExploreHydrated,
-  } = useExploreStore();
-  const {
-    selectedRegion,
-    setRegion,
-    clearRegion,
-    _hasHydrated: _hasRegionHydrated,
-  } = useRegionStore();
+  const data = useExploreData();
+  const actions = useExploreActions();
 
-  const [direction, setDirection] = useState<'left' | 'right' | null>(null);
-  const [showGuide, setShowGuide] = useState(false);
-  const { bookmarks, toggleBookmark } = useBookmarkStore();
-
-  const { user, pendingAction, setPendingAction } = useAuthStore();
-  const { tourControllerGetLandmarksByRegion } = useMemo(() => getAPIDocumentation(), []);
-
-  const _hasHydrated = _hasExploreHydrated && _hasRegionHydrated;
-
-  useEffect(() => {
-    if (user && pendingAction?.type === 'bookmark') {
-      const { landmarkId } = pendingAction.payload;
-      const landmark = landmarks.find((l) => l.contentid === landmarkId);
-
-      if (landmark) {
-        toggleBookmark(landmark);
-      }
-      setPendingAction(null);
+  const onAddressSelect = async (address: AddressResult) => {
+    const success = await data.handleAddressSelect(address);
+    if (success && !localStorage.getItem(STORAGE_KEYS.ONBOARDING_SEEN)) {
+      actions.setShowGuide(true);
     }
   }, [user, pendingAction, landmarks, toggleBookmark, setPendingAction]);
 
@@ -179,20 +144,8 @@ export const useLandmarkExplore = () => {
   }, [showGuide, handleDismissGuide]);
 
   return {
-    step,
-    landmarks,
-    currentIndex,
-    direction,
-    showGuide,
-    bookmarks,
-    _hasHydrated,
-    selectedRegion,
-    handleAddressSelect,
-    handleDismissGuide,
-    handleSwipe,
-    handleBookmark,
-    handleReset,
-    handleResetUnbookmarked,
-    handleReselect,
+    ...data,
+    ...actions,
+    handleAddressSelect: onAddressSelect,
   };
 };

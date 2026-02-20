@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
+import { STORAGE_KEYS } from '@/constants/types';
 interface SplashStore {
   isVisible: boolean;
   _hasHydrated: boolean;
@@ -17,7 +18,7 @@ export const useSplashStore = create<SplashStore>()(
       setHasHydrated: (state) => set({ _hasHydrated: state }),
     }),
     {
-      name: 'splash-storage',
+      name: STORAGE_KEYS.SPLASH_STORAGE,
       storage: createJSONStorage(() => sessionStorage),
       onRehydrateStorage: () => (state) => {
         state?.setHasHydrated(true);

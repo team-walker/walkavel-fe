@@ -7,7 +7,7 @@ export default function NoHeaderLayout({ children }: { children: React.ReactNode
     <main
       id="main-content"
       role="main"
-      className="no-scrollbar flex-1 overflow-y-auto pb-[calc(88px+env(safe-area-inset-bottom))]"
+      className="no-scrollbar flex-1 overflow-y-auto pb-[calc(88px+env(safe-area-inset-bottom,0px))]"
     >
       <PageTransition>{children}</PageTransition>
     </main>
