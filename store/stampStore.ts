@@ -19,6 +19,7 @@ interface StampState {
   resetFailedState: (landmarkId: number) => void;
   setRequesting: (landmarkId: number, isRequesting: boolean) => void;
   setFailed: (landmarkId: number) => void;
+  clearStamps: () => void;
 }
 
 export const useStampStore = create<StampState>()(
@@ -64,6 +65,7 @@ export const useStampStore = create<StampState>()(
           failedIds: [...state.failedIds, landmarkId],
         }));
       },
+      clearStamps: () => set({ collectedIds: {}, summary: null, requestingIds: [], failedIds: [] }),
     }),
     {
       name: STORAGE_KEYS.STAMP_STORAGE,

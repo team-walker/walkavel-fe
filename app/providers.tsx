@@ -8,20 +8,22 @@ import { useStamp } from '@/hooks/useStamp';
 import { supabase } from '@/lib/supabase/client';
 import { showErrorToast, showSuccessToast } from '@/lib/utils/toast';
 import { useAuthStore } from '@/store/authStore';
+import { useBookmarkStore } from '@/store/bookmarkStore';
+import { useExploreStore } from '@/store/exploreStore';
+import { useStampStore } from '@/store/stampStore';
 
 export default function AuthProvider({ children }: { children: React.ReactNode }) {
   const { setUser, setInitialized } = useAuthStore();
   const { fetchStamps } = useStamp();
   const { fetchBookmarks } = useBookmark();
 
-  // QueryClient 인스턴스를 상태로 관리하여 참조 무결성 유지
   const [queryClient] = useState(
     () =>
       new QueryClient({
         defaultOptions: {
           queries: {
-            staleTime: 1000 * 60 * 5, // 5분간 Fresh 상태 유지
-            cacheTime: 1000 * 60 * 30, // 30분 후 가비지 컬렉션
+            staleTime: 1000 * 60 * 5,
+            cacheTime: 1000 * 60 * 30,
           },
         },
       }),
@@ -59,12 +61,15 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
         fetchStamps();
         fetchBookmarks();
       } else {
-        // 로그아웃 시 데이터 초기화 (필요시)
+        useBookmarkStore.getState().clearBookmarks();
+        useStampStore.getState().clearStamps();
+        useExploreStore.getState().resetExplore();
+        queryClient.clear();
       }
     });
 
     return () => subscription.unsubscribe();
-  }, [setUser, setInitialized, fetchStamps, fetchBookmarks]);
+  }, [setUser, setInitialized, fetchStamps, fetchBookmarks, queryClient]);
 
   return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
 }
