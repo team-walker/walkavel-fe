@@ -41,7 +41,7 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
       window.removeEventListener('online', handleOnline);
       window.removeEventListener('offline', handleOffline);
     };
-  });
+  }, []);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
