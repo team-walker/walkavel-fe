@@ -16,7 +16,7 @@ export default function BottomNav() {
   return (
     <nav
       aria-label="하단 네비게이션"
-      className="border-walkavel-gray-100 fixed bottom-0 left-1/2 z-50 w-full max-w-120 -translate-x-1/2 border-t-[0.5px] bg-white pb-[env(safe-area-inset-bottom,0px)]"
+      className="border-walkavel-gray-100 fixed bottom-0 left-1/2 z-9999 w-full max-w-120 -translate-x-1/2 border-t-[0.5px] bg-white pb-[env(safe-area-inset-bottom,0px)]"
     >
       <div className="flex h-22 items-center justify-between px-5">
         {NAV_ITEMS.map(({ href, label, icon: IconComponent }) => {
