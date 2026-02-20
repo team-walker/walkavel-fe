@@ -38,7 +38,10 @@ export const useLoginLogic = () => {
       if (error) throw error;
     } catch (error: unknown) {
       console.error('Login error:', error);
-      const message = error instanceof Error ? error.message : '로그인 중 문제가 발생했습니다.';
+      const message =
+        error instanceof Error
+          ? error.message
+          : (error as { message?: string })?.message || '로그인 중 문제가 발생했습니다.';
       setError(message);
       showErrorToast(message);
       setLoading(false);
@@ -59,7 +62,10 @@ export const useLoginLogic = () => {
       router.replace('/');
     } catch (error: unknown) {
       console.error('Logout error:', error);
-      const message = error instanceof Error ? error.message : '로그아웃 중 오류가 발생했습니다.';
+      const message =
+        error instanceof Error
+          ? error.message
+          : (error as { message?: string })?.message || '로그아웃 중 오류가 발생했습니다.';
       showErrorToast(message);
     } finally {
       setLoading(false);

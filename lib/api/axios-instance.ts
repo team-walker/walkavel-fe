@@ -34,17 +34,22 @@ axiosInstance.interceptors.request.use(
   (error) => Promise.reject(error),
 );
 
+const redirectToLogin = async () => {
+  if (typeof window !== 'undefined') {
+    const { supabase } = await import('@/lib/supabase/client');
+    await supabase.auth.signOut();
+    window.location.href = `/login?returnTo=${encodeURIComponent(
+      window.location.pathname,
+    )}&expired=true`;
+  }
+};
+
 axiosInstance.interceptors.response.use(
   (response) => response,
   async (error: AxiosError) => {
     if (error.response?.status === 401) {
       console.error('Authentication required. Session may have expired.');
-
-      if (typeof window !== 'undefined') {
-        const { supabase } = await import('@/lib/supabase/client');
-        await supabase.auth.signOut();
-        window.location.href = `/login?returnTo=${encodeURIComponent(window.location.pathname)}&expired=true`;
-      }
+      await redirectToLogin();
     }
     return Promise.reject(error);
   },
