@@ -17,6 +17,12 @@ export function LandmarkInfoItem({ icon, label, content, isHtml }: LandmarkInfoI
       import('dompurify').then((mod) => {
         const DOMPurify = mod.default || mod;
         if (DOMPurify && typeof DOMPurify.sanitize === 'function') {
+          DOMPurify.addHook('afterSanitizeAttributes', function (node) {
+            if ('target' in node) {
+              node.setAttribute('target', '_blank');
+              node.setAttribute('rel', 'noopener noreferrer');
+            }
+          });
           setSanitized(DOMPurify.sanitize(content));
         }
       });
