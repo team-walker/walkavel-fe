@@ -12,8 +12,8 @@ import {
   CommandShortcut,
 } from '@/components/ui/command';
 
-describe('Command Component', () => {
-  it('renders correctly with input and list', () => {
+describe('Command 컴포넌트', () => {
+  it('input 및 list와 함께 올바르게 렌더링되어야 한다', () => {
     render(
       <Command>
         <CommandInput placeholder="Type to search..." />
@@ -36,7 +36,7 @@ describe('Command Component', () => {
     expect(screen.getByText('⌘C')).toBeInTheDocument();
   });
 
-  it('renders CommandDialog', async () => {
+  it('CommandDialog를 렌더링해야 한다', async () => {
     render(
       <CommandDialog open={true}>
         <CommandInput placeholder="Search..." />
@@ -48,7 +48,7 @@ describe('Command Component', () => {
     expect(await screen.findByPlaceholderText('Search...')).toBeInTheDocument();
   });
 
-  it('displays empty message when no items match', () => {
+  it('일치하는 항목이 없을 때 빈 메시지를 표시해야 한다', () => {
     // Note: Behavior depends on cmdk implementation, but we can test rendering
     render(
       <Command>

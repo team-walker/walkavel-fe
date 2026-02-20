@@ -10,8 +10,8 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 
-describe('Card Component', () => {
-  it('renders all sections correctly', () => {
+describe('Card 컴포넌트', () => {
+  it('모든 섹션이 올바르게 렌더링되어야 한다', () => {
     render(
       <Card>
         <CardHeader>
@@ -31,7 +31,7 @@ describe('Card Component', () => {
     expect(screen.getByText('Footer')).toBeInTheDocument();
   });
 
-  it('applies custom className to parts', () => {
+  it('각 부분에 사용자 지정 className이 적용되어야 한다', () => {
     render(
       <Card className="card-class">
         <CardHeader className="header-class">Header</CardHeader>
@@ -45,7 +45,7 @@ describe('Card Component', () => {
     expect(header).toHaveClass('header-class');
   });
 
-  it('renders with appropriate data-slots for styling', () => {
+  it('스타일링을 위한 적절한 data-slots와 함께 렌더링되어야 한다', () => {
     render(
       <Card>
         <CardTitle>Title</CardTitle>
