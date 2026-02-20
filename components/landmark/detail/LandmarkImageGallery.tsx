@@ -40,13 +40,8 @@ export function LandmarkImageGallery({ images, title, onBack }: LandmarkImageGal
     }),
   };
 
-  const swipeConfidenceThreshold = 1000;
-  const swipePower = (offset: number, velocity: number) => {
-    return Math.abs(offset) * velocity;
-  };
-
   return (
-    <div className="relative h-full w-full overflow-hidden bg-gray-100">
+    <div className="bg-walkavel-gray-100 relative h-full w-full overflow-hidden">
       <div className="sr-only" aria-live="polite" aria-atomic="true">
         {images.length > 0
           ? `${images.length}장 중 ${currentSlide + 1}번째 이미지: ${title}`
@@ -68,33 +63,34 @@ export function LandmarkImageGallery({ images, title, onBack }: LandmarkImageGal
               }}
               drag="x"
               dragConstraints={{ left: 0, right: 0 }}
-              dragElastic={1}
+              dragElastic={0.2}
               onDragEnd={(e, info) => {
-                const offset = info.offset.x;
-                const velocity = info.velocity.x;
-                const swipe = swipePower(offset, velocity);
+                const threshold = 50;
+                const velocityThreshold = 500;
 
-                if (swipe < -swipeConfidenceThreshold) {
+                if (info.offset.x < -threshold || info.velocity.x < -velocityThreshold) {
                   paginate(1);
-                } else if (swipe > swipeConfidenceThreshold) {
+                } else if (info.offset.x > threshold || info.velocity.x > velocityThreshold) {
                   paginate(-1);
                 }
               }}
-              className="absolute inset-0 h-full w-full touch-pan-y"
+              className="absolute inset-0 h-full w-full cursor-grab touch-pan-y active:cursor-grabbing"
             >
               <ImageWithFallback
                 src={images[currentSlide]}
                 alt={`${title} 이미지 ${currentSlide + 1}`}
                 fill
-                className="object-cover"
+                className="object-cover select-none"
                 priority
+                unoptimized={images[currentSlide]?.includes('visitkorea.or.kr')}
                 sizes="(max-width: 480px) 100vw, 480px"
+                onDragStart={(e) => e.preventDefault()}
               />
             </motion.div>
           </AnimatePresence>
         </div>
       ) : (
-        <div className="flex h-full w-full items-center justify-center bg-gray-200 text-gray-400">
+        <div className="bg-walkavel-gray-200 text-walkavel-gray-400 flex h-full w-full items-center justify-center">
           이미지가 없습니다
         </div>
       )}
@@ -104,7 +100,7 @@ export function LandmarkImageGallery({ images, title, onBack }: LandmarkImageGal
       <Button
         onClick={onBack}
         aria-label="이전 페이지로 돌아가기"
-        className="absolute top-6 left-6 z-10 flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-white p-0 text-gray-900 shadow-md backdrop-blur-sm transition-transform hover:bg-white/70 active:scale-95"
+        className="text-walkavel-gray-900 absolute top-[calc(env(safe-area-inset-top)+1.5rem)] left-6 z-10 flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-white p-0 shadow-md backdrop-blur-sm transition-transform hover:bg-white/70 active:scale-95"
       >
         <ChevronLeft size={24} strokeWidth={2.5} />
       </Button>

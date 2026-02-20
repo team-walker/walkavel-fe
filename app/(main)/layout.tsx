@@ -8,7 +8,7 @@ interface MainLayoutProps {
 
 export default function MainLayout({ children }: MainLayoutProps) {
   return (
-    <div className="h-dvh overflow-hidden bg-gray-100">
+    <div className="bg-walkavel-gray-100 fixed inset-0 overflow-hidden">
       <div className="relative mx-auto flex h-full max-w-120 flex-col bg-white shadow-lg">
         <a
           href="#main-content"

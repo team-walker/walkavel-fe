@@ -3,6 +3,7 @@ import { FC, SVGProps } from 'react';
 import BookmarkIcon from '@/public/images/bookmark.svg';
 import HomeIcon from '@/public/images/home.svg';
 import ProfileIcon from '@/public/images/profile.svg';
+import SearchIcon from '@/public/images/search.svg';
 
 export interface NavItems {
   href: string;
@@ -12,6 +13,7 @@ export interface NavItems {
 
 export const ROUTES = {
   HOME: '/',
+  SEARCH: '/search',
   BOOKMARK: '/bookmark',
   MYPAGE: '/mypage',
   LANDMARK_DETAIL: (id: number | string) => `/landmark/${id}`,
@@ -22,6 +24,11 @@ export const NAV_ITEMS: NavItems[] = [
     href: '/',
     label: '홈',
     icon: HomeIcon,
+  },
+  {
+    href: '/search',
+    label: '검색',
+    icon: SearchIcon,
   },
   {
     href: '/bookmark',

@@ -18,53 +18,32 @@ export default function SplashScreen({
   minDisplayTime = 2000,
 }: SplashScreenProps) {
   const [isVisible, setIsVisible] = useState(true);
-  const [mounted, setMounted] = useState(false);
-  const [minTimePassed, setMinTimePassed] = useState(false);
 
   useEffect(() => {
-    const mountTimer = setTimeout(() => {
-      setMounted(true);
-    }, 0);
-    return () => clearTimeout(mountTimer);
-  }, []);
-
-  useEffect(() => {
-    if (!mounted) return;
-
     if (window.innerWidth >= 768) {
-      const bypassTimer = setTimeout(() => {
-        onComplete();
-      }, 0);
-      return () => clearTimeout(bypassTimer);
+      onComplete();
+      return;
     }
-  }, [mounted, onComplete]);
 
-  useEffect(() => {
     const timer = setTimeout(() => {
-      setMinTimePassed(true);
+      if (isAppReady) {
+        setIsVisible(false);
+        setTimeout(onComplete, 800);
+      }
     }, minDisplayTime);
 
     return () => clearTimeout(timer);
-  }, [minDisplayTime]);
+  }, [isAppReady, minDisplayTime, onComplete]);
 
   useEffect(() => {
-    if (!mounted || !minTimePassed || !isAppReady) return;
-
-    const hideTimer = setTimeout(() => {
-      setIsVisible(false);
-    }, 0);
-
-    const exitTimer = setTimeout(() => {
-      onComplete();
-    }, 800);
-
-    return () => {
-      clearTimeout(hideTimer);
-      clearTimeout(exitTimer);
-    };
-  }, [mounted, isAppReady, minTimePassed, onComplete]);
-
-  if (!mounted) return null;
+    if (isAppReady && isVisible) {
+      const checkTimer = setTimeout(() => {
+        setIsVisible(false);
+        setTimeout(onComplete, 800);
+      }, minDisplayTime);
+      return () => clearTimeout(checkTimer);
+    }
+  }, [isAppReady, minDisplayTime, onComplete, isVisible]);
 
   return createPortal(
     <AnimatePresence>
@@ -74,7 +53,7 @@ export default function SplashScreen({
           exit={{ opacity: 0 }}
           transition={{ duration: 0.8, ease: 'easeInOut' }}
           data-testid="splash-screen"
-          className="fixed inset-0 z-9999 flex h-dvh w-full flex-col items-center justify-center bg-white p-6"
+          className="fixed inset-y-0 left-1/2 z-9999 flex h-dvh w-full max-w-120 -translate-x-1/2 flex-col items-center justify-center bg-white p-6"
         >
           <motion.div
             initial={{ scale: 0.8, opacity: 0, y: 20 }}
@@ -91,7 +70,7 @@ export default function SplashScreen({
             }}
             className="flex flex-col items-center gap-4 sm:gap-6"
           >
-            <div className="mb-14 flex h-25 w-25 items-center justify-center rounded-[32px] bg-[#3182F6] shadow-[0_8px_30px_rgba(49,130,246,0.15)]">
+            <div className="bg-brand-blue shadow-brand-blue/15 mb-14 flex h-25 w-25 items-center justify-center rounded-[32px] shadow-xl">
               <FootLogoIcon className="h-12 w-12 text-white" />
             </div>
 
@@ -100,7 +79,7 @@ export default function SplashScreen({
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5, duration: 1 }}
-                className="font-outfit text-2xl font-bold tracking-tight text-blue-600 sm:text-3xl"
+                className="font-outfit text-brand-blue text-2xl font-bold tracking-tight sm:text-3xl"
               >
                 Walkavel
               </motion.h1>
@@ -108,7 +87,7 @@ export default function SplashScreen({
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.8, duration: 1 }}
-                className="mt-2 px-4 text-xs font-medium text-gray-400 sm:text-sm"
+                className="text-walkavel-gray-400 mt-2 px-4 text-xs font-medium sm:text-sm"
               >
                 우리만의 걷기 좋은 길, 특별한 여행의 시작
               </motion.p>
@@ -121,9 +100,9 @@ export default function SplashScreen({
             transition={{ delay: 1.2 }}
             className="absolute bottom-12 mb-[env(safe-area-inset-bottom)] flex items-center gap-2 sm:bottom-16"
           >
-            <div className="h-1 w-1 animate-bounce rounded-full bg-blue-400 [animation-delay:-0.3s]" />
-            <div className="h-1 w-1 animate-bounce rounded-full bg-blue-400 [animation-delay:-0.15s]" />
-            <div className="h-1 w-1 animate-bounce rounded-full bg-blue-400" />
+            <div className="bg-brand-blue h-1 w-1 animate-bounce rounded-full [animation-delay:-0.3s]" />
+            <div className="bg-brand-blue h-1 w-1 animate-bounce rounded-full [animation-delay:-0.15s]" />
+            <div className="bg-brand-blue h-1 w-1 animate-bounce rounded-full" />
           </motion.div>
         </motion.div>
       )}

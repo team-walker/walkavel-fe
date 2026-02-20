@@ -10,8 +10,8 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 
-describe('Popover Component', () => {
-  it('displays popover content when trigger is clicked', async () => {
+describe('Popover 컴포넌트', () => {
+  it('트리거를 클릭하면 팝오버 콘텐츠를 표시해야 한다', async () => {
     render(
       <Popover>
         <PopoverTrigger>Toggle Popover</PopoverTrigger>
@@ -38,7 +38,7 @@ describe('Popover Component', () => {
     expect(screen.getByText('Description')).toBeInTheDocument();
   });
 
-  it('renders with PopoverAnchor', async () => {
+  it('PopoverAnchor와 함께 렌더링되어야 한다', async () => {
     render(
       <Popover open={true}>
         <PopoverAnchor>Anchor</PopoverAnchor>
@@ -48,7 +48,7 @@ describe('Popover Component', () => {
     expect(await screen.findByText('Content')).toBeInTheDocument();
   });
 
-  it('can be controlled with open prop', () => {
+  it('open prop으로 제어할 수 있어야 한다', () => {
     const { rerender } = render(
       <Popover open={false}>
         <PopoverTrigger>Trigger</PopoverTrigger>

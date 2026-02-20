@@ -1,34 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-interface AddressElement {
-  types: string[];
-  longName: string;
-  shortName: string;
-  code: string;
-}
-
-interface NaverAddress {
-  roadAddress: string;
-  jibunAddress: string;
-  englishAddress: string;
-  addressElements: AddressElement[];
-  x: string;
-  y: string;
-  distance: number;
-  sido?: string;
-  sigugun?: string;
-}
-
-interface NaverGeocodeResponse {
-  status: string;
-  meta: {
-    totalCount: number;
-    page: number;
-    count: number;
-  };
-  addresses: NaverAddress[];
-  errorMessage: string;
-}
+import { getGeocodeAction } from '@/lib/api/geocode-service';
 
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
@@ -39,74 +11,28 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'Query is required.' }, { status: 400 });
   }
 
-  const clientId = process.env.NEXT_PUBLIC_NAVER_MAPS_CLIENT_ID || process.env.NAVER_CLIENT_ID;
-  const clientSecret = process.env.NAVER_CLIENT_SECRET;
+  try {
+    const addresses = await getGeocodeAction(query, region || undefined);
 
-  if (!clientId || !clientSecret) {
-    const missing = [];
-    if (!clientId) missing.push('NAVER_CLIENT_ID');
-    if (!clientSecret) missing.push('NAVER_CLIENT_SECRET');
-
-    console.error('Naver API configuration error. Missing variables:', missing.join(', '));
+    return NextResponse.json({
+      status: 'OK',
+      meta: {
+        totalCount: addresses.length,
+        page: 1,
+        count: addresses.length,
+      },
+      addresses,
+    });
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Internal Server Error';
+    console.error('Geocode API Route error:', error);
 
     return NextResponse.json(
       {
-        error: 'Server configuration error.',
-        details: `Missing environment variables: ${missing.join(', ')}`,
+        error: errorMessage,
         timestamp: new Date().toISOString(),
       },
       { status: 500 },
     );
-  }
-
-  const SEOUL_COORDINATE = '126.978388,37.566610';
-
-  let url = `https://maps.apigw.ntruss.com/map-geocode/v2/geocode?query=${encodeURIComponent(query)}`;
-  url += `&coordinate=${SEOUL_COORDINATE}`;
-
-  try {
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'X-NCP-APIGW-API-KEY-ID': clientId,
-        'X-NCP-APIGW-API-KEY': clientSecret,
-        Accept: 'application/json',
-      },
-    });
-
-    const data: NaverGeocodeResponse = await response.json();
-
-    if (data.addresses) {
-      data.addresses = data.addresses.map((address: NaverAddress) => {
-        const sido =
-          address.addressElements.find((element: AddressElement) => element.types.includes('SIDO'))
-            ?.longName || '';
-        const sigugun =
-          address.addressElements.find((element: AddressElement) =>
-            element.types.includes('SIGUGUN'),
-          )?.longName || '';
-
-        return {
-          ...address,
-          sido,
-          sigugun,
-        };
-      });
-
-      if (region) {
-        data.addresses = data.addresses.filter(
-          (address: NaverAddress) =>
-            address.roadAddress.includes(region) || address.jibunAddress.includes(region),
-        );
-      }
-
-      data.meta.totalCount = data.addresses.length;
-      data.meta.count = data.addresses.length;
-    }
-
-    return NextResponse.json(data);
-  } catch (error) {
-    console.error(error);
-    return NextResponse.json({ error: 'Failed to fetch geocode data.' }, { status: 500 });
   }
 }

@@ -1,19 +1,14 @@
 'use client';
 
-import { type ClassValue, clsx } from 'clsx';
 import { motion } from 'framer-motion';
 import { MapPin } from 'lucide-react';
 import React from 'react';
-import { twMerge } from 'tailwind-merge';
 
 import { ImageWithFallback } from '@/components/common/ImageWithFallback';
+import { cn } from '@/lib/utils';
 import BookmarkIcon from '@/public/images/bookmark.svg';
 
 import { Button } from '../ui/button';
-
-function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
 
 interface LandmarkHeroCardProps {
   landmark: {
@@ -53,6 +48,8 @@ export default function LandmarkHeroCard({
         src={landmark.image}
         alt={landmark.name}
         fill
+        priority
+        unoptimized={landmark.image.includes('visitkorea.or.kr')}
         sizes="(max-width: 480px) 100vw, 480px"
         className="pointer-events-none h-full w-full object-cover object-[center_30%]"
       />
@@ -69,7 +66,7 @@ export default function LandmarkHeroCard({
         <BookmarkIcon
           className={cn(
             'stroke-2.5 h-5 w-5 transition-colors',
-            isBookmarked ? 'fill-[#3182F6] text-[#3182F6]' : 'text-gray-700',
+            isBookmarked ? 'fill-brand-blue text-brand-blue' : 'text-walkavel-gray-700',
           )}
         />
       </Button>

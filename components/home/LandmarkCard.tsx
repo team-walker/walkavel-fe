@@ -5,7 +5,9 @@ import { MapPin } from 'lucide-react';
 
 import { ImageWithFallback } from '@/components/common/ImageWithFallback';
 import { Card } from '@/components/ui/card';
+import { SWIPE_CONFIG } from '@/constants/types';
 import { cn } from '@/lib/utils';
+import { triggerVibration, VIBRATION_PATTERNS } from '@/lib/utils/pwa';
 import BookmarkIcon from '@/public/images/bookmark.svg';
 import { LandmarkDto } from '@/types/model';
 
@@ -43,13 +45,18 @@ export default function LandmarkCard({
   const handleDragEnd = (e: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     if (!isTop) return;
 
-    const threshold = 100;
-    const velocityThreshold = 500;
-
-    if (info.offset.x < -threshold || info.velocity.x < -velocityThreshold) {
+    if (
+      info.offset.x < -SWIPE_CONFIG.SWIPE_THRESHOLD ||
+      info.velocity.x < -SWIPE_CONFIG.VELOCITY_THRESHOLD
+    ) {
+      triggerVibration(VIBRATION_PATTERNS.SWIPE);
       onSwipe?.('left');
-    } else if (info.offset.x > threshold || info.velocity.x > velocityThreshold) {
+    } else if (
+      info.offset.x > SWIPE_CONFIG.SWIPE_THRESHOLD ||
+      info.velocity.x > SWIPE_CONFIG.VELOCITY_THRESHOLD
+    ) {
       if (isFirstCard) return;
+      triggerVibration(VIBRATION_PATTERNS.SWIPE);
       onSwipe?.('right');
     }
   };
@@ -57,7 +64,7 @@ export default function LandmarkCard({
   const handleBookmarkClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     onBookmark?.(data);
-    console.log('Bookmark clicked:', data.contentid);
+    triggerVibration(VIBRATION_PATTERNS.SWIPE);
   };
 
   const handleCardClick = () => {
@@ -68,7 +75,7 @@ export default function LandmarkCard({
 
   const variants: Variants = {
     initial: (dir: DIRECTION | null) => ({
-      x: dir === 'right' ? -1000 : 0,
+      x: dir === 'right' ? -SWIPE_CONFIG.EXIT_X : 0,
       opacity: 0,
       scale: 0.9,
     }),
@@ -79,8 +86,8 @@ export default function LandmarkCard({
       transition: {
         x: shouldWiggle
           ? {
-              delay: 0.5,
-              duration: 0.6,
+              delay: SWIPE_CONFIG.WIGGLE_DELAY,
+              duration: SWIPE_CONFIG.WIGGLE_DURATION,
               ease: 'easeInOut',
             }
           : {
@@ -94,7 +101,7 @@ export default function LandmarkCard({
       },
     },
     exit: (dir: DIRECTION | null) => ({
-      x: dir === 'left' ? -1000 : dir === 'right' ? 1000 : 0,
+      x: dir === 'left' ? -SWIPE_CONFIG.EXIT_X : dir === 'right' ? SWIPE_CONFIG.EXIT_X : 0,
       opacity: 0,
       scale: 0.9,
       transition: { duration: 0.3 },
@@ -138,12 +145,13 @@ export default function LandmarkCard({
             fill
             className="object-cover object-[center_30%]"
             priority={isTop}
+            unoptimized={imageUrl.includes('visitkorea.or.kr')}
             sizes="(max-width: 480px) 100vw, 480px"
             quality={85}
           />
         ) : (
-          <div className="flex h-full w-full items-center justify-center bg-zinc-100">
-            <span className="text-sm font-medium text-zinc-400">이미지가 없습니다</span>
+          <div className="bg-walkavel-gray-100 flex h-full w-full items-center justify-center">
+            <span className="text-walkavel-gray-400 text-sm font-medium">이미지가 없습니다</span>
           </div>
         )}
         <div className="absolute inset-0 bg-linear-to-b from-transparent via-[rgba(0,0,0,0.2)] via-50% to-[rgba(0,0,0,0.8)]" />
@@ -156,7 +164,7 @@ export default function LandmarkCard({
             <BookmarkIcon
               className={cn(
                 'stroke-2.5 h-5 w-5 transition-colors',
-                isBookmarked ? 'fill-[#3182F6] text-[#3182F6]' : 'text-gray-700',
+                isBookmarked ? 'fill-brand-blue text-brand-blue' : 'text-walkavel-gray-700',
               )}
             />
           </Button>

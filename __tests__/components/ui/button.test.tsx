@@ -2,20 +2,20 @@ import { fireEvent, render, screen } from '@testing-library/react';
 
 import { Button } from '@/components/ui/button';
 
-describe('Button Component', () => {
-  it('renders correctly', () => {
+describe('Button 컴포넌트', () => {
+  it('올바르게 렌더링되어야 한다', () => {
     render(<Button>Click me</Button>);
     const button = screen.getByRole('button', { name: /click me/i });
     expect(button).toBeInTheDocument();
   });
 
-  it('applies the correct variant class', () => {
+  it('올바른 변형 클래스를 적용해야 한다', () => {
     render(<Button variant="destructive">Delete</Button>);
     const button = screen.getByRole('button', { name: /delete/i });
     expect(button).toHaveClass('bg-destructive');
   });
 
-  it('handles click events', () => {
+  it('클릭 이벤트를 처리해야 한다', () => {
     const handleClick = jest.fn();
     render(<Button onClick={handleClick}>Click me</Button>);
     const button = screen.getByRole('button', { name: /click me/i });
@@ -23,7 +23,7 @@ describe('Button Component', () => {
     expect(handleClick).toHaveBeenCalledTimes(1);
   });
 
-  it('is disabled when the disabled prop is passed', () => {
+  it('disabled prop이 전달되면 비활성화되어야 한다', () => {
     const handleClick = jest.fn();
     render(
       <Button disabled onClick={handleClick}>
@@ -36,7 +36,7 @@ describe('Button Component', () => {
     expect(handleClick).not.toHaveBeenCalled();
   });
 
-  it('renders as a child component when asChild is true', () => {
+  it('asChild가 true일 때 자식 컴포넌트로 렌더링되어야 한다', () => {
     render(
       <Button asChild>
         <a href="/test">Link Button</a>

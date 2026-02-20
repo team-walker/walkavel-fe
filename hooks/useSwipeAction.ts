@@ -5,7 +5,7 @@ import { SWIPE_CONFIG } from '@/constants/types';
 
 export const useSwipeAction = (onAction: () => void) => {
   const x = useMotionValue(0);
-  const opacity = useTransform(x, [...SWIPE_CONFIG.VISIBLE_RANGE], [0, 1]);
+  const opacity = useTransform(x, [...SWIPE_CONFIG.VISIBLE_RANGE], [1, 0]);
   const isDragging = useRef(false);
 
   const DragStart = () => {

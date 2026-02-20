@@ -11,10 +11,12 @@ export const BookmarkItem = memo(function BookmarkItem({
   landmark,
   onRemove,
   onSelect,
+  priority = false,
 }: {
   landmark: LandmarkDto;
   onRemove: (id: number) => void;
   onSelect: (id: number) => void;
+  priority?: boolean;
 }) {
   const { x, opacity, isDragging, DragStart, DragEnd } = useSwipeAction(() =>
     onRemove(landmark.contentid),
@@ -51,24 +53,28 @@ export const BookmarkItem = memo(function BookmarkItem({
         onClick={() => {
           if (!isDragging.current) onSelect(landmark.contentid);
         }}
-        className="relative z-10 flex cursor-pointer touch-pan-y items-center space-x-4 rounded-4xl border border-gray-100 bg-white p-4 shadow-sm transition-colors active:bg-gray-50"
+        className="border-walkavel-gray-100 active:bg-walkavel-gray-50 relative z-10 flex cursor-pointer touch-pan-y items-center space-x-4 rounded-4xl border bg-white p-4 shadow-sm transition-colors"
       >
-        <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-3xl border border-gray-100">
+        <div className="border-walkavel-gray-100 flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-3xl border">
           <ImageWithFallback
             src={landmark.firstimage || ''}
             alt={landmark.title}
             width={80}
             height={80}
             className="h-full w-full object-cover"
+            priority={priority}
+            unoptimized={landmark.firstimage?.includes('visitkorea.or.kr')}
           />
         </div>
         <div className="min-w-0 flex-1">
-          <h3 className="mb-1 truncate text-[17px] font-bold text-gray-900">{landmark.title}</h3>
-          <p className="truncate text-[14px] text-gray-500">
+          <h3 className="text-walkavel-gray-900 mb-1 truncate text-[17px] font-bold">
+            {landmark.title}
+          </h3>
+          <p className="text-walkavel-gray-500 truncate text-[14px]">
             {landmark.addr1 || '상세 주소 정보가 없습니다.'}
           </p>
         </div>
-        <ChevronRightIcon width={22} height={22} className="shrink-0 text-gray-300" />
+        <ChevronRightIcon width={22} height={22} className="text-walkavel-gray-300 shrink-0" />
       </motion.div>
     </motion.div>
   );

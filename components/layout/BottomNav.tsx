@@ -16,7 +16,7 @@ export default function BottomNav() {
   return (
     <nav
       aria-label="하단 네비게이션"
-      className="fixed bottom-0 left-1/2 z-50 w-full max-w-120 -translate-x-1/2 border-t-[0.5px] border-[#F3F4F6] bg-white pb-[env(safe-area-inset-bottom)]"
+      className="border-walkavel-gray-100 fixed bottom-0 left-1/2 z-9999 w-full max-w-120 -translate-x-1/2 border-t-[0.5px] bg-white pb-[env(safe-area-inset-bottom,0px)]"
     >
       <div className="flex h-22 items-center justify-between px-5">
         {NAV_ITEMS.map(({ href, label, icon: IconComponent }) => {
@@ -34,7 +34,7 @@ export default function BottomNav() {
               }}
               className={cn(
                 'relative flex flex-1 flex-col items-center justify-center py-1 transition-colors duration-200',
-                isActive ? 'text-[#3182F6]' : 'text-[#99A1AF] hover:text-[#3182F6]/50',
+                isActive ? 'text-brand-blue' : 'text-walkavel-gray-400 hover:text-brand-blue/50',
               )}
               aria-current={isActive ? 'page' : undefined}
             >

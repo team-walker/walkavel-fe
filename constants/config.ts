@@ -1,0 +1,22 @@
+export const STAMP_CONFIG = {
+  DISCOVERY_DISTANCE: 150,
+  ACQUISITION_DISTANCE: 50,
+} as const;
+
+export const GEOLOCATION_CONFIG = {
+  HIGH_ACCURACY_THRESHOLD: 3000,
+  SEARCH_TIMEOUT: 10000,
+  MAX_AGE_HIGH: 0,
+  MAX_AGE_LOW: 3000,
+} as const;
+
+export const API_CONFIG = {
+  DEFAULT_TIMEOUT: 10000,
+  SEARCH_DEBOUNCE: 300,
+  BASE_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001',
+} as const;
+
+export const UI_CONFIG = {
+  ANIMATION_DURATION: 0.3,
+  TOAST_DURATION: 3000,
+} as const;
