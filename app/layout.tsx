@@ -5,6 +5,7 @@ import { Analytics } from '@vercel/analytics/next';
 import type { Metadata, Viewport } from 'next';
 import { Inter, Outfit } from 'next/font/google';
 
+import GlobalLayout from '@/components/layout/GlobalLayout';
 import { Toaster } from '@/components/ui/sonner';
 
 import AuthProvider from './providers';
@@ -38,11 +39,11 @@ export const metadata: Metadata = {
       { url: '/icons/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
       { url: '/icons/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
     ],
-    apple: [{ url: '/icons/apple-touch-icon.png' }],
+    apple: [{ url: '/icons/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
   },
   appleWebApp: {
     capable: true,
-    statusBarStyle: 'black-translucent',
+    statusBarStyle: 'default',
     title: 'Walkavel',
   },
   formatDetection: {
@@ -58,15 +59,17 @@ export default function RootLayout({
   return (
     <html lang="ko-KR">
       <body className={`${inter.variable} ${outfit.variable} font-sans antialiased`}>
-        <AuthProvider>{children}</AuthProvider>
-        <Analytics />
-        <Toaster
-          position="top-center"
-          toastOptions={{
-            unstyled: true,
-          }}
-          className="flex w-full justify-center"
-        />
+        <GlobalLayout>
+          <AuthProvider>{children}</AuthProvider>
+          <Analytics />
+          <Toaster
+            position="top-center"
+            toastOptions={{
+              unstyled: true,
+            }}
+            className="flex w-full justify-center"
+          />
+        </GlobalLayout>
       </body>
     </html>
   );
