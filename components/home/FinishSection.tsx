@@ -37,7 +37,7 @@ export default function FinishSection({
             onClick={onReselect}
             className="bg-brand-blue hover:bg-brand-blue/90 h-15.25 min-h-15.25 w-full cursor-pointer rounded-3xl text-[1.0625rem] font-semibold tracking-tight text-white shadow-none transition-all active:scale-[0.98]"
           >
-            다른 지역 보러가기
+            다른 지역 보러 가기
           </Button>
 
           <Button

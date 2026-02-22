@@ -14,10 +14,6 @@ interface State {
   error: Error | null;
 }
 
-/**
- * 선언적 에러 핸들링을 위한 Error Boundary 컴포넌트입니다.
- * 특정 UI 영역(예: 지도, 카드 리스트)에서 발생하는 런타임 에러를 격격하여 전체 앱이 깨지는 것을 방지합니다.
- */
 export class ErrorBoundary extends Component<Props, State> {
   public state: State = {
     hasError: false,

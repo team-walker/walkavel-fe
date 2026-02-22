@@ -23,7 +23,7 @@ export default function BottomNav() {
         stiffness: 260,
         damping: 20,
       }}
-      aria-label="하단 네비게이션"
+      aria-label="하단 내비게이션"
       className="fixed bottom-0 left-1/2 z-9999 w-full max-w-120 -translate-x-1/2 rounded-t-3xl border-x border-t border-gray-100 bg-white/80 pb-[env(safe-area-inset-bottom,0px)] shadow-[0_-4px_20px_0_rgba(0,0,0,0.05)] backdrop-blur-md will-change-transform sm:border-gray-50"
     >
       <div className="flex items-center justify-between px-10 max-sm:h-16 sm:h-22">

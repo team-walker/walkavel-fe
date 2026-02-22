@@ -195,7 +195,7 @@ export function RadarSheet({ id }: { id: string | number }) {
                     />
                   </div>
                   <p className="text-walkavel-gray-600 text-center text-sm break-keep">
-                    50m 이내로 접근해주세요
+                    50m 이내로 접근해 주세요
                   </p>
                 </div>
               </>

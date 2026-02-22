@@ -76,7 +76,7 @@ export function StampMissionSheet({
                 현재 장소에서 약 <span className="text-brand-blue font-bold">{distance}m</span>{' '}
                 거리에 있어요.
                 <br />
-                탐험을 시작해서 스탬프를 획득해보세요!
+                탐험을 시작해서 스탬프를 획득해 보세요!
               </p>
 
               <div className="bg-walkavel-gray-50 mb-8 flex w-full items-center gap-3 rounded-2xl p-4 text-left">
