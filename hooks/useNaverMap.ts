@@ -19,7 +19,7 @@ export const useNaverMap = ({ lat, lng, isMapLoaded, mapElement }: UseNaverMapPr
   const [isLocating, setIsLocating] = useState(false);
 
   useEffect(() => {
-    if (!isMapLoaded || !mapElement.current || typeof naver === 'undefined') return;
+    if (!isMapLoaded || !mapElement.current || typeof naver === 'undefined' || !naver.maps) return;
 
     const location = new naver.maps.LatLng(lat, lng);
 

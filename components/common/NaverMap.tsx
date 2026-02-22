@@ -33,7 +33,7 @@ export const NaverMap = ({
   return (
     <div className={`relative ${className}`}>
       <Script
-        src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVER_MAPS_CLIENT_ID}`}
+        src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=${process.env.NEXT_PUBLIC_NAVER_MAPS_CLIENT_ID}`}
         onReady={() => setIsMapLoaded(true)}
       />
       <div ref={mapElement} style={{ width: '100%', height: '100%' }} />
