@@ -28,7 +28,7 @@ export const useStamp = () => {
       const response = await stampRepository.getSummary();
       const idMap: Record<number, boolean> = {};
       response.landmarks.forEach((landmark) => {
-        idMap[landmark.contentid] = true;
+        idMap[landmark.landmarkId] = true;
       });
       setCollectedIds(idMap);
       setSummary(response);
