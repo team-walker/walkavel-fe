@@ -1,7 +1,6 @@
 'use client';
 
-import DOMPurify from 'dompurify';
-import { ReactNode } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 
 interface LandmarkInfoItemProps {
   icon: ReactNode;
@@ -11,22 +10,41 @@ interface LandmarkInfoItemProps {
 }
 
 export function LandmarkInfoItem({ icon, label, content, isHtml }: LandmarkInfoItemProps) {
+  const [sanitized, setSanitized] = useState<string>('');
+
+  useEffect(() => {
+    if (isHtml && content) {
+      import('dompurify').then((mod) => {
+        const DOMPurify = mod.default || mod;
+        if (DOMPurify && typeof DOMPurify.sanitize === 'function') {
+          DOMPurify.addHook('afterSanitizeAttributes', function (node) {
+            if ('target' in node) {
+              node.setAttribute('target', '_blank');
+              node.setAttribute('rel', 'noopener noreferrer');
+            }
+          });
+          setSanitized(DOMPurify.sanitize(content));
+        }
+      });
+    }
+  }, [content, isHtml]);
+
   if (!content) return null;
 
   return (
-    <li className="flex items-start rounded-2xl border border-gray-100 bg-white p-4">
-      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#F2F4F6]">
+    <li className="border-walkavel-gray-100 flex items-start rounded-2xl border bg-white p-4">
+      <div className="bg-walkavel-gray-100 flex h-10 w-10 shrink-0 items-center justify-center rounded-full">
         {icon}
       </div>
       <div className="ml-3 min-w-0 flex-1">
-        <div className="mb-1 text-[13px] text-gray-500">{label}</div>
+        <div className="text-walkavel-gray-500 mb-1 text-[13px]">{label}</div>
         {isHtml ? (
           <div
-            className="text-[15px] leading-relaxed font-medium break-all whitespace-pre-wrap text-gray-900"
-            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(content) }}
+            className="text-walkavel-gray-900 text-[15px] leading-relaxed font-medium break-all whitespace-pre-wrap"
+            dangerouslySetInnerHTML={{ __html: sanitized || content }}
           />
         ) : (
-          <div className="text-[15px] font-medium text-gray-900">{content}</div>
+          <div className="text-walkavel-gray-900 text-[15px] font-medium">{content}</div>
         )}
       </div>
     </li>

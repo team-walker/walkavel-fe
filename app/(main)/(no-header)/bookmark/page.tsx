@@ -1,66 +1,53 @@
-'use client';
+import { Suspense } from 'react';
 
-import { AnimatePresence } from 'framer-motion';
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { getBookmarksAction } from '@/app/actions/bookmark';
+import { BookmarkedLandmark } from '@/types/app';
+import { BookmarkResponseDto } from '@/types/model';
 
-import { BookmarkItem } from '@/components/bookmark/BookmarkItem';
-import EmptyView from '@/components/bookmark/EmptyView';
-import { ROUTES } from '@/constants/navigation';
-import { useBookmarkStore } from '@/store/bookmarkStore';
+import { BookmarkListClient } from './BookmarkListClient';
 
-export default function BookmarkPage() {
-  const router = useRouter();
-  const { bookmarks, isLoading, removeBookmark, fetchBookmarks } = useBookmarkStore();
+export const dynamic = 'force-dynamic';
 
-  useEffect(() => {
-    fetchBookmarks();
-  }, [fetchBookmarks]);
+const mapToBookmarkedLandmark = (bookmark: BookmarkResponseDto): BookmarkedLandmark | null => {
+  if (!bookmark.landmark) return null;
+  return {
+    contentid: bookmark.landmark.contentid || 0,
+    title: bookmark.landmark.title,
+    firstimage: bookmark.landmark.firstimage,
+    addr1: bookmark.landmark.addr1,
+    cat1: bookmark.landmark.cat1,
+    cat2: bookmark.landmark.cat2,
+    cat3: bookmark.landmark.cat3,
+    bookmarkId: bookmark.id,
+  } as BookmarkedLandmark;
+};
 
-  const onDeleteBookmark = (id: number) => removeBookmark(id);
-  const navigateToDetail = (id: number) => router.push(ROUTES.LANDMARK_DETAIL(id));
+export default async function BookmarkPage() {
+  const response = await getBookmarksAction();
 
-  if (isLoading && bookmarks.length === 0) {
-    return (
-      <div
-        className="flex min-h-screen items-center justify-center bg-white"
-        role="status"
-        aria-label="북마크 정보를 불러오는 중입니다"
-      >
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-blue-500 border-t-transparent" />
-      </div>
-    );
-  }
+  const initialBookmarks: BookmarkedLandmark[] = (response || [])
+    .map(mapToBookmarkedLandmark)
+    .filter((l): l is BookmarkedLandmark => l !== null);
 
   return (
-    <div className="flex min-h-full w-full flex-col bg-white px-6 pt-8">
+    <div className="flex min-h-full w-full flex-col bg-white px-6 pt-[calc(env(safe-area-inset-top,0px)+2rem)]">
       <div className="mb-6 shrink-0">
-        <h1 className="text-[28px] leading-tight font-bold text-gray-900">나의 워커블</h1>
-        <p className="mt-2 text-[16px] text-gray-500">
-          저장한 장소 <span className="font-bold text-[#3182F6]">{bookmarks.length}개</span>
-        </p>
+        <h1 className="text-walkavel-gray-900 text-[28px] leading-tight font-bold">나의 워커블</h1>
       </div>
 
-      {bookmarks.length === 0 ? (
-        <EmptyView />
-      ) : (
-        <div className="space-y-3 pb-24">
-          <AnimatePresence mode="popLayout" initial={false}>
-            {bookmarks.map((landmark) => (
-              <BookmarkItem
-                key={landmark.contentid}
-                landmark={landmark}
-                onRemove={onDeleteBookmark}
-                onSelect={navigateToDetail}
-              />
-            ))}
-          </AnimatePresence>
+      <Suspense fallback={<BookmarkSkeleton />}>
+        <BookmarkListClient initialBookmarks={initialBookmarks} />
+      </Suspense>
+    </div>
+  );
+}
 
-          <div className="pt-4 pb-2 text-center">
-            <p className="text-[13px] text-gray-400">카드를 왼쪽으로 밀어서 삭제할 수 있어요</p>
-          </div>
-        </div>
-      )}
+function BookmarkSkeleton() {
+  return (
+    <div className="space-y-3">
+      {[...Array(3)].map((_, i) => (
+        <div key={i} className="bg-walkavel-gray-50 h-28 w-full animate-pulse rounded-4xl" />
+      ))}
     </div>
   );
 }

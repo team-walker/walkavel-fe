@@ -1,12 +1,11 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { AlertCircle, CheckCircle2, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
 import * as z from 'zod';
 
 import { Button } from '@/components/ui/button';
@@ -21,6 +20,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { supabase } from '@/lib/supabase/client';
+import { showErrorToast, showSuccessToast } from '@/lib/utils/toast';
 import ArrowLeftIcon from '@/public/images/arrow-left.svg';
 import CameraIcon from '@/public/images/camera.svg';
 import ProfileIcon from '@/public/images/profile.svg';
@@ -142,11 +142,9 @@ export default function ProfileEditPage() {
       const fallbackAvatar = user.user_metadata?.avatar_url || user.user_metadata?.picture || '';
       setAvatarUrl(fallbackAvatar);
 
-      toast.error('이미지 업로드에 실패했습니다.', {
-        description: '네트워크 연결을 확인하거나 나중에 다시 시도해주세요.',
-        icon: <AlertCircle className="h-5 w-5 text-[#FF3B30]" />,
-        className: 'bg-white border-2 border-[#F2F2F7] rounded-2xl p-4 shadow-lg',
-      });
+      showErrorToast(
+        '이미지 업로드에 실패했습니다. 네트워크 연결을 확인하거나 나중에 다시 시도해주세요.',
+      );
     } finally {
       setUploading(false);
     }
@@ -187,18 +185,12 @@ export default function ProfileEditPage() {
         setUser(authData.user);
       }
 
-      toast.success('프로필이 성공적으로 저장되었습니다.', {
-        icon: <CheckCircle2 className="h-5 w-5 text-[#34C759]" />,
-        className: 'bg-white border-2 border-[#F2F2F7] rounded-2xl p-4 shadow-lg',
-      });
+      showSuccessToast('프로필이 성공적으로 저장되었습니다.');
+
       router.back();
     } catch (error) {
       console.error('Profile update error:', error);
-      toast.error('저장에 실패했습니다.', {
-        description: error instanceof Error ? error.message : '알 수 없는 오류가 발생했습니다.',
-        icon: <AlertCircle className="h-5 w-5 text-[#FF3B30]" />,
-        className: 'bg-white border-2 border-[#F2F2F7] rounded-2xl p-4 shadow-lg',
-      });
+      showErrorToast('저장에 실패했습니다.');
     } finally {
       setLoading(false);
     }
@@ -206,22 +198,24 @@ export default function ProfileEditPage() {
 
   return (
     <div className="flex h-full flex-col bg-white">
-      <div className="border-b-[0.5px] border-[#F3F4F6] bg-white px-6 pt-8 pb-3">
+      <div className="border-walkavel-gray-100 border-b-[0.5px] bg-white px-6 pt-8 pb-3">
         <div className="flex h-10 items-center justify-between">
           <Button
             variant="ghost"
             size="icon"
             onClick={() => router.back()}
-            className="-ml-2 h-10 w-10 cursor-pointer rounded-2xl p-0 transition-colors hover:bg-gray-50 active:bg-gray-100"
+            className="hover:bg-walkavel-gray-50 active:bg-walkavel-gray-100 -ml-2 h-10 w-10 cursor-pointer rounded-2xl p-0 transition-colors"
           >
-            <ArrowLeftIcon width={24} height={24} className="stroke-2 text-[#101828]" />
+            <ArrowLeftIcon width={24} height={24} className="text-walkavel-gray-900 stroke-2" />
           </Button>
-          <h1 className="text-[20px] font-bold tracking-tight text-[#101828]">프로필 수정</h1>
+          <h1 className="text-walkavel-gray-900 text-[20px] font-bold tracking-tight">
+            프로필 수정
+          </h1>
           <Button
             variant="ghost"
             onClick={form.handleSubmit(onSubmit)}
             disabled={loading || uploading || !form.formState.isDirty}
-            className="h-9 min-w-13 rounded-[10px] px-3 text-[16px] font-bold text-[#3182F6] hover:bg-[#F8FAFF] active:bg-[#EBF3FF] disabled:opacity-50"
+            className="text-brand-blue active:bg-brand-blue-light hover:bg-brand-blue-light h-9 min-w-13 rounded-[10px] px-3 text-[16px] font-bold disabled:opacity-50"
           >
             {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : '완료'}
           </Button>
@@ -233,7 +227,7 @@ export default function ProfileEditPage() {
           <div className="px-6 pt-8 pb-7">
             <div className="flex flex-col items-center">
               <div className="relative">
-                <div className="h-24 w-24 rounded-full bg-linear-to-b from-[#3182F6] to-[#1B64DA] p-0.75 shadow-[0_10px_15px_-3px_rgba(0,0,0,0.1),0_4px_6px_-2px_rgba(0,0,0,0.05)]">
+                <div className="from-brand-blue to-brand-blue-dark h-24 w-24 rounded-full bg-linear-to-b p-0.75 shadow-lg">
                   <div className="flex h-full w-full items-center justify-center overflow-hidden rounded-full bg-white">
                     {avatarUrl ? (
                       <Image
@@ -245,12 +239,12 @@ export default function ProfileEditPage() {
                         unoptimized={avatarUrl.startsWith('http') || avatarUrl.startsWith('blob:')}
                       />
                     ) : (
-                      <ProfileIcon width={40} height={40} className="text-gray-300" />
+                      <ProfileIcon width={40} height={40} className="text-walkavel-gray-300" />
                     )}
                   </div>
                   {uploading && (
                     <div className="absolute inset-0 flex items-center justify-center rounded-full bg-white/40 backdrop-blur-[1px]">
-                      <Loader2 className="h-6 w-6 animate-spin text-[#3182F6]" />
+                      <Loader2 className="text-brand-blue h-6 w-6 animate-spin" />
                     </div>
                   )}
                 </div>
@@ -258,7 +252,7 @@ export default function ProfileEditPage() {
                   type="button"
                   onClick={handleAvatarClick}
                   disabled={uploading}
-                  className="absolute right-0 bottom-0 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-[#3182F6] shadow-[0_10px_15px_-3px_rgba(0,0,0,0.1)] transition-all hover:bg-[#1B64DA] active:scale-95 disabled:bg-gray-400"
+                  className="bg-brand-blue hover:bg-brand-blue-dark disabled:bg-walkavel-gray-400 absolute right-0 bottom-0 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full shadow-lg transition-all active:scale-95"
                 >
                   <CameraIcon width={18} height={18} className="text-white" />
                 </Button>
@@ -270,7 +264,7 @@ export default function ProfileEditPage() {
                   className="hidden"
                 />
               </div>
-              <p className="mt-5 text-[13px] tracking-tight text-[#6A7282]">
+              <p className="text-walkavel-gray-600 mt-5 text-[13px] tracking-tight">
                 프로필 이미지를 변경하려면 카메라 아이콘을 클릭하세요
               </p>
             </div>
@@ -282,13 +276,13 @@ export default function ProfileEditPage() {
               name="nickname"
               render={({ field }) => (
                 <FormItem className="space-y-2">
-                  <FormLabel className="text-[14px] font-bold tracking-tight text-[#101828]">
+                  <FormLabel className="text-walkavel-gray-900 text-[14px] font-bold tracking-tight">
                     닉네임
                   </FormLabel>
                   <FormControl>
                     <Input
                       {...field}
-                      className="h-13 w-full border-none bg-[#F8F9FA] px-4 py-3.5 text-[16px] text-[#101828] transition-all placeholder:text-[#99A1AF] focus:bg-white focus:ring-2 focus:ring-[#3182F6] focus:outline-none"
+                      className="bg-walkavel-gray-50 text-walkavel-gray-900 placeholder:text-walkavel-gray-400 focus:ring-brand-blue h-13 w-full border-none px-4 py-3.5 text-[16px] transition-all focus:bg-white focus:ring-2 focus:outline-none"
                       style={{ borderRadius: '14px' }}
                       placeholder="닉네임을 입력하세요"
                       maxLength={20}
@@ -296,7 +290,7 @@ export default function ProfileEditPage() {
                   </FormControl>
                   <div className="flex justify-between px-1">
                     <FormMessage className="text-[12px] text-red-500" />
-                    <p className="ml-auto text-[12px] tracking-tight text-[#99A1AF]">
+                    <p className="text-walkavel-gray-400 ml-auto text-[12px] tracking-tight">
                       {field.value.length} / 20
                     </p>
                   </div>
@@ -305,7 +299,9 @@ export default function ProfileEditPage() {
             />
 
             <div className="space-y-2">
-              <Label className="text-[14px] font-bold tracking-tight text-[#101828]">이메일</Label>
+              <Label className="text-walkavel-gray-900 text-[14px] font-bold tracking-tight">
+                이메일
+              </Label>
               <div
                 className="flex h-13 w-full items-center bg-[#F9FAFB] px-4 text-[16px] tracking-tight text-[#6A7282]"
                 style={{ borderRadius: '14px' }}

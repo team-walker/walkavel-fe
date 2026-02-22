@@ -42,7 +42,7 @@ describe('Auth Callback Route Handler', () => {
   });
 
   // 시나리오 1: code 파라미터가 누락된 경우
-  it('should redirect to login if "code" is missing', async () => {
+  it('"code" 파라미터가 없으면 로그인 페이지로 리다이렉트해야 한다', async () => {
     const request = new Request(`${baseUrl}/callback?returnTo=/mypage`);
     const response = await GET(request);
 
@@ -51,7 +51,7 @@ describe('Auth Callback Route Handler', () => {
   });
 
   // 시나리오 2: 인증 에러가 발생한 경우
-  it('should redirect to login with error details when auth fails', async () => {
+  it('인증 실패 시 에러 상세 정보와 함께 로그인 페이지로 리다이렉트해야 한다', async () => {
     const mockExchange = jest.fn().mockResolvedValue({ error: { message: 'Invalid code' } });
     (createClient as jest.Mock).mockResolvedValue({
       auth: { exchangeCodeForSession: mockExchange },
@@ -65,7 +65,7 @@ describe('Auth Callback Route Handler', () => {
   });
 
   // 시나리오 3: 예상치 못한 런타임 예외 발생 시
-  it('should handle unexpected errors gracefully and redirect to login', async () => {
+  it('예상치 못한 에러를 안전하게 처리하고 로그인 페이지로 리다이렉트해야 한다', async () => {
     (createClient as jest.Mock).mockRejectedValue(new Error('Database connection failed'));
 
     const request = new Request(`${baseUrl}/callback?code=valid-code`);
@@ -75,7 +75,7 @@ describe('Auth Callback Route Handler', () => {
   });
 
   // 시나리오 4: Open Redirect 방어 및 보안 검증
-  describe('Open Redirect Protection', () => {
+  describe('오픈 리다이렉트 보호', () => {
     const testCases = [
       { input: 'https://malicious.com', expected: '/' },
       { input: '//evil.com', expected: '/' },
@@ -85,7 +85,7 @@ describe('Auth Callback Route Handler', () => {
     ];
 
     testCases.forEach(({ input, expected }) => {
-      it(`should redirect to root if returnTo is unsafe: ${input}`, async () => {
+      it(`returnTo가 안전하지 않은 경우 루트로 리다이렉트해야 한다: ${input}`, async () => {
         const mockExchange = jest.fn().mockResolvedValue({ error: null });
         (createClient as jest.Mock).mockResolvedValue({
           auth: { exchangeCodeForSession: mockExchange },
@@ -101,7 +101,7 @@ describe('Auth Callback Route Handler', () => {
       });
     });
 
-    it('should allow safe relative paths', async () => {
+    it('안전한 상대 경로는 허용해야 한다', async () => {
       const mockExchange = jest.fn().mockResolvedValue({ error: null });
       (createClient as jest.Mock).mockResolvedValue({
         auth: { exchangeCodeForSession: mockExchange },

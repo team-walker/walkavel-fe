@@ -2,7 +2,7 @@ name: Auto Assignment & Reviewer Request
 
 on:
   pull_request:
-    types: [opened, reopened, ready_for_review]
+    types: [opened, reopened, ready_for_review, synchronize]
 
 jobs:
   auto-assign-main:
@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      issues: write
+      pull-requests: write
       issues: write
       pull-requests: write
     steps:
@@ -29,14 +31,12 @@ jobs:
             try {
               const botName = 'gemini-code-assist[bot]';
               console.log(`🤖 Requesting review from: ${botName}`);
-
               await github.rest.pulls.requestReviewers({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 pull_number: context.payload.pull_request.number,
                 reviewers: [botName]
               });
-
               console.log('✅ Gemini bot added as a reviewer');
             } catch (error) {
               console.log('❌ Failed to add Gemini reviewer. Check if the App is installed.');
@@ -51,11 +51,12 @@ jobs:
       issues: write
       pull-requests: write
     steps:
-      - name: 'Auto PR Assignment'
+      - name: 'Auto PR Assignment & Reviewers'
         uses: pozil/auto-assign-issue@v1
         with:
           repo-token: ${{ github.token }}
           assignees: ${{ github.actor }}
+          reviewers: 'jsyoon27, JHParrrk, YOJIN003'
           numOfAssignee: 1
 
       - name: 'Request Review from Gemini'
