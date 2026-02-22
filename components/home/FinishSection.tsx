@@ -23,10 +23,10 @@ export default function FinishSection({
         </div>
 
         <div className="mb-8 flex flex-col gap-3">
-          <h2 className="text-walkavel-gray-900 text-[26px] leading-[32.5px] font-bold tracking-[0.2158px]">
+          <h2 className="text-walkavel-gray-900 text-2xl leading-8 font-bold tracking-wide break-keep">
             여기까지 다 둘러봤어요
           </h2>
-          <p className="text-walkavel-gray-600 text-[17px] leading-[27.625px] font-normal tracking-[-0.4316px]">
+          <p className="text-walkavel-gray-600 text-lg leading-7 font-normal tracking-tight break-keep">
             다른 지역도 한 번 볼까요?
           </p>
         </div>
@@ -35,7 +35,7 @@ export default function FinishSection({
           <Button
             variant="default"
             onClick={onReselect}
-            className="bg-brand-blue hover:bg-brand-blue/90 h-[61.5px] w-full cursor-pointer rounded-3xl text-[17px] font-semibold tracking-[-0.4316px] text-white shadow-none transition-all active:scale-[0.98]"
+            className="bg-brand-blue hover:bg-brand-blue/90 h-15.25 min-h-15.25 w-full cursor-pointer rounded-3xl text-[1.0625rem] font-semibold tracking-tight text-white shadow-none transition-all active:scale-[0.98]"
           >
             다른 지역 보러가기
           </Button>
@@ -43,7 +43,7 @@ export default function FinishSection({
           <Button
             variant="ghost"
             onClick={onReset}
-            className="text-walkavel-gray-600 hover:text-walkavel-gray-900 h-auto cursor-pointer p-0 text-[15px] leading-[22.5px] font-medium tracking-[-0.2344px] hover:bg-transparent"
+            className="text-walkavel-gray-600 hover:text-walkavel-gray-900 h-auto min-h-12 cursor-pointer p-0 text-[0.9375rem] leading-5.5 font-medium tracking-tight hover:bg-transparent"
           >
             처음부터 다시 보기
           </Button>

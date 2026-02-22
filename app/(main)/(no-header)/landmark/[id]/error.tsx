@@ -21,10 +21,10 @@ export default function LandmarkError({
       <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-red-50 text-red-500">
         <AlertCircle size={32} />
       </div>
-      <h2 className="text-walkavel-gray-900 mb-2 text-xl font-bold">
+      <h2 className="text-walkavel-gray-900 mb-2 text-xl font-bold break-keep">
         도착 정보를 불러오지 못했어요
       </h2>
-      <p className="text-walkavel-gray-500 mb-8 text-[15px]">
+      <p className="text-walkavel-gray-500 mb-8 text-sm break-keep">
         네트워크 연결 상태를 확인하거나
         <br />
         잠시 후 다시 시도해 주세요.

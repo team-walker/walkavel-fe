@@ -48,11 +48,14 @@ export function BookmarkListClient({ initialBookmarks }: BookmarkListClientProps
   }
 
   return (
-    <div className="space-y-3 pb-24">
-      <div className="mb-4">
-        <p className="text-walkavel-gray-500 text-[16px]">
+    <div className="space-y-3 pb-32">
+      <div className="mb-6 flex flex-col gap-2">
+        <p className="text-walkavel-gray-500 text-base break-keep">
           저장한 장소{' '}
           <span className="text-brand-blue font-bold">{optimisticBookmarks.length}개</span>
+        </p>
+        <p className="text-walkavel-gray-400 text-center text-xs break-keep">
+          카드를 왼쪽으로 밀어서 삭제할 수 있어요
         </p>
       </div>
 
@@ -67,12 +70,6 @@ export function BookmarkListClient({ initialBookmarks }: BookmarkListClientProps
           />
         ))}
       </AnimatePresence>
-
-      <div className="pt-4 pb-2 text-center">
-        <p className="text-walkavel-gray-400 text-[13px]">
-          카드를 왼쪽으로 밀어서 삭제할 수 있어요
-        </p>
-      </div>
     </div>
   );
 }

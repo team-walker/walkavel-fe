@@ -48,14 +48,16 @@ export class ErrorBoundary extends Component<Props, State> {
           className={`bg-walkavel-gray-50 flex flex-col items-center justify-center rounded-2xl p-6 text-center ${this.props.className}`}
         >
           <div className="text-walkavel-gray-500 mb-4">
-            <p className="text-walkavel-gray-900 text-[15px] font-semibold">문제가 발생했습니다</p>
-            <p className="mt-1 text-[13px]">
+            <p className="text-walkavel-gray-900 text-sm font-semibold break-keep">
+              문제가 발생했습니다
+            </p>
+            <p className="mt-1 text-xs break-keep">
               {this.state.error?.message || '로드 중 오류가 발생했습니다.'}
             </p>
           </div>
           <button
             onClick={this.handleReset}
-            className="bg-brand-blue-light text-brand-blue active:bg-brand-blue/10 rounded-full px-4 py-2 text-[13px] font-bold transition-colors"
+            className="bg-brand-blue-light text-brand-blue active:bg-brand-blue/10 min-h-10 rounded-full px-4 py-2 text-xs font-bold break-keep transition-colors"
           >
             다시 시도
           </button>

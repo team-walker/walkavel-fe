@@ -148,7 +148,7 @@ export default function LandmarkDetailClient({ id, initialData }: LandmarkDetail
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="relative flex h-dvh flex-col overflow-hidden bg-white"
+      className="relative flex h-full flex-col overflow-hidden bg-white"
     >
       <div
         ref={scrollContainerRef}
@@ -165,11 +165,11 @@ export default function LandmarkDetailClient({ id, initialData }: LandmarkDetail
           <div className="px-6 pt-6 pb-48">
             <div className="border-walkavel-gray-100 mb-6 rounded-4xl border-2 bg-white p-5 shadow-sm">
               <div className="mb-3 flex items-start justify-between gap-4">
-                <h1 className="text-walkavel-gray-900 flex-1 text-[24px] leading-tight font-bold">
+                <h1 className="text-walkavel-gray-900 flex-1 text-2xl leading-tight font-bold">
                   {detail.title}
                 </h1>
                 {collected && (
-                  <div className="bg-brand-blue-light text-brand-blue mt-1 flex shrink-0 items-center gap-1 rounded-full px-3 py-1 text-[12px] font-bold">
+                  <div className="bg-brand-blue-light text-brand-blue mt-1 flex shrink-0 items-center gap-1 rounded-full px-3 py-1 text-xs font-bold">
                     <Sparkles size={14} className="fill-brand-blue" />
                     수집 완료
                   </div>
@@ -178,7 +178,7 @@ export default function LandmarkDetailClient({ id, initialData }: LandmarkDetail
               <div className="space-y-2">
                 <div className="text-walkavel-gray-600 flex items-start">
                   <MapPin size={16} className="mt-0.5 mr-2 shrink-0" strokeWidth={2} />
-                  <span className="text-[14px] leading-relaxed">
+                  <span className="text-sm leading-relaxed">
                     {detail.addr1} {detail.addr2}
                   </span>
                 </div>
@@ -190,7 +190,7 @@ export default function LandmarkDetailClient({ id, initialData }: LandmarkDetail
                   <ErrorBoundary
                     fallback={
                       <div className="bg-walkavel-gray-50 text-walkavel-gray-500 flex h-full w-full flex-col items-center justify-center">
-                        <p className="text-[13px]">지도를 불러오는 중 문제가 발생했습니다.</p>
+                        <p className="text-sm">지도를 불러오는 중 문제가 발생했습니다.</p>
                         <Button
                           variant="ghost"
                           size="sm"
@@ -217,7 +217,7 @@ export default function LandmarkDetailClient({ id, initialData }: LandmarkDetail
                   <Button
                     onClick={handleOpenMap}
                     aria-label="네이버 지도에서 보기 (새 창 열림)"
-                    className="text-walkavel-gray-700 active:bg-walkavel-gray-50 absolute right-3 bottom-3 z-10 flex items-center rounded-full bg-white p-0 px-3 py-1.5 text-[12px] font-semibold shadow-[0_10px_15px_0_rgba(0,0,0,0.1),0_4_6px_0_rgba(0,0,0,0.1)] transition-colors hover:bg-white/90 active:scale-95"
+                    className="text-walkavel-gray-700 active:bg-walkavel-gray-50 absolute right-3 bottom-3 z-10 flex items-center rounded-full bg-white p-0 px-3 py-1.5 text-xs font-semibold shadow-[0_10px_15px_0_rgba(0,0,0,0.1),0_4_6px_0_rgba(0,0,0,0.1)] transition-colors hover:bg-white/90 active:scale-95"
                   >
                     <ExternalLink size={12} className="mr-1" strokeWidth={2} />
                     지도 앱
@@ -227,7 +227,7 @@ export default function LandmarkDetailClient({ id, initialData }: LandmarkDetail
             </div>
 
             {!collected && (
-              <div className="bg-walkavel-gray-50 text-walkavel-gray-500 mb-8 rounded-2xl p-4 text-center text-[14px] leading-relaxed">
+              <div className="bg-walkavel-gray-50 text-walkavel-gray-500 mb-8 rounded-2xl p-4 text-center text-sm leading-relaxed">
                 <MapPin size={14} className="text-brand-blue mr-1 mb-1 inline-block" />
                 장소 주변 <span className="text-walkavel-gray-900 font-bold">150m</span> 내에서
                 탐험을 시작하고,
@@ -241,9 +241,9 @@ export default function LandmarkDetailClient({ id, initialData }: LandmarkDetail
 
             {detail.overview && (
               <div className="mb-8">
-                <h2 className="text-walkavel-gray-900 mb-3 text-[18px] font-semibold">소개</h2>
+                <h2 className="text-walkavel-gray-900 mb-3 text-lg font-semibold">소개</h2>
                 <div className="border-walkavel-gray-100 bg-walkavel-gray-50 rounded-3xl border p-5">
-                  <p className="text-walkavel-gray-700 text-[15px] leading-[1.7] whitespace-pre-wrap">
+                  <p className="text-walkavel-gray-700 text-sm leading-[1.7] whitespace-pre-wrap">
                     {detail.overview}
                   </p>
                 </div>
@@ -253,7 +253,7 @@ export default function LandmarkDetailClient({ id, initialData }: LandmarkDetail
             <div className="bg-walkavel-gray-100 -mx-6 mb-8 h-2 rounded-sm" />
 
             <div className="mb-8">
-              <h2 className="text-walkavel-gray-900 mb-4 text-[18px] font-semibold">운영 정보</h2>
+              <h2 className="text-walkavel-gray-900 mb-4 text-lg font-semibold">운영 정보</h2>
               <ul className="space-y-3">
                 {detail.tel && (
                   <LandmarkInfoItem
