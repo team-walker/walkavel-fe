@@ -167,23 +167,23 @@ export default function MyPage() {
           <div className="grid grid-cols-3 gap-3">
             {displayStamps.map((stamp, index) => (
               <motion.div
-                key={stamp.contentid}
+                key={`${stamp.landmarkId}-${index}`}
                 layout
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => router.push(`/landmark/${stamp.contentid}`)}
+                onClick={() => router.push(`/landmark/${stamp.landmarkId}`)}
                 className="bg-walkavel-gray-100 aspect-square cursor-pointer overflow-hidden rounded-[18px] shadow-[0_1px_3px_rgba(0,0,0,0.1)]"
               >
-                {stamp.firstimage ? (
+                {stamp.image ? (
                   <Image
-                    src={stamp.firstimage}
+                    src={stamp.image}
                     alt={stamp.title}
                     width={122}
                     height={122}
                     className="h-full w-full object-cover"
                     priority={index === 0}
-                    unoptimized={stamp.firstimage?.includes('visitkorea.or.kr')}
+                    unoptimized={stamp.image?.includes('visitkorea.or.kr')}
                   />
                 ) : (
                   <div className="bg-walkavel-gray-200 flex h-full w-full items-center justify-center">

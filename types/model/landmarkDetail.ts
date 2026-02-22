@@ -7,15 +7,15 @@
  */
 
 export interface LandmarkDetail {
-  /** 획득 일시 */
-  obtainedAt: string;
-  /** 콘텐츠 ID */
-  contentid: number;
+  /** 랜드마크 ID */
+  landmarkId: number;
   /** 제목 */
   title: string;
   /**
-   * 대표 이미지 (원본)
+   * 이미지 URL
    * @nullable
    */
-  firstimage?: string | null;
+  image: string | null;
+  /** 획득 일시 */
+  obtainedAt: string;
 }
