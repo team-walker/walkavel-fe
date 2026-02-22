@@ -18,10 +18,10 @@ function StampSuccessUI() {
         animate={{ opacity: 1, y: 0 }}
         className="mb-8 w-full text-center"
       >
-        <h2 className="text-walkavel-gray-900 mb-2 text-xl font-bold tracking-tight">
+        <h2 className="text-walkavel-gray-900 mb-2 text-xl font-bold tracking-tight break-keep">
           스탬프 획득 중!
         </h2>
-        <p className="text-walkavel-gray-700 text-[15px]">성공적으로 스탬프를 획득했어요!</p>
+        <p className="text-walkavel-gray-700 text-sm break-keep">성공적으로 스탬프를 획득했어요!</p>
       </motion.div>
 
       <div className="relative flex h-64 w-full items-center justify-center overflow-visible">
@@ -52,7 +52,7 @@ function StampSuccessUI() {
                   ease: [0.23, 1, 0.32, 1],
                   delay: 0.1 + (i % 5) * 0.05,
                 }}
-                className={`absolute h-2.5 w-2.5 rounded-[2px] ${colors[i % colors.length]}`}
+                className={`absolute h-2.5 w-2.5 rounded-sm ${colors[i % colors.length]}`}
               />
             );
           })}
@@ -162,7 +162,7 @@ export function RadarSheet({ id }: { id: string | number }) {
               }
             }}
             onClick={(e) => e.stopPropagation()}
-            className="fixed bottom-0 left-1/2 z-10001 flex min-h-[500px] w-full max-w-120 flex-col items-center rounded-t-[24px] bg-white px-6 pt-3 pb-12 shadow-[0_-10px_40px_rgba(0,0,0,0.1)]"
+            className="fixed bottom-0 left-1/2 z-10001 flex h-125 w-full max-w-120 flex-col items-center rounded-t-3xl bg-white px-6 pt-3 pb-12 shadow-[0_-10px_40px_rgba(0,0,0,0.1)]"
           >
             <div className="bg-walkavel-gray-300 mb-8 h-1.5 w-12 rounded-full" />
 
@@ -171,10 +171,10 @@ export function RadarSheet({ id }: { id: string | number }) {
             ) : (
               <>
                 <div className="w-full text-center">
-                  <h2 className="text-walkavel-gray-900 mb-2 text-xl font-bold tracking-tight">
+                  <h2 className="text-walkavel-gray-900 mb-2 text-xl font-bold tracking-tight break-keep">
                     탐험 중...
                   </h2>
-                  <p className="text-walkavel-gray-700 mb-10 text-[15px]">
+                  <p className="text-walkavel-gray-700 mb-10 text-sm break-keep">
                     {distanceToTarget !== null
                       ? `현재 위치에서 약 ${distanceToTarget}m 떨어져 있어요`
                       : '위치 정보를 수신하고 있습니다...'}
@@ -194,7 +194,7 @@ export function RadarSheet({ id }: { id: string | number }) {
                       transition={{ type: 'spring', bounce: 0, duration: 0.5 }}
                     />
                   </div>
-                  <p className="text-walkavel-gray-600 text-center text-[13px]">
+                  <p className="text-walkavel-gray-600 text-center text-xs break-keep">
                     50m 이내로 접근해주세요
                   </p>
                 </div>

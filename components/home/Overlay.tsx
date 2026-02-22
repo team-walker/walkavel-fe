@@ -13,16 +13,16 @@ export default function Overlay({ onDismiss }: OverlayProps) {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       onClick={onDismiss}
-      className="fixed inset-y-0 left-1/2 z-100 flex w-full max-w-120 -translate-x-1/2 items-center justify-center bg-black/40 backdrop-blur-sm"
+      className="fixed inset-y-0 left-1/2 z-10000 flex w-full max-w-120 -translate-x-1/2 items-center justify-center bg-black/40 backdrop-blur-sm"
     >
       <motion.div
         initial={{ scale: 0.9, opacity: 0, y: 20 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
         transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-        className="relative mx-6 flex w-full max-w-[320px] flex-col items-center overflow-hidden rounded-[40px] bg-white px-8 pt-12 pb-10 shadow-[0_30px_60px_-12px_rgba(0,0,0,0.25)]"
+        className="rounded-10 relative mx-6 flex w-full max-w-80 flex-col items-center overflow-hidden bg-white px-8 pt-12 pb-10 shadow-[0_30px_60px_-12px_rgba(0,0,0,0.25)]"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="bg-walkavel-gray-50 relative mb-10 flex h-36 w-full items-center justify-center overflow-hidden rounded-[24px]">
+        <div className="bg-walkavel-gray-50 relative mb-10 flex h-36 w-full items-center justify-center overflow-hidden rounded-3xl">
           <motion.div
             animate={{ x: [40, -40, 40] }}
             transition={{
@@ -47,14 +47,14 @@ export default function Overlay({ onDismiss }: OverlayProps) {
               duration: 2.5,
               ease: 'easeInOut',
             }}
-            className="absolute text-[56px] drop-shadow-lg select-none"
+            className="absolute text-6xl drop-shadow-lg select-none"
           >
             👆
           </motion.div>
         </div>
 
         <div className="text-center">
-          <p className="text-walkavel-gray-900 text-[18px] leading-tight font-bold tracking-tight">
+          <p className="text-walkavel-gray-900 text-lg leading-tight font-bold tracking-tight break-keep">
             옆으로 밀어서
             <br />
             랜드마크를 둘러보세요

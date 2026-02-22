@@ -13,17 +13,17 @@ export function RadarAnimation({ distance }: RadarAnimationProps) {
   return (
     <div className="relative flex h-80 w-full items-center justify-center overflow-hidden">
       <motion.div
-        className="border-brand-blue/30 absolute h-140 w-140 rounded-full border-[3.8px] opacity-13"
+        className="border-brand-blue/30 absolute h-140 w-140 rounded-full border-4 opacity-13"
         animate={{ scale: [0.8, 1.1], opacity: [0.13, 0.05] }}
         transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
       />
       <motion.div
-        className="border-brand-blue/30 absolute h-112 w-md rounded-full border-[3.8px] opacity-43"
+        className="border-brand-blue/30 absolute h-112 w-md rounded-full border-4 opacity-43"
         animate={{ scale: [0.9, 1.1], opacity: [0.43, 0.2] }}
         transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
       />
       <motion.div
-        className="border-brand-blue/30 absolute h-44 w-44 rounded-full border-[3.8px] opacity-80"
+        className="border-brand-blue/30 absolute h-44 w-44 rounded-full border-4 opacity-80"
         animate={{ scale: [1, 1.2], opacity: [0.84, 0.4] }}
         transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
       />
