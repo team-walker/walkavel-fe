@@ -4,7 +4,6 @@ import 'pretendard/dist/web/static/pretendard.css';
 import { Analytics } from '@vercel/analytics/next';
 import type { Metadata, Viewport } from 'next';
 import { Inter, Outfit } from 'next/font/google';
-import Script from 'next/script';
 
 import { Toaster } from '@/components/ui/sonner';
 
