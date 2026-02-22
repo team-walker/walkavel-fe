@@ -50,6 +50,7 @@
 > PR 생성 전 아래 항목을 확인해 주세요.
 
 ### 코드 품질
+
 - [ ] 린트 및 타입 체크 통과 (`pnpm lint`, `pnpm typecheck`)
 - [ ] 빌드 성공 (`pnpm build`)
 - [ ] 불필요한 `console.log` 및 주석 제거 완료
