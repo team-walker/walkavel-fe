@@ -30,8 +30,8 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: 'Walkavel - 여행을 걷다',
-  description: 'Walk your way, Travel your story - 걷기 좋은 여행지 발견, 워커블(Walkavel)',
+  title: 'Walkavel - 일상의 발걸음을 여행으로, 워커블',
+  description: 'Walk your way, Travel your story - 일상의 발걸음을 여행으로, 워커블(Walkavel)',
   manifest: '/manifest.json',
   icons: {
     icon: [

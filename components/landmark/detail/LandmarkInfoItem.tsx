@@ -37,7 +37,7 @@ export function LandmarkInfoItem({ icon, label, content, isHtml }: LandmarkInfoI
         {icon}
       </div>
       <div className="ml-3 min-w-0 flex-1">
-        <div className="text-walkavel-gray-500 mb-1 text-[0.8125rem]">{label}</div>
+        <div className="text-walkavel-gray-500 mb-1 text-sm">{label}</div>
         {isHtml ? (
           <div
             className="text-walkavel-gray-900 text-[0.9375rem] leading-relaxed font-medium break-all whitespace-pre-wrap"

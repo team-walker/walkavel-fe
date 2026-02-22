@@ -27,7 +27,7 @@ export default function LandmarkError({
       <p className="text-walkavel-gray-500 mb-8 text-sm break-keep">
         네트워크 연결 상태를 확인하거나
         <br />
-        잠시 후 다시 시도해 주세요.
+        잠시 후 다시 시도해 보세요.
       </p>
       <Button
         onClick={() => reset()}

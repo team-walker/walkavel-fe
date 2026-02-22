@@ -146,7 +146,7 @@ export default function MyPage() {
                 <span className="text-2xl font-medium text-white/90">개</span>
               </div>
               <p className="text-sm font-normal tracking-[-0.23px] text-white/85">
-                새로운 장소를 발견해보세요!
+                워커블과 함께 새로운 장소를 발견해 보세요!
               </p>
             </div>
           </div>

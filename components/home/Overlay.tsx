@@ -55,9 +55,9 @@ export default function Overlay({ onDismiss }: OverlayProps) {
 
         <div className="text-center">
           <p className="text-walkavel-gray-900 text-lg leading-tight font-bold tracking-tight break-keep">
-            옆으로 밀어서
+            카드를 옆으로 밀어서
             <br />
-            랜드마크를 둘러보세요
+            새로운 장소를 발견해 보세요
           </p>
         </div>
       </motion.div>

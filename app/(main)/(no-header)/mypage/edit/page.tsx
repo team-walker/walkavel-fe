@@ -140,7 +140,7 @@ export default function ProfileEditPage() {
       setAvatarUrl(fallbackAvatar);
 
       showErrorToast(
-        '이미지 업로드에 실패했습니다. 네트워크 연결을 확인하거나 나중에 다시 시도해주세요.',
+        '이미지 업로드에 실패했습니다. 네트워크 연결을 확인하거나 나중에 다시 시도해 보세요.',
       );
     } finally {
       setUploading(false);

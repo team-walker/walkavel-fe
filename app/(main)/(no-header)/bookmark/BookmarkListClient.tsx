@@ -49,12 +49,17 @@ export function BookmarkListClient({ initialBookmarks }: BookmarkListClientProps
 
   return (
     <div className="space-y-3 pb-32">
-      <div className="mb-6 flex flex-col gap-2">
-        <p className="text-walkavel-gray-500 text-base break-keep">
-          저장한 장소{' '}
-          <span className="text-brand-blue font-bold">{optimisticBookmarks.length}개</span>
-        </p>
-        <p className="text-walkavel-gray-400 text-center text-xs break-keep">
+      <div className="mb-8 flex flex-col gap-4">
+        <div className="flex items-baseline gap-1">
+          <span className="text-walkavel-gray-600 text-lg font-bold">저장한 장소</span>
+          <span className="text-walkavel-gray-600 text-lg font-bold">
+            <span className="text-brand-blue text-xl font-extrabold">
+              {optimisticBookmarks.length}
+            </span>
+            개
+          </span>
+        </div>
+        <p className="text-walkavel-gray-400 text-center text-sm break-keep">
           카드를 왼쪽으로 밀어서 삭제할 수 있어요
         </p>
       </div>

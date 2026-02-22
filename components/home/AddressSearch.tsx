@@ -41,7 +41,7 @@ export default function AddressSearch({ onSelectAddress }: AddressSearchProps) {
           어디로 갈까요?
         </h1>
         <p className="text-walkavel-gray-600 text-base break-keep sm:text-lg">
-          걷고 싶은 동네를 검색해보세요
+          나만의 워커블을 찾아 떠나보세요
         </p>
       </div>
       <Popover open={isOpen && query.trim().length >= 2} onOpenChange={setIsOpen}>

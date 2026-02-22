@@ -83,7 +83,7 @@ export function StampMissionSheet({
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white shadow-sm">
                   <MapPin size={20} className="text-brand-blue" />
                 </div>
-                <div className="text-walkavel-gray-600 text-xs leading-snug">
+                <div className="text-walkavel-gray-600 text-sm leading-snug">
                   <span className="text-walkavel-gray-900 font-bold">획득 조건</span>
                   <br />
                   장소 주변 50m 이내로 접근 시 자동 획득

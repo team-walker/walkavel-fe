@@ -24,7 +24,7 @@ export function StaticSplash() {
             Walkavel
           </h1>
           <p className="text-walkavel-gray-400 mt-2 px-4 text-xs font-medium sm:text-sm">
-            우리만의 걷기 좋은 길, 특별한 여행의 시작
+            일상의 발걸음을 여행으로, 워커블
           </p>
         </div>
       </div>
@@ -86,7 +86,7 @@ export default function SplashScreen({
             Walkavel
           </h1>
           <p className="text-walkavel-gray-400 mt-2 px-4 text-xs font-medium sm:text-sm">
-            우리만의 걷기 좋은 길, 특별한 여행의 시작
+            일상의 발걸음을 여행으로, 워커블
           </p>
         </div>
       </div>

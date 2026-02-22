@@ -194,7 +194,7 @@ export function RadarSheet({ id }: { id: string | number }) {
                       transition={{ type: 'spring', bounce: 0, duration: 0.5 }}
                     />
                   </div>
-                  <p className="text-walkavel-gray-600 text-center text-xs break-keep">
+                  <p className="text-walkavel-gray-600 text-center text-sm break-keep">
                     50m 이내로 접근해주세요
                   </p>
                 </div>
