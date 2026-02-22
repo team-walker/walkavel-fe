@@ -7,33 +7,16 @@
  */
 
 export interface LandmarkSummaryDto {
-  /** 콘텐츠 ID */
-  contentid: number;
-  /** 제목 */
+  contentId: number;
   title: string;
-  /**
-   * 대표 이미지 (원본)
-   * @nullable
-   */
-  firstimage?: string | null;
-  /**
-   * 주소1
-   * @nullable
-   */
-  addr1?: string | null;
-  /**
-   * 대분류
-   * @nullable
-   */
-  cat1?: string | null;
-  /**
-   * 중분류
-   * @nullable
-   */
-  cat2?: string | null;
-  /**
-   * 소분류
-   * @nullable
-   */
-  cat3?: string | null;
+  /** @nullable */
+  firstImage: string | null;
+  /** @nullable */
+  addr1: string | null;
+  /** @nullable */
+  cat1: string | null;
+  /** @nullable */
+  cat2: string | null;
+  /** @nullable */
+  cat3: string | null;
 }

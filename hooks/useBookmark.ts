@@ -11,9 +11,9 @@ import { BookmarkResponseDto, LandmarkDto } from '@/types/model';
 const mapToBookmarkedLandmark = (bookmark: BookmarkResponseDto): BookmarkedLandmark | null => {
   if (!bookmark.landmark) return null;
   return {
-    contentid: bookmark.landmark.contentid || 0,
+    contentid: bookmark.landmark.contentId || 0,
     title: bookmark.landmark.title,
-    firstimage: bookmark.landmark.firstimage,
+    firstimage: bookmark.landmark.firstImage,
     addr1: bookmark.landmark.addr1,
     cat1: bookmark.landmark.cat1,
     cat2: bookmark.landmark.cat2,
