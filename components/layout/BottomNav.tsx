@@ -14,11 +14,19 @@ export default function BottomNav() {
   const { user } = useAuthStore();
 
   return (
-    <nav
+    <motion.nav
+      initial={{ y: 10, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ y: 10, opacity: 0 }}
+      transition={{
+        type: 'spring',
+        stiffness: 260,
+        damping: 20,
+      }}
       aria-label="하단 네비게이션"
-      className="border-walkavel-gray-100 fixed bottom-0 left-1/2 z-9999 w-full max-w-120 -translate-x-1/2 border-t-[0.5px] bg-white pb-[env(safe-area-inset-bottom,0px)]"
+      className="fixed bottom-0 left-1/2 z-9999 w-full max-w-120 -translate-x-1/2 rounded-t-3xl border-x border-t border-gray-100 bg-white/80 pb-[env(safe-area-inset-bottom,0px)] shadow-[0_-4px_20px_0_rgba(0,0,0,0.05)] backdrop-blur-md will-change-transform sm:border-gray-50"
     >
-      <div className="flex h-22 items-center justify-between px-5">
+      <div className="flex items-center justify-between px-10 max-sm:h-16 sm:h-22">
         {NAV_ITEMS.map(({ href, label, icon: IconComponent }) => {
           const isActive = pathname === href;
 
@@ -33,41 +41,24 @@ export default function BottomNav() {
                 }
               }}
               className={cn(
-                'relative flex flex-1 flex-col items-center justify-center py-1 transition-colors duration-200',
-                isActive ? 'text-brand-blue' : 'text-walkavel-gray-400 hover:text-brand-blue/50',
+                'flex w-16 flex-col items-center justify-center gap-1 transition-colors duration-200',
+                isActive ? 'text-brand-blue' : 'text-walkavel-gray-400',
               )}
               aria-current={isActive ? 'page' : undefined}
             >
-              <motion.div
-                className="relative flex flex-col items-center"
-                initial={false}
-                animate={{
-                  scale: isActive ? 1.05 : 1,
-                }}
-                transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+              {IconComponent && <IconComponent className="h-6 w-6 transition-all duration-200" />}
+              <span
+                className={cn(
+                  'text-[0.625rem] leading-3.75 tracking-wide transition-all duration-200',
+                  isActive ? 'font-medium' : 'font-normal',
+                )}
               >
-                <div className="z-10">
-                  {IconComponent && (
-                    <IconComponent
-                      width={24}
-                      height={24}
-                      className="h-6 w-6 transition-all duration-200"
-                    />
-                  )}
-                </div>
-                <span
-                  className={cn(
-                    'mt-1 text-[10px] transition-all duration-200',
-                    isActive ? 'font-semibold' : 'font-normal',
-                  )}
-                >
-                  {label}
-                </span>
-              </motion.div>
+                {label}
+              </span>
             </Link>
           );
         })}
       </div>
-    </nav>
+    </motion.nav>
   );
 }
