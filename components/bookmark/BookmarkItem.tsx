@@ -67,7 +67,7 @@ export const BookmarkItem = memo(function BookmarkItem({
           />
         </div>
         <div className="min-w-0 flex-1">
-          <h3 className="text-walkavel-gray-900 mb-0.5 line-clamp-1 text-base font-bold break-all sm:text-lg">
+          <h3 className="text-walkavel-gray-900 mb-0.5 line-clamp-1 text-base font-bold break-keep sm:text-lg">
             {landmark.title}
           </h3>
           <p className="text-walkavel-gray-500 truncate text-sm">

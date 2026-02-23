@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import FootLogoIcon from '@/public/images/foot-logo.svg';
 
@@ -47,29 +47,25 @@ export default function SplashScreen({
   isAppReady,
   minDisplayTime = 2000,
 }: SplashScreenProps) {
+  const [startTime] = useState(() => Date.now());
+
   useEffect(() => {
     if (window.innerWidth >= 768) {
       onComplete();
       return;
     }
 
-    const timer = setTimeout(() => {
-      if (isAppReady) {
-        onComplete();
-      }
-    }, minDisplayTime);
-
-    return () => clearTimeout(timer);
-  }, [isAppReady, minDisplayTime, onComplete]);
-
-  useEffect(() => {
     if (isAppReady) {
-      const checkTimer = setTimeout(() => {
+      const elapsed = Date.now() - startTime;
+      const remainingTime = Math.max(0, minDisplayTime - elapsed);
+
+      const timer = setTimeout(() => {
         onComplete();
-      }, minDisplayTime);
-      return () => clearTimeout(checkTimer);
+      }, remainingTime);
+
+      return () => clearTimeout(timer);
     }
-  }, [isAppReady, minDisplayTime, onComplete]);
+  }, [isAppReady, minDisplayTime, onComplete, startTime]);
 
   return (
     <div
