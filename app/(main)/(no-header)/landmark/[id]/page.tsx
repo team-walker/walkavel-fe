@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
+import { fetchServerApi } from '@/lib/api/server-api';
 import { LandmarkDetailResponseDto } from '@/types/model';
 
 import LandmarkDetailClient from './LandmarkDetailClient';
@@ -10,18 +11,10 @@ interface Props {
 }
 
 async function getLandmarkDetail(id: string): Promise<LandmarkDetailResponseDto | null> {
-  const baseURL =
-    process.env.NODE_ENV === 'development'
-      ? 'http://localhost:3001'
-      : process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
-
   try {
-    const response = await fetch(`${baseURL}/tour/landmarks/${id}`, {
+    return await fetchServerApi<LandmarkDetailResponseDto>(`/tour/landmarks/${id}`, {
       next: { revalidate: 3600 },
     });
-
-    if (!response.ok) return null;
-    return response.json();
   } catch (error) {
     console.error('Failed to fetch landmark detail on server:', error);
     return null;

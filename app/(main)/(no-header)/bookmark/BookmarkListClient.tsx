@@ -67,7 +67,7 @@ export function BookmarkListClient({ initialBookmarks }: BookmarkListClientProps
       <AnimatePresence mode="popLayout" initial={false}>
         {optimisticBookmarks.map((landmark, index) => (
           <BookmarkItem
-            key={landmark.contentid || `bookmark-${index}`}
+            key={landmark.bookmarkId}
             landmark={landmark}
             onRemove={handleDelete}
             onSelect={navigateToDetail}
