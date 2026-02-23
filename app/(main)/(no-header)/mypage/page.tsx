@@ -112,7 +112,9 @@ export default function MyPage() {
             </div>
           </div>
           <div className="min-w-0 flex-1 text-left">
-            <h2 className="text-walkavel-gray-900 text-lg leading-tight font-bold">{nickname}</h2>
+            <h2 className="text-walkavel-gray-900 truncate text-lg leading-tight font-bold">
+              {nickname}
+            </h2>
             <p className="text-walkavel-gray-500 mt-0.5 truncate text-sm font-medium">{email}</p>
           </div>
           <ChevronRightIcon width={20} height={20} className="text-walkavel-gray-400 shrink-0" />

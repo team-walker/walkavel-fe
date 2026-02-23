@@ -31,6 +31,8 @@ export function LandmarkInfoItem({ icon, label, content, isHtml }: LandmarkInfoI
 
   if (!content) return null;
 
+  const isPlainUrl = content.startsWith('http') && !content.includes('<a');
+
   return (
     <li className="border-walkavel-gray-100 flex items-start rounded-2xl border bg-white p-4">
       <div className="bg-walkavel-gray-100 flex h-10 w-10 shrink-0 items-center justify-center rounded-full">
@@ -38,13 +40,26 @@ export function LandmarkInfoItem({ icon, label, content, isHtml }: LandmarkInfoI
       </div>
       <div className="ml-3 min-w-0 flex-1">
         <div className="text-walkavel-gray-500 mb-1 text-sm">{label}</div>
-        {isHtml ? (
+        {isHtml && !isPlainUrl ? (
           <div
-            className="text-walkavel-gray-900 text-[0.9375rem] leading-relaxed font-medium break-all whitespace-pre-wrap"
+            className="text-walkavel-gray-900 text-[0.9375rem] leading-relaxed font-medium break-all whitespace-pre-wrap [&_a]:cursor-pointer"
             dangerouslySetInnerHTML={{ __html: sanitized || content }}
           />
         ) : (
-          <div className="text-walkavel-gray-900 text-[0.9375rem] font-medium">{content}</div>
+          <div className="text-walkavel-gray-900 text-[0.9375rem] font-medium break-all">
+            {(label === '홈페이지' || isPlainUrl) && content.startsWith('http') ? (
+              <a
+                href={content}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="cursor-pointer"
+              >
+                {content}
+              </a>
+            ) : (
+              content
+            )}
+          </div>
         )}
       </div>
     </li>
