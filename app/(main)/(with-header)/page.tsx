@@ -17,7 +17,7 @@ const SplashScreen = dynamic(() => import('@/components/common/SplashScreen'), {
   ssr: false,
   loading: () => <StaticSplash />,
 });
-const Overlay = dynamic(() => import('@/components/home/Overlay'));
+const Overlay = dynamic(() => import('@/components/home/Overlay'), { ssr: false });
 const FinishSection = dynamic(() => import('@/components/home/FinishSection'));
 
 export default function MainPage() {
