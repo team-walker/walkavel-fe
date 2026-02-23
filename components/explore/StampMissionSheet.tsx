@@ -69,7 +69,7 @@ export function StampMissionSheet({
                 />
               </div>
 
-              <h2 className="text-walkavel-gray-900 mb-2 text-2xl font-black tracking-tight">
+              <h2 className="text-walkavel-gray-900 mb-2 text-2xl font-black tracking-tight break-all">
                 {landmarkName} 스탬프 발견!
               </h2>
               <p className="text-walkavel-gray-500 mb-6 text-sm leading-relaxed">
