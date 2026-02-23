@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Star, Trophy } from 'lucide-react';
+import { ImageOff, Star, Trophy } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -184,8 +184,11 @@ export default function MyPage() {
                     unoptimized={stamp.image?.includes('visitkorea.or.kr')}
                   />
                 ) : (
-                  <div className="bg-walkavel-gray-200 flex h-full w-full items-center justify-center">
-                    <Star className="text-walkavel-gray-400" size={24} />
+                  <div className="bg-walkavel-gray-200 text-walkavel-gray-600 flex h-full w-full flex-col items-center justify-center space-y-2 p-2 text-center">
+                    <ImageOff className="text-walkavel-gray-400 shrink-0" size={24} />
+                    <span className="line-clamp-2 w-full text-xs leading-tight font-medium break-keep">
+                      {stamp.title}
+                    </span>
                   </div>
                 )}
               </motion.div>
