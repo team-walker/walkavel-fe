@@ -10,8 +10,18 @@ export interface ImageWithFallbackProps extends Omit<ImageProps, 'onError'> {
   fallbackSrc?: string;
 }
 
-export const ImageWithFallback = ({ src, alt, className, ...props }: ImageWithFallbackProps) => {
+export const ImageWithFallback = (props: ImageWithFallbackProps) => {
+  return <ImageContent key={props.src?.toString()} {...props} />;
+};
+
+const ImageContent = ({ src, alt, className, ...props }: ImageWithFallbackProps) => {
   const [error, setError] = useState(false);
+  const [prevSrc, setPrevSrc] = useState(src);
+
+  if (src !== prevSrc) {
+    setPrevSrc(src);
+    setError(false);
+  }
 
   if (!src || error) {
     return (
@@ -22,13 +32,6 @@ export const ImageWithFallback = ({ src, alt, className, ...props }: ImageWithFa
   }
 
   return (
-    <Image
-      key={src?.toString()}
-      {...props}
-      src={src}
-      alt={alt}
-      className={className}
-      onError={() => setError(true)}
-    />
+    <Image {...props} src={src} alt={alt} className={className} onError={() => setError(true)} />
   );
 };

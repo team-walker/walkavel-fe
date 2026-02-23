@@ -1,7 +1,7 @@
 'use client';
 
 import { AnimatePresence, motion } from 'framer-motion';
-import { ChevronLeft } from 'lucide-react';
+import { ChevronLeft, ImageOff } from 'lucide-react';
 import { useState } from 'react';
 
 import { ImageWithFallback } from '@/components/common/ImageWithFallback';
@@ -45,7 +45,7 @@ export function LandmarkImageGallery({ images, title, onBack }: LandmarkImageGal
       <div className="sr-only" aria-live="polite" aria-atomic="true">
         {images.length > 0
           ? `${images.length}장 중 ${currentSlide + 1}번째 이미지: ${title}`
-          : '이미지가 없습니다'}
+          : '이미지 준비 중입니다.'}
       </div>
       {images.length > 0 ? (
         <div className="relative h-full w-full">
@@ -90,8 +90,11 @@ export function LandmarkImageGallery({ images, title, onBack }: LandmarkImageGal
           </AnimatePresence>
         </div>
       ) : (
-        <div className="bg-walkavel-gray-200 text-walkavel-gray-400 flex h-full w-full items-center justify-center">
-          이미지가 없습니다
+        <div className="bg-walkavel-gray-100 flex h-full w-full flex-col items-center justify-center gap-3">
+          <div className="bg-walkavel-gray-200/50 flex h-16 w-16 items-center justify-center rounded-full">
+            <ImageOff className="text-walkavel-gray-400 h-8 w-8" strokeWidth={1.5} />
+          </div>
+          <span className="text-walkavel-gray-500 text-sm font-medium">이미지 준비 중입니다</span>
         </div>
       )}
 
@@ -100,7 +103,7 @@ export function LandmarkImageGallery({ images, title, onBack }: LandmarkImageGal
       <Button
         onClick={onBack}
         aria-label="이전 페이지로 돌아가기"
-        className="text-walkavel-gray-900 absolute top-[calc(env(safe-area-inset-top)+1.5rem)] left-6 z-10 flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-white p-0 shadow-md backdrop-blur-sm transition-transform hover:bg-white/70 active:scale-95"
+        className="text-walkavel-gray-900 absolute top-[calc(env(safe-area-inset-top,0px)+1.5rem)] left-6 z-10 flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-white p-0 shadow-md backdrop-blur-sm transition-transform hover:bg-white/70 active:scale-95"
       >
         <ChevronLeft size={24} strokeWidth={2.5} />
       </Button>
@@ -110,7 +113,7 @@ export function LandmarkImageGallery({ images, title, onBack }: LandmarkImageGal
           aria-hidden="true"
           className="absolute right-4 bottom-4 z-10 flex items-center justify-center rounded-full bg-black/50 px-3 py-1.5 backdrop-blur-sm"
         >
-          <span className="text-[12px] leading-none font-medium tracking-tighter text-white tabular-nums">
+          <span className="text-xs leading-none font-medium tracking-tighter text-white tabular-nums">
             {currentSlide + 1}/{images.length}
           </span>
         </div>

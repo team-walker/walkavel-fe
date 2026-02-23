@@ -35,7 +35,7 @@ export default function LandmarkHeroCard({
   return (
     <motion.div
       className={cn(
-        'relative h-full w-full cursor-pointer overflow-hidden rounded-[28px] bg-white select-none',
+        'relative h-full w-full cursor-pointer overflow-hidden rounded-3xl bg-white select-none',
         className,
       )}
       style={{
@@ -73,14 +73,12 @@ export default function LandmarkHeroCard({
 
       <div className="absolute right-0 bottom-0 left-0 flex flex-col px-6 py-6 transition-all">
         <div className="flex flex-col gap-2">
-          <h2 className="text-[28px] leading-tight font-bold tracking-[0.38px] text-white [text-shadow:0_4px_8px_rgba(0,0,0,0.15)]">
+          <h2 className="text-3xl leading-tight font-bold tracking-wide break-keep text-white drop-shadow-md">
             {landmark.name}
           </h2>
           <div className="flex items-center gap-1.5 text-white/90 [text-shadow:0_1px_4px_rgba(0,0,0,0.1),0_1px_2px_rgba(0,0,0,0.06)]">
             <MapPin size={16} className="shrink-0" />
-            <span className="truncate text-[15px] font-medium tracking-[-0.23px]">
-              {landmark.location}
-            </span>
+            <span className="truncate text-sm font-medium tracking-tight">{landmark.location}</span>
           </div>
         </div>
       </div>
