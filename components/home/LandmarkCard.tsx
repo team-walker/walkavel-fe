@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, PanInfo, useMotionValue, Variants } from 'framer-motion';
-import { MapPin } from 'lucide-react';
+import { ImageOff, MapPin } from 'lucide-react';
 
 import { ImageWithFallback } from '@/components/common/ImageWithFallback';
 import { Card } from '@/components/ui/card';
@@ -150,8 +150,11 @@ export default function LandmarkCard({
             quality={85}
           />
         ) : (
-          <div className="bg-walkavel-gray-100 flex h-full w-full items-center justify-center">
-            <span className="text-walkavel-gray-400 text-sm font-medium">이미지가 없습니다</span>
+          <div className="bg-walkavel-gray-100 flex h-full w-full flex-col items-center justify-center gap-3">
+            <div className="bg-walkavel-gray-200/50 flex h-16 w-16 items-center justify-center rounded-full">
+              <ImageOff className="text-walkavel-gray-400 h-8 w-8" strokeWidth={1.5} />
+            </div>
+            <span className="text-walkavel-gray-500 text-sm font-medium">이미지 준비 중입니다</span>
           </div>
         )}
         <div className="absolute inset-0 bg-linear-to-b from-transparent via-[rgba(0,0,0,0.2)] via-50% to-[rgba(0,0,0,0.8)]" />
