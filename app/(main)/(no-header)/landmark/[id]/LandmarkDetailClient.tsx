@@ -93,7 +93,7 @@ export default function LandmarkDetailClient({ id, initialData }: LandmarkDetail
   useEffect(() => {
     if (
       distanceToTarget !== null &&
-      distanceToTarget > 0 &&
+      distanceToTarget >= 0 &&
       distanceToTarget <= STAMP_CONFIG.DISCOVERY_DISTANCE &&
       !isExploring &&
       !collected &&
@@ -119,7 +119,7 @@ export default function LandmarkDetailClient({ id, initialData }: LandmarkDetail
   const [scrollY, setScrollY] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  const heroHeight = Math.max(240, 360 - scrollY * 0.5);
+  const heroHeight = Math.max(220, 320 - scrollY * 0.5);
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     setScrollY(e.currentTarget.scrollTop);
@@ -162,8 +162,8 @@ export default function LandmarkDetailClient({ id, initialData }: LandmarkDetail
           <LandmarkImageGallery images={galleryImages} title={detail.title} onBack={handleBack} />
         </div>
         <div className="bg-white">
-          <div className="px-6 pt-6 pb-48">
-            <div className="border-walkavel-gray-100 mb-6 rounded-4xl border-2 bg-white p-5 shadow-sm">
+          <div className="px-6 pt-5 pb-48">
+            <div className="border-walkavel-gray-100 mb-5 rounded-4xl border-2 bg-white p-4 shadow-sm">
               <div className="mb-3 flex items-start justify-between gap-4">
                 <h1 className="text-walkavel-gray-900 flex-1 text-2xl leading-tight font-bold">
                   {detail.title}
@@ -184,9 +184,9 @@ export default function LandmarkDetailClient({ id, initialData }: LandmarkDetail
                 </div>
               </div>
             </div>
-            <div className="from-brand-blue/5 to-brand-blue/10 mb-8 rounded-4xl bg-linear-to-br">
+            <div className="from-brand-blue/5 to-brand-blue/10 mb-7 rounded-4xl bg-linear-to-br">
               <div className="mb-4 overflow-hidden rounded-3xl bg-white shadow-sm">
-                <div className="relative h-50">
+                <div className="relative h-64">
                   <ErrorBoundary
                     fallback={
                       <div className="bg-walkavel-gray-50 text-walkavel-gray-500 flex h-full w-full flex-col items-center justify-center">
@@ -217,7 +217,7 @@ export default function LandmarkDetailClient({ id, initialData }: LandmarkDetail
                   <Button
                     onClick={handleOpenMap}
                     aria-label="네이버 지도에서 보기 (새 창 열림)"
-                    className="text-walkavel-gray-700 active:bg-walkavel-gray-50 absolute right-3 bottom-3 z-10 flex items-center rounded-full bg-white p-0 px-3 py-1.5 text-xs font-semibold shadow-[0_10px_15px_0_rgba(0,0,0,0.1),0_4_6px_0_rgba(0,0,0,0.1)] transition-colors hover:bg-white/90 active:scale-95"
+                    className="text-walkavel-gray-700 active:bg-walkavel-gray-50 absolute right-3 bottom-3 z-10 flex cursor-pointer items-center rounded-full bg-white p-0 px-3 py-1.5 text-xs font-semibold shadow-[0_10px_15px_0_rgba(0,0,0,0.1),0_4_6px_0_rgba(0,0,0,0.1)] transition-colors hover:bg-white/90 active:scale-95"
                   >
                     <ExternalLink size={12} className="mr-1" strokeWidth={2} />
                     지도 앱
@@ -227,13 +227,26 @@ export default function LandmarkDetailClient({ id, initialData }: LandmarkDetail
             </div>
 
             {!collected && (
-              <div className="bg-walkavel-gray-50 text-walkavel-gray-500 mb-8 rounded-2xl p-4 text-center text-sm leading-relaxed">
-                <MapPin size={14} className="text-brand-blue mr-1 mb-1 inline-block" />
-                장소 주변 <span className="text-walkavel-gray-900 font-bold">150m</span> 내에서
-                탐험을 시작하고,
-                <br />
-                <span className="text-brand-blue font-bold">50m 이내</span>로 더 다가가 스탬프를
-                획득해 보세요!
+              <div className="bg-walkavel-gray-50 text-walkavel-gray-500 mb-7 flex flex-col items-center rounded-2xl p-4 text-center text-sm leading-relaxed">
+                <div>
+                  <MapPin size={14} className="text-brand-blue mr-1 mb-1 inline-block" />
+                  장소 주변 <span className="text-walkavel-gray-900 font-bold">150m</span> 내에서
+                  탐험을 시작하고,
+                  <br />
+                  <span className="text-brand-blue font-bold">50m 이내</span>로 더 다가가 스탬프를
+                  획득해 보세요!
+                </div>
+                {distanceToTarget !== null &&
+                  distanceToTarget <= STAMP_CONFIG.DISCOVERY_DISTANCE &&
+                  !isExploring && (
+                    <Button
+                      onClick={() => setIsMissionSheetOpen(true)}
+                      aria-label="스탬프 탐험 시작하기"
+                      className="bg-brand-blue mt-4 h-10 w-full max-w-50 cursor-pointer rounded-xl font-bold text-white shadow-md transition-all active:scale-95"
+                    >
+                      스탬프 탐험 시작하기
+                    </Button>
+                  )}
               </div>
             )}
 

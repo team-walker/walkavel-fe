@@ -16,7 +16,7 @@ function StampSuccessUI() {
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="mb-8 w-full text-center"
+        className="mb-6 w-full text-center"
       >
         <h2 className="text-walkavel-gray-900 mb-2 text-xl font-bold tracking-tight break-keep">
           스탬프 획득 중!
@@ -162,9 +162,9 @@ export function RadarSheet({ id }: { id: string | number }) {
               }
             }}
             onClick={(e) => e.stopPropagation()}
-            className="fixed bottom-0 left-1/2 z-10001 flex h-125 w-full max-w-120 flex-col items-center rounded-t-3xl bg-white px-6 pt-3 pb-12 shadow-[0_-10px_40px_rgba(0,0,0,0.1)]"
+            className="fixed bottom-0 left-1/2 z-10001 flex min-h-fit w-full max-w-120 flex-col items-center rounded-t-3xl bg-white px-6 pt-3 pb-[calc(env(safe-area-inset-bottom)+5.5rem)] shadow-[0_-10px_40px_rgba(0,0,0,0.1)] sm:pb-[calc(env(safe-area-inset-bottom)+7rem)]"
           >
-            <div className="bg-walkavel-gray-300 mb-8 h-1.5 w-12 rounded-full" />
+            <div className="bg-walkavel-gray-300 mb-6 h-1.5 w-12 rounded-full" />
 
             {showSuccess ? (
               <StampSuccessUI />
@@ -174,7 +174,7 @@ export function RadarSheet({ id }: { id: string | number }) {
                   <h2 className="text-walkavel-gray-900 mb-2 text-xl font-bold tracking-tight break-keep">
                     탐험 중...
                   </h2>
-                  <p className="text-walkavel-gray-700 mb-10 text-sm break-keep">
+                  <p className="text-walkavel-gray-700 mb-6 text-sm break-keep">
                     {distanceToTarget !== null
                       ? `현재 위치에서 약 ${distanceToTarget}m 떨어져 있어요`
                       : '위치 정보를 수신하고 있습니다...'}
@@ -183,7 +183,7 @@ export function RadarSheet({ id }: { id: string | number }) {
 
                 <RadarAnimation distance={distanceToTarget} />
 
-                <div className="mt-8 w-full space-y-2 px-4">
+                <div className="mt-6 w-full space-y-2 px-4">
                   <div className="bg-walkavel-gray-100 h-2 w-full overflow-hidden rounded-full">
                     <motion.div
                       className="bg-brand-blue h-full"
@@ -205,6 +205,7 @@ export function RadarSheet({ id }: { id: string | number }) {
               <Button
                 variant="ghost"
                 onClick={() => setIsExploring(false)}
+                aria-label="탐험 그만하기"
                 className="text-walkavel-gray-400 hover:text-walkavel-gray-600 mt-6 cursor-pointer text-sm font-medium hover:bg-transparent"
               >
                 그만하기
