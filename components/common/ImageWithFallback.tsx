@@ -16,6 +16,12 @@ export const ImageWithFallback = (props: ImageWithFallbackProps) => {
 
 const ImageContent = ({ src, alt, className, ...props }: ImageWithFallbackProps) => {
   const [error, setError] = useState(false);
+  const [prevSrc, setPrevSrc] = useState(src);
+
+  if (src !== prevSrc) {
+    setPrevSrc(src);
+    setError(false);
+  }
 
   if (!src || error) {
     return (
