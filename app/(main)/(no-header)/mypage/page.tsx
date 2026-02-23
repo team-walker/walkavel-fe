@@ -184,7 +184,7 @@ export default function MyPage() {
                     unoptimized={stamp.image?.includes('visitkorea.or.kr')}
                   />
                 ) : (
-                  <div className="bg-walkavel-gray-200 text-walkavel-gray-400 flex h-full w-full flex-col items-center justify-center space-y-2 p-2 text-center">
+                  <div className="bg-walkavel-gray-200 text-walkavel-gray-600 flex h-full w-full flex-col items-center justify-center space-y-2 p-2 text-center">
                     <ImageOff className="text-walkavel-gray-400 shrink-0" size={24} />
                     <span className="line-clamp-2 w-full text-xs leading-tight font-medium break-keep">
                       {stamp.title}
