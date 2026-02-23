@@ -1,10 +1,11 @@
 'use client';
 
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 
+import { StaticSplash } from '@/components/common/SplashScreen';
 import AddressSearch from '@/components/home/AddressSearch';
 import LandmarkCard from '@/components/home/LandmarkCard';
 import { ROUTES } from '@/constants/navigation';
@@ -12,7 +13,10 @@ import { useLandmarkExplore } from '@/hooks/useLandmarkExplore';
 import { useSplashStore } from '@/store/splash';
 import { LandmarkDto } from '@/types/model';
 
-const SplashScreen = dynamic(() => import('@/components/common/SplashScreen'), { ssr: false });
+const SplashScreen = dynamic(() => import('@/components/common/SplashScreen'), {
+  ssr: false,
+  loading: () => <StaticSplash />,
+});
 const Overlay = dynamic(() => import('@/components/home/Overlay'));
 const FinishSection = dynamic(() => import('@/components/home/FinishSection'));
 
@@ -69,7 +73,17 @@ export default function MainPage() {
   return (
     <div className="h-full w-full bg-white select-none">
       <AnimatePresence>
-        {isVisible && <SplashScreen key="splash" isAppReady={isAppReady} onComplete={hideSplash} />}
+        {isVisible && (
+          <motion.div
+            key="splash-wrapper"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5, ease: 'easeOut' }}
+            className="will-change-opacity fixed inset-0 z-10000 bg-white"
+          >
+            <SplashScreen isAppReady={isAppReady} onComplete={hideSplash} />
+          </motion.div>
+        )}
       </AnimatePresence>
 
       <main className="relative h-full w-full overflow-hidden">

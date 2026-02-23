@@ -1,8 +1,7 @@
 'use client';
 
-import { AnimatePresence, motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
-import { createPortal } from 'react-dom';
+import { motion } from 'framer-motion';
+import { useEffect } from 'react';
 
 import FootLogoIcon from '@/public/images/foot-logo.svg';
 
@@ -12,13 +11,42 @@ interface SplashScreenProps {
   minDisplayTime?: number;
 }
 
+export function StaticSplash() {
+  return (
+    <div className="fixed inset-0 z-10000 flex flex-col items-center justify-center bg-white p-6">
+      <div className="flex flex-col items-center gap-4 sm:gap-6">
+        <div className="bg-brand-blue shadow-brand-blue/15 mb-14 flex h-25 w-25 items-center justify-center rounded-4xl shadow-xl">
+          <FootLogoIcon className="h-12 w-12 text-white" />
+        </div>
+
+        <div className="text-center">
+          <h1 className="font-outfit text-brand-blue text-2xl font-bold tracking-tight sm:text-3xl">
+            Walkavel
+          </h1>
+          <p className="text-walkavel-gray-400 mt-2 px-4 text-xs font-medium sm:text-sm">
+            일상의 발걸음을 여행으로, 워커블
+          </p>
+        </div>
+      </div>
+
+      <div className="absolute bottom-24 flex items-center gap-3 pb-[env(safe-area-inset-bottom)]">
+        {[0, 1, 2].map((i) => (
+          <div
+            key={i}
+            className="bg-brand-blue h-2 w-2 animate-bounce rounded-full"
+            style={{ animationDelay: `${i * 0.15}s`, opacity: 0.6 }}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function SplashScreen({
   onComplete,
   isAppReady,
   minDisplayTime = 2000,
 }: SplashScreenProps) {
-  const [isVisible, setIsVisible] = useState(true);
-
   useEffect(() => {
     if (window.innerWidth >= 768) {
       onComplete();
@@ -27,8 +55,7 @@ export default function SplashScreen({
 
     const timer = setTimeout(() => {
       if (isAppReady) {
-        setIsVisible(false);
-        setTimeout(onComplete, 800);
+        onComplete();
       }
     }, minDisplayTime);
 
@@ -36,77 +63,52 @@ export default function SplashScreen({
   }, [isAppReady, minDisplayTime, onComplete]);
 
   useEffect(() => {
-    if (isAppReady && isVisible) {
+    if (isAppReady) {
       const checkTimer = setTimeout(() => {
-        setIsVisible(false);
-        setTimeout(onComplete, 800);
+        onComplete();
       }, minDisplayTime);
       return () => clearTimeout(checkTimer);
     }
-  }, [isAppReady, minDisplayTime, onComplete, isVisible]);
+  }, [isAppReady, minDisplayTime, onComplete]);
 
-  return createPortal(
-    <AnimatePresence>
-      {isVisible && (
-        <motion.div
-          initial={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.8, ease: 'easeInOut' }}
-          data-testid="splash-screen"
-          className="fixed inset-y-0 left-1/2 z-9999 flex h-dvh w-full max-w-120 -translate-x-1/2 flex-col items-center justify-center bg-white p-6"
-        >
+  return (
+    <div
+      data-testid="splash-screen"
+      className="flex h-dvh w-full flex-col items-center justify-center bg-white p-6"
+    >
+      <div className="flex flex-col items-center gap-4 sm:gap-6">
+        <div className="bg-brand-blue shadow-brand-blue/15 mb-14 flex h-25 w-25 items-center justify-center rounded-4xl shadow-xl">
+          <FootLogoIcon className="h-12 w-12 text-white" />
+        </div>
+
+        <div className="text-center">
+          <h1 className="font-outfit text-brand-blue text-2xl font-bold tracking-tight sm:text-3xl">
+            Walkavel
+          </h1>
+          <p className="text-walkavel-gray-400 mt-2 px-4 text-xs font-medium sm:text-sm">
+            일상의 발걸음을 여행으로, 워커블
+          </p>
+        </div>
+      </div>
+
+      <div className="absolute bottom-24 flex items-center gap-3 pb-[env(safe-area-inset-bottom)]">
+        {[0, 1, 2].map((i) => (
           <motion.div
-            initial={{ scale: 0.8, opacity: 0, y: 20 }}
-            animate={{ scale: 1, opacity: 1, y: 0 }}
+            key={i}
+            animate={{
+              y: [0, -8, 0],
+              opacity: [0.3, 1, 0.3],
+            }}
             transition={{
               duration: 1.2,
-              ease: [0, 0.71, 0.2, 1.01],
-              scale: {
-                type: 'spring',
-                damping: 12,
-                stiffness: 100,
-                restDelta: 0.001,
-              },
+              repeat: Infinity,
+              delay: i * 0.15,
+              ease: 'easeInOut',
             }}
-            className="flex flex-col items-center gap-4 sm:gap-6"
-          >
-            <div className="bg-brand-blue shadow-brand-blue/15 mb-14 flex h-25 w-25 items-center justify-center rounded-[32px] shadow-xl">
-              <FootLogoIcon className="h-12 w-12 text-white" />
-            </div>
-
-            <div className="text-center">
-              <motion.h1
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5, duration: 1 }}
-                className="font-outfit text-brand-blue text-2xl font-bold tracking-tight sm:text-3xl"
-              >
-                Walkavel
-              </motion.h1>
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.8, duration: 1 }}
-                className="text-walkavel-gray-400 mt-2 px-4 text-xs font-medium sm:text-sm"
-              >
-                우리만의 걷기 좋은 길, 특별한 여행의 시작
-              </motion.p>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.2 }}
-            className="absolute bottom-12 mb-[env(safe-area-inset-bottom)] flex items-center gap-2 sm:bottom-16"
-          >
-            <div className="bg-brand-blue h-1 w-1 animate-bounce rounded-full [animation-delay:-0.3s]" />
-            <div className="bg-brand-blue h-1 w-1 animate-bounce rounded-full [animation-delay:-0.15s]" />
-            <div className="bg-brand-blue h-1 w-1 animate-bounce rounded-full" />
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>,
-    document.body,
+            className="bg-brand-blue h-2 w-2 rounded-full"
+          />
+        ))}
+      </div>
+    </div>
   );
 }

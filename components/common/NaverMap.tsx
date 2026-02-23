@@ -42,11 +42,11 @@ export const NaverMap = ({
         {showCurrentLocationButton && (
           <Button
             onClick={handleCurrentLocation}
-            className="hover:bg-walkavel-gray-50 active:bg-walkavel-gray-100 flex h-9 w-9 items-center justify-center rounded-lg bg-white shadow-md transition-colors"
+            className="hover:bg-walkavel-gray-50 active:bg-walkavel-gray-100 flex h-12 w-12 items-center justify-center rounded-lg bg-white shadow-md transition-colors"
             aria-label="내 위치 찾기"
           >
             <Locate
-              size={20}
+              size={24}
               className={`${isLocating ? 'text-brand-blue animate-spin' : 'text-walkavel-gray-700'}`}
             />
           </Button>
@@ -55,18 +55,18 @@ export const NaverMap = ({
         <div className="flex flex-col overflow-hidden rounded-lg bg-white shadow-md">
           <Button
             onClick={() => handleZoom(1)}
-            className="hover:bg-walkavel-gray-50 active:bg-walkavel-gray-100 flex h-9 w-9 items-center justify-center rounded-none bg-white p-0"
+            className="hover:bg-walkavel-gray-50 active:bg-walkavel-gray-100 flex h-12 w-12 items-center justify-center rounded-none bg-white p-0"
             aria-label="지도 확대"
           >
-            <Plus size={20} className="text-walkavel-gray-700" />
+            <Plus size={24} className="text-walkavel-gray-700" />
           </Button>
           <div className="bg-walkavel-gray-100 h-px w-full" />
           <Button
             onClick={() => handleZoom(-1)}
-            className="hover:bg-walkavel-gray-50 active:bg-walkavel-gray-100 flex h-9 w-9 items-center justify-center rounded-none bg-white p-0"
+            className="hover:bg-walkavel-gray-50 active:bg-walkavel-gray-100 flex h-12 w-12 items-center justify-center rounded-none bg-white p-0"
             aria-label="지도 축소"
           >
-            <Minus size={20} className="text-walkavel-gray-700" />
+            <Minus size={24} className="text-walkavel-gray-700" />
           </Button>
         </div>
       </div>

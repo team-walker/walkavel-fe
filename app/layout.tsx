@@ -5,6 +5,7 @@ import { Analytics } from '@vercel/analytics/next';
 import type { Metadata, Viewport } from 'next';
 import { Inter, Outfit } from 'next/font/google';
 
+import GlobalLayout from '@/components/layout/GlobalLayout';
 import { Toaster } from '@/components/ui/sonner';
 
 import AuthProvider from './providers';
@@ -29,8 +30,8 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: 'Walkavel - 여행을 걷다',
-  description: 'Walk your way, Travel your story - 걷기 좋은 여행지 발견, 워커블(Walkavel)',
+  title: 'Walkavel - 일상의 발걸음을 여행으로, 워커블',
+  description: 'Walk your way, Travel your story - 일상의 발걸음을 여행으로, 워커블(Walkavel)',
   manifest: '/manifest.json',
   icons: {
     icon: [
@@ -38,11 +39,11 @@ export const metadata: Metadata = {
       { url: '/icons/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
       { url: '/icons/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
     ],
-    apple: [{ url: '/icons/apple-touch-icon.png' }],
+    apple: [{ url: '/icons/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
   },
   appleWebApp: {
     capable: true,
-    statusBarStyle: 'black-translucent',
+    statusBarStyle: 'default',
     title: 'Walkavel',
   },
   formatDetection: {
@@ -58,15 +59,17 @@ export default function RootLayout({
   return (
     <html lang="ko-KR">
       <body className={`${inter.variable} ${outfit.variable} font-sans antialiased`}>
-        <AuthProvider>{children}</AuthProvider>
-        <Analytics />
-        <Toaster
-          position="top-center"
-          toastOptions={{
-            unstyled: true,
-          }}
-          className="flex w-full justify-center"
-        />
+        <GlobalLayout>
+          <AuthProvider>{children}</AuthProvider>
+          <Analytics />
+          <Toaster
+            position="top-center"
+            toastOptions={{
+              unstyled: true,
+            }}
+            className="flex w-full justify-center"
+          />
+        </GlobalLayout>
       </body>
     </html>
   );

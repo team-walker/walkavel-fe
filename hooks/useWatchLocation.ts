@@ -30,7 +30,7 @@ export const useWatchLocation = (targetLat?: number, targetLng?: number) => {
       },
       (error) => {
         if (error.code === 1) {
-          showErrorToast('위치 권한을 허용해주세요.');
+          showErrorToast('위치 권한을 허용해 주세요.');
           triggerVibration([...VIBRATION_PATTERNS.ERROR]);
         } else if (error.code !== 2) {
           console.error('GPS Error: ', error);

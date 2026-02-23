@@ -67,14 +67,16 @@ export const BookmarkItem = memo(function BookmarkItem({
           />
         </div>
         <div className="min-w-0 flex-1">
-          <h3 className="text-walkavel-gray-900 mb-1 truncate text-[17px] font-bold">
+          <h3 className="text-walkavel-gray-900 mb-0.5 line-clamp-1 text-base font-bold break-all sm:text-lg">
             {landmark.title}
           </h3>
-          <p className="text-walkavel-gray-500 truncate text-[14px]">
+          <p className="text-walkavel-gray-500 truncate text-sm">
             {landmark.addr1 || '상세 주소 정보가 없습니다.'}
           </p>
         </div>
-        <ChevronRightIcon width={22} height={22} className="text-walkavel-gray-300 shrink-0" />
+        <div className="flex h-11 w-11 shrink-0 items-center justify-center">
+          <ChevronRightIcon width={22} height={22} className="text-walkavel-gray-300" />
+        </div>
       </motion.div>
     </motion.div>
   );

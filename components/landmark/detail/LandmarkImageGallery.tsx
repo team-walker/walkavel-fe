@@ -100,7 +100,7 @@ export function LandmarkImageGallery({ images, title, onBack }: LandmarkImageGal
       <Button
         onClick={onBack}
         aria-label="이전 페이지로 돌아가기"
-        className="text-walkavel-gray-900 absolute top-[calc(env(safe-area-inset-top)+1.5rem)] left-6 z-10 flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-white p-0 shadow-md backdrop-blur-sm transition-transform hover:bg-white/70 active:scale-95"
+        className="text-walkavel-gray-900 absolute top-[calc(env(safe-area-inset-top,0px)+1.5rem)] left-6 z-10 flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-white p-0 shadow-md backdrop-blur-sm transition-transform hover:bg-white/70 active:scale-95"
       >
         <ChevronLeft size={24} strokeWidth={2.5} />
       </Button>
@@ -110,7 +110,7 @@ export function LandmarkImageGallery({ images, title, onBack }: LandmarkImageGal
           aria-hidden="true"
           className="absolute right-4 bottom-4 z-10 flex items-center justify-center rounded-full bg-black/50 px-3 py-1.5 backdrop-blur-sm"
         >
-          <span className="text-[12px] leading-none font-medium tracking-tighter text-white tabular-nums">
+          <span className="text-xs leading-none font-medium tracking-tighter text-white tabular-nums">
             {currentSlide + 1}/{images.length}
           </span>
         </div>

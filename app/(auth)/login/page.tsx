@@ -43,21 +43,21 @@ function LoginContent() {
   };
 
   return (
-    <div className="text-walkavel-gray-900 flex min-h-dvh flex-col items-center justify-center bg-white">
-      <div className="mx-auto flex w-full max-w-[384px] flex-col items-center px-7">
-        <div className="bg-brand-blue shadow-brand-blue/15 mb-14 flex h-25 w-25 items-center justify-center rounded-[32px] shadow-xl">
+    <div className="text-walkavel-gray-900 flex flex-1 flex-col items-center justify-center bg-white">
+      <div className="mx-auto flex w-full max-w-96 flex-col items-center px-7">
+        <div className="bg-brand-blue shadow-brand-blue/15 mb-14 flex h-25 w-25 items-center justify-center rounded-4xl shadow-xl">
           <FootLogoIcon className="h-12 w-12 text-white" />
         </div>
 
         <div className="mb-4 text-center">
-          <h1 className="text-walkavel-gray-900 text-[28px] leading-tight font-bold tracking-tight">
+          <h1 className="text-walkavel-gray-900 text-3xl leading-tight font-bold tracking-tight">
             걷고 싶은 장소,
             <br />
             카드로 발견하세요
           </h1>
         </div>
 
-        <p className="text-walkavel-gray-600 mb-12 text-center text-[16px] font-medium">
+        <p className="text-walkavel-gray-600 mb-12 text-center text-base font-medium">
           마음에 드는 곳은 북마크로 저장할 수 있어요
         </p>
 
@@ -71,7 +71,7 @@ function LoginContent() {
           <Button
             onClick={() => handleOAuthLogin('google')}
             disabled={loading}
-            className="border-walkavel-gray-200 text-walkavel-gray-900 hover:bg-walkavel-gray-50 flex h-14 w-full cursor-pointer items-center justify-center gap-2.5 rounded-3xl border bg-white text-[16px] font-semibold shadow-none active:scale-[0.98] disabled:opacity-50"
+            className="border-walkavel-gray-200 text-walkavel-gray-900 hover:bg-walkavel-gray-50 flex h-14 w-full cursor-pointer items-center justify-center gap-2.5 rounded-3xl border bg-white text-base font-semibold shadow-none active:scale-[0.98] disabled:opacity-50"
           >
             <GoogleIcon className="pointer-events-none h-5 w-5" />
             Google로 시작하기
@@ -80,7 +80,7 @@ function LoginContent() {
           <Button
             onClick={() => handleOAuthLogin('kakao')}
             disabled={loading}
-            className="flex h-14 w-full cursor-pointer items-center justify-center gap-2.5 rounded-3xl bg-[#FEE500] text-[16px] font-semibold text-[#181600] shadow-none hover:bg-[#FDD000] active:scale-[0.98] disabled:opacity-50"
+            className="flex h-14 w-full cursor-pointer items-center justify-center gap-2.5 rounded-3xl bg-[#FEE500] text-base font-semibold text-[#181600] shadow-none hover:bg-[#FDD000] active:scale-[0.98] disabled:opacity-50"
           >
             <KakaoIcon className="pointer-events-none h-5 w-5" />
             카카오로 시작하기
@@ -91,13 +91,13 @@ function LoginContent() {
           <Button
             variant="ghost"
             onClick={handleGuestContinue}
-            className="text-walkavel-gray-400 hover:text-walkavel-gray-500 h-auto p-0 text-[14px] font-medium underline underline-offset-4 hover:bg-transparent"
+            className="text-walkavel-gray-400 hover:text-walkavel-gray-500 h-auto p-0 text-sm font-medium underline underline-offset-4 hover:bg-transparent"
           >
             로그인 없이 둘러보기
           </Button>
         </div>
 
-        <div className="text-walkavel-gray-300 mt-14 text-center text-[12px] leading-relaxed">
+        <div className="text-walkavel-gray-300 mt-14 text-center text-xs leading-relaxed">
           로그인하면{' '}
           <a href="/terms" className="underline underline-offset-2 hover:text-[#9CA3AF]">
             서비스 약관

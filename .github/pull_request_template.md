@@ -49,11 +49,7 @@
 > [!IMPORTANT]
 > PR 생성 전 아래 항목을 확인해 주세요.
 
-- [ ] 유닛 테스트 통과 여부 (`pnpm test`)
-- [ ] 린트 및 타입 체크 확인 (`pnpm lint`, `pnpm typecheck`)
-- [ ] 빌드 통과 여부 (`pnpm build`)
-- [ ] 데스크톱 및 모바일 뷰 반응형 동작 확인
-- [ ] 주요 브라우저(Chrome, Safari 등) 동작 확인
+### 코드 품질
 
 - [ ] 린트 및 타입 체크 통과 (`pnpm lint`, `pnpm typecheck`)
 - [ ] 빌드 성공 (`pnpm build`)

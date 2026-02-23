@@ -21,7 +21,7 @@ export default function GlobalError({
         알 수 없는 오류가 발생했습니다
       </h2>
       <p className="text-walkavel-gray-500 mb-8">
-        앱을 이용하는 중에 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.
+        앱을 이용하는 중에 문제가 발생했습니다. 잠시 후 다시 시도해 보세요.
       </p>
       <div className="flex gap-4">
         <Button onClick={() => reset()} className="bg-brand-blue font-bold">

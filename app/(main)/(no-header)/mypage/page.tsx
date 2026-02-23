@@ -82,11 +82,13 @@ export default function MyPage() {
   const hasMore = allStamps.length > 9;
 
   return (
-    <div className="bg-walkavel-gray-50 w-full flex-1 overflow-y-auto pb-24">
-      <div className="bg-white px-6 pt-12 pb-10">
-        <h1 className="text-walkavel-gray-900 mb-6 text-[28px] font-bold tracking-tight">
-          마이페이지
-        </h1>
+    <div className="bg-walkavel-gray-50 flex w-full flex-1 flex-col pb-24">
+      <div className="bg-white px-6 pt-[env(safe-area-inset-top,0px)] pb-10">
+        <div className="mt-8 mb-6 shrink-0">
+          <h1 className="text-walkavel-gray-900 text-3xl leading-tight font-bold tracking-tight">
+            마이페이지
+          </h1>
+        </div>
 
         <Button
           variant="ghost"
@@ -110,17 +112,13 @@ export default function MyPage() {
             </div>
           </div>
           <div className="min-w-0 flex-1 text-left">
-            <h2 className="text-walkavel-gray-900 text-[18px] leading-tight font-bold">
-              {nickname}
-            </h2>
-            <p className="text-walkavel-gray-500 mt-0.5 truncate text-[13px] font-medium">
-              {email}
-            </p>
+            <h2 className="text-walkavel-gray-900 text-lg leading-tight font-bold">{nickname}</h2>
+            <p className="text-walkavel-gray-500 mt-0.5 truncate text-sm font-medium">{email}</p>
           </div>
           <ChevronRightIcon width={20} height={20} className="text-walkavel-gray-400 shrink-0" />
         </Button>
 
-        <div className="from-brand-blue to-brand-blue-dark relative mb-10 h-48.5 w-full overflow-hidden rounded-[24px] bg-linear-to-b shadow-xl">
+        <div className="from-brand-blue to-brand-blue-dark relative mb-10 h-48 w-full overflow-hidden rounded-3xl bg-linear-to-b shadow-xl">
           <div className="pointer-events-none absolute inset-0 opacity-12">
             <Trophy className="absolute top-4 right-8 -rotate-12 text-white/80" size={40} />
             <Star className="absolute top-16 right-16 rotate-12 text-white/60" size={32} />
@@ -137,28 +135,28 @@ export default function MyPage() {
               <div className="flex h-6 w-6 items-center justify-center rounded-full bg-white/20">
                 <Trophy size={14} className="text-white" />
               </div>
-              <span className="text-[15px] font-medium text-white/90">지금까지 모은 스탬프</span>
+              <span className="text-sm font-medium text-white/90">지금까지 모은 스탬프</span>
             </div>
 
             <div className="flex flex-col">
               <div className="flex items-baseline space-x-1">
-                <span className="text-[64px] leading-tight font-bold tracking-[-1.38px]">
+                <span className="text-6xl leading-tight font-bold tracking-[-1.38px]">
                   {totalCollected}
                 </span>
-                <span className="text-[22px] font-medium text-white/90">개</span>
+                <span className="text-2xl font-medium text-white/90">개</span>
               </div>
-              <p className="text-[15px] font-normal tracking-[-0.23px] text-white/85">
-                새로운 장소를 발견해보세요!
+              <p className="text-sm font-normal tracking-[-0.23px] text-white/85">
+                워커블과 함께 새로운 장소를 발견해 보세요!
               </p>
             </div>
           </div>
         </div>
 
         <div className="mb-4 flex items-center justify-between">
-          <h3 className="text-walkavel-gray-900 text-[18px] font-bold tracking-tight">
+          <h3 className="text-walkavel-gray-900 text-lg font-bold tracking-tight">
             최근 획득한 스탬프
           </h3>
-          <div className="bg-brand-blue-light text-brand-blue flex h-8 items-center justify-center rounded-full px-3 py-1 text-[13px] font-bold">
+          <div className="bg-brand-blue-light text-brand-blue flex h-8 items-center justify-center rounded-full px-3 py-1 text-sm font-bold">
             {totalCollected} / 784
           </div>
         </div>
@@ -173,7 +171,7 @@ export default function MyPage() {
                 animate={{ opacity: 1, scale: 1 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => router.push(`/landmark/${stamp.landmarkId}`)}
-                className="bg-walkavel-gray-100 aspect-square cursor-pointer overflow-hidden rounded-[18px] shadow-[0_1px_3px_rgba(0,0,0,0.1)]"
+                className="bg-walkavel-gray-100 aspect-square cursor-pointer overflow-hidden rounded-2xl shadow-[0_1px_3px_rgba(0,0,0,0.1)]"
               >
                 {stamp.image ? (
                   <Image
@@ -197,14 +195,14 @@ export default function MyPage() {
               Array.from({ length: 9 - displayStamps.length }).map((_, i) => (
                 <div
                   key={`empty-${i}`}
-                  className="border-walkavel-gray-100 bg-walkavel-gray-100/50 aspect-square rounded-[18px] border-2 border-dashed"
+                  className="border-walkavel-gray-100 bg-walkavel-gray-100/50 aspect-square rounded-2xl border-2 border-dashed"
                 />
               ))}
           </div>
         ) : (
-          <div className="bg-walkavel-gray-50 flex flex-col items-center justify-center rounded-[24px] py-12 text-center">
+          <div className="bg-walkavel-gray-50 flex flex-col items-center justify-center rounded-3xl py-12 text-center">
             <Trophy className="text-walkavel-gray-300 mb-3" size={32} />
-            <p className="text-walkavel-gray-500 text-[14px]">아직 획득한 스탬프가 없어요.</p>
+            <p className="text-walkavel-gray-500 text-sm">아직 획득한 스탬프가 없어요.</p>
           </div>
         )}
 
@@ -212,7 +210,7 @@ export default function MyPage() {
           <Button
             variant="ghost"
             onClick={() => setIsExpanded(!isExpanded)}
-            className="border-walkavel-gray-200 text-walkavel-gray-900 hover:bg-walkavel-gray-50 mt-6 flex h-14.75 w-full cursor-pointer items-center justify-center rounded-3xl border-[1.5px] bg-white text-[16px] font-bold transition-all"
+            className="border-walkavel-gray-200 text-walkavel-gray-900 hover:bg-walkavel-gray-50 mt-6 flex h-14 w-full cursor-pointer items-center justify-center rounded-3xl border-2 bg-white text-base font-bold transition-all"
           >
             {isExpanded ? '접기' : '스탬프 전체보기'}
             <motion.div animate={{ rotate: isExpanded ? 180 : 0 }} transition={{ duration: 0.3 }}>
@@ -229,11 +227,11 @@ export default function MyPage() {
       <div className="border-walkavel-gray-50 bg-walkavel-gray-50 h-2 border-y" />
 
       <div className="bg-white px-6 pt-8 pb-8">
-        <h2 className="text-walkavel-gray-600 mb-4 text-[15px] font-bold tracking-tight">설정</h2>
+        <h2 className="text-walkavel-gray-600 mb-4 text-sm font-bold tracking-tight">설정</h2>
 
         <Button
           variant="ghost"
-          className="text-walkavel-gray-600 hover:bg-walkavel-gray-100 active:bg-walkavel-gray-200 flex h-13.5 w-full cursor-pointer items-center justify-center rounded-3xl px-5 py-4 text-[15px] font-medium transition-colors"
+          className="text-walkavel-gray-600 hover:bg-walkavel-gray-100 active:bg-walkavel-gray-200 flex h-14 w-full cursor-pointer items-center justify-center rounded-3xl px-5 py-4 text-sm font-medium transition-colors"
           onClick={handleLogout}
         >
           <LogoutIcon width={18} height={18} className="mr-2 opacity-70" />
@@ -241,7 +239,7 @@ export default function MyPage() {
         </Button>
 
         <div className="mt-8 text-center">
-          <p className="text-walkavel-gray-400 text-[13px]">
+          <p className="text-walkavel-gray-400 text-xs">
             버전 {process.env.NEXT_PUBLIC_APP_VERSION || '1.0.0'}
           </p>
         </div>

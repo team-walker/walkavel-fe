@@ -11,9 +11,9 @@ export const dynamic = 'force-dynamic';
 const mapToBookmarkedLandmark = (bookmark: BookmarkResponseDto): BookmarkedLandmark | null => {
   if (!bookmark.landmark) return null;
   return {
-    contentid: bookmark.landmark.contentid || 0,
+    contentid: bookmark.landmark.contentId || 0,
     title: bookmark.landmark.title,
-    firstimage: bookmark.landmark.firstimage,
+    firstimage: bookmark.landmark.firstImage,
     addr1: bookmark.landmark.addr1,
     cat1: bookmark.landmark.cat1,
     cat2: bookmark.landmark.cat2,
@@ -30,9 +30,11 @@ export default async function BookmarkPage() {
     .filter((l): l is BookmarkedLandmark => l !== null);
 
   return (
-    <div className="flex min-h-full w-full flex-col bg-white px-6 pt-[calc(env(safe-area-inset-top,0px)+2rem)]">
-      <div className="mb-6 shrink-0">
-        <h1 className="text-walkavel-gray-900 text-[28px] leading-tight font-bold">나의 워커블</h1>
+    <div className="flex w-full flex-1 flex-col bg-white px-6 pt-[env(safe-area-inset-top,0px)]">
+      <div className="mt-8 mb-6 shrink-0">
+        <h1 className="text-walkavel-gray-900 text-3xl leading-tight font-bold tracking-tight">
+          나의 워커블
+        </h1>
       </div>
 
       <Suspense fallback={<BookmarkSkeleton />}>

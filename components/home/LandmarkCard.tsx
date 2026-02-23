@@ -137,7 +137,7 @@ export default function LandmarkCard({
       whileTap={{ scale: isTop ? 1.01 : 1 }}
       className="flex h-full flex-col"
     >
-      <Card className="pointer-events-none relative flex h-full w-full flex-col overflow-hidden rounded-[28px] border-none p-0 shadow-[0px_8px_32px_-8px_rgba(0,0,0,0.12),0px_0px_1px_0px_rgba(0,0,0,0.05)] transition-shadow">
+      <Card className="pointer-events-none relative flex h-full w-full flex-col overflow-hidden rounded-3xl border-none p-0 shadow-[0px_8px_32px_-8px_rgba(0,0,0,0.12),0px_0px_1px_0px_rgba(0,0,0,0.05)] transition-shadow">
         {imageUrl ? (
           <ImageWithFallback
             src={imageUrl}
@@ -156,33 +156,37 @@ export default function LandmarkCard({
         )}
         <div className="absolute inset-0 bg-linear-to-b from-transparent via-[rgba(0,0,0,0.2)] via-50% to-[rgba(0,0,0,0.8)]" />
 
-        <div className="pointer-events-auto absolute top-5 right-6 z-20">
+        <div className="pointer-events-auto absolute top-4 right-4 z-20 sm:top-5 sm:right-6">
           <Button
             onClick={handleBookmarkClick}
-            className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-white/95 p-0 shadow-[0_10px_15px_0_rgba(0,0,0,0.1),0_4_6px_0_rgba(0,0,0,0.1)] transition-transform hover:bg-white/70 active:scale-95"
+            className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-white/95 p-0 shadow-lg transition-transform hover:bg-white/70 active:scale-95"
+            aria-label={isBookmarked ? '북마크 취소' : '북마크 추가'}
           >
             <BookmarkIcon
               className={cn(
-                'stroke-2.5 h-5 w-5 transition-colors',
+                'h-5 w-5 stroke-[2.5] transition-colors',
                 isBookmarked ? 'fill-brand-blue text-brand-blue' : 'text-walkavel-gray-700',
               )}
             />
           </Button>
         </div>
 
-        <div className="relative z-10 mt-auto px-6 py-6 text-white">
-          <motion.div layoutId={`info-container-${data.contentid}`} className="flex flex-col gap-2">
+        <div className="relative z-10 mt-auto px-5 py-6 text-white sm:px-6">
+          <motion.div
+            layoutId={`info-container-${data.contentid}`}
+            className="flex flex-col gap-1.5 sm:gap-2"
+          >
             <motion.h2
               layoutId={`title-${data.contentid}`}
-              className="text-[28px] leading-tight font-bold tracking-[0.38px] drop-shadow-[0_4px_8px_rgba(0,0,0,0.15)]"
+              className="line-clamp-2 text-2xl font-bold tracking-tight break-keep drop-shadow-md sm:text-3xl"
             >
               {data.title}
             </motion.h2>
-            <div className="flex items-center gap-1.5 drop-shadow-[0_1px_2px_rgba(0,0,0,0.06)]">
-              <MapPin className="h-4 w-4 text-white/90" />
+            <div className="flex items-center gap-1.5 drop-shadow-sm">
+              <MapPin className="h-4 w-4 shrink-0 text-white/90" />
               <motion.p
                 layoutId={`addr-${data.contentid}`}
-                className="truncate text-[15px] font-medium tracking-[-0.23px] text-white/90"
+                className="truncate text-sm font-medium tracking-tight text-white/90 sm:text-base"
               >
                 {data.addr1 || '상세 주소 정보가 없습니다.'}
               </motion.p>

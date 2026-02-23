@@ -35,24 +35,26 @@ export default function AddressSearch({ onSelectAddress }: AddressSearchProps) {
   } = useAddressSearch({ onSelectAddress });
 
   return (
-    <div className="mx-auto w-full max-w-md px-6 pt-8">
-      <div className="mb-6 space-y-2">
-        <h1 className="text-walkavel-gray-900 text-[32px] font-bold tracking-tight">
+    <div className="mx-auto w-full max-w-md px-5 pt-6 sm:px-6 sm:pt-8">
+      <div className="mb-5 space-y-1.5 sm:mb-6 sm:space-y-2">
+        <h1 className="text-walkavel-gray-900 text-3xl font-bold tracking-tight break-keep sm:text-4xl">
           어디로 갈까요?
         </h1>
-        <p className="text-walkavel-gray-600 text-[17px]">걷고 싶은 동네를 검색해보세요</p>
+        <p className="text-walkavel-gray-600 text-base break-keep sm:text-lg">
+          나만의 워커블을 찾아 떠나 보세요
+        </p>
       </div>
       <Popover open={isOpen && query.trim().length >= 2} onOpenChange={setIsOpen}>
         <PopoverTrigger asChild>
           <div className="group relative flex w-full items-center">
             <Search
-              className={`absolute left-5 h-5.5 w-5.5 transition-colors ${
+              className={`absolute left-5 h-5 w-5 transition-colors sm:h-5.5 sm:w-5.5 ${
                 isFocused ? 'text-brand-blue' : 'text-walkavel-gray-400'
               }`}
             />
             <Input
               type="text"
-              className={`placeholder:text-walkavel-gray-400 h-14.5 w-full rounded-2xl border-none px-5 pl-13 text-[17px] font-medium transition-all duration-300 outline-none focus:ring-0 focus-visible:ring-0 ${
+              className={`placeholder:text-walkavel-gray-400 flex h-14 w-full items-center rounded-2xl border-none px-5 pl-13 text-base transition-all duration-300 outline-none focus:ring-0 focus-visible:ring-0 sm:h-15 sm:text-lg md:text-base ${
                 isFocused || query.length > 0
                   ? 'bg-white shadow-[0_0_0_1px_var(--brand-blue),0_10px_15px_-3px_rgba(0,0,0,0.1)]'
                   : 'bg-walkavel-gray-100'
@@ -70,7 +72,7 @@ export default function AddressSearch({ onSelectAddress }: AddressSearchProps) {
         </PopoverTrigger>
 
         <PopoverContent
-          className="border-walkavel-gray-100 mt-3 w-(--radix-popover-trigger-width) min-w-(--radix-popover-trigger-width) overflow-hidden rounded-4xl bg-white p-0 shadow-[0_20px_25px_-5px_rgba(0,0,0,0.1),0_8px_10px_-6px_rgba(0,0,0,0.1)]"
+          className="border-walkavel-gray-100 mt-2 w-(--radix-popover-trigger-width) min-w-(--radix-popover-trigger-width) overflow-hidden rounded-3xl bg-white p-0 shadow-xl"
           align="start"
           onOpenAutoFocus={(e) => e.preventDefault()}
         >
@@ -104,12 +106,12 @@ export default function AddressSearch({ onSelectAddress }: AddressSearchProps) {
                       <CommandItem
                         data-testid="search-result-item"
                         onSelect={() => handleSelectAddress(item)}
-                        className="group text-walkavel-gray-900 hover:bg-walkavel-gray-100 aria-selected:bg-walkavel-gray-100 flex h-17 cursor-pointer items-center space-x-3 bg-transparent px-5 transition-colors"
+                        className="group aria-selected:bg-walkavel-gray-100 hover:bg-walkavel-gray-100 flex min-h-14 cursor-pointer items-center space-x-3 bg-transparent px-4 transition-colors sm:px-5"
                       >
                         <div className="bg-walkavel-gray-100 group-aria-selected:bg-brand-blue/10 flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-colors">
                           <MapPin className="text-walkavel-gray-400 group-aria-selected:text-brand-blue h-4.5 w-4.5 transition-colors" />
                         </div>
-                        <span className="truncate text-[16px] font-medium tracking-[-0.31px]">
+                        <span className="line-clamp-2 truncate text-[0.9375rem] font-medium tracking-tight sm:text-base">
                           {item.roadAddress}
                         </span>
                       </CommandItem>

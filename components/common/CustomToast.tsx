@@ -18,7 +18,7 @@ export const PushNotificationToast = ({
 }: PushNotificationToastProps) => {
   return (
     <div
-      className="group dark:border-walkavel-gray-700/50 dark:bg-walkavel-gray-900/90 relative mx-auto flex h-15 w-[calc(100vw-32px)] max-w-100 cursor-pointer items-center gap-3.5 overflow-hidden rounded-2xl border border-white/40 bg-white/95 px-4 shadow-[0_12px_40px_-12px_rgba(0,0,0,0.15)] backdrop-blur-xl transition-all active:scale-[0.98]"
+      className="group dark:border-walkavel-gray-700/50 dark:bg-walkavel-gray-900/90 relative mx-auto flex h-15 w-[calc(100vw-2rem)] max-w-100 cursor-pointer items-center gap-3.5 overflow-hidden rounded-2xl border border-white/40 bg-white/95 px-4 shadow-[0_12px_40px_-12px_rgba(0,0,0,0.15)] backdrop-blur-xl transition-all active:scale-[0.98]"
       onClick={() => toast.dismiss(t)}
     >
       <div
@@ -34,7 +34,7 @@ export const PushNotificationToast = ({
       </div>
 
       <div className="flex flex-1 flex-col justify-center overflow-hidden">
-        <p className="text-walkavel-gray-900 dark:text-walkavel-gray-200 line-clamp-1 text-[14.5px] font-bold tracking-[-0.02em]">
+        <p className="text-walkavel-gray-900 dark:text-walkavel-gray-200 line-clamp-1 text-sm font-bold tracking-tight break-keep">
           {description}
         </p>
       </div>
