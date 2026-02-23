@@ -195,7 +195,7 @@ export default function ProfileEditPage() {
 
   return (
     <div className="flex flex-1 flex-col bg-white">
-      <div className="border-walkavel-gray-100 sticky top-0 z-50 border-b bg-white/95 px-4 pt-[env(safe-area-inset-top,0px)] backdrop-blur-sm sm:px-6">
+      <div className="border-walkavel-gray-100 sticky top-0 z-50 border-b bg-white/95 px-4 pt-[calc(env(safe-area-inset-top,0px)+0.5rem)] backdrop-blur-sm sm:px-6">
         <div className="flex h-16 items-center justify-between">
           <Button
             variant="ghost"
