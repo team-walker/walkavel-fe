@@ -1,74 +1,130 @@
-# Team Walker Frontend
+<div align="center">
+  <h1 style="color: #3182F6; display: flex; align-items: center; justify-content: center; gap: 12px;">
+    <img src="public/icons/apple-touch-icon.png" width="40" height="40" alt="Walkavel Icon" />
+    Walkavel (워커블)
+  </h1>
+  <p><b>일상이 여행이 되는 순간, 발걸음이 즐거운 여행을 제안합니다.</b></p>
+  <p>걷기 좋은 여행지를 발견하고 스탬프 미션을 통해 재미를 더해주는 모바일 최적화 웹 서비스</p>
+
+  <p>
+    <a href="https://walkavel.vercel.app/"><img src="https://img.shields.io/badge/Live_Demo-3182F6?style=for-the-badge&logo=vercel&logoColor=white" /></a>
+    <a href="docs/assets/presentation.pdf"><img src="https://img.shields.io/badge/Presentation-FF5722?style=for-the-badge&logo=adobe-acrobat-reader&logoColor=white" /></a>
+    <a href="https://youtu.be/BHgrptiKOFI"><img src="https://img.shields.io/badge/Demo_Video-FF0000?style=for-the-badge&logo=youtube&logoColor=white" /></a>
+    <a href="https://teamwalkerbackend.fly.dev/docs"><img src="https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=swagger&logoColor=black" /></a>
+  </p>
+
+<br/>
 
 ![Next.js](https://img.shields.io/badge/Next.js_16-App_Router-black?style=flat&logo=next.js&logoColor=white)
 ![React](https://img.shields.io/badge/React-19-20232A?style=flat&logo=react&logoColor=61DAFB)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=flat&logo=typescript&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=flat&logo=typescript&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS_4-38B2AC?style=flat&logo=tailwind-css&logoColor=white)
-![pnpm](https://img.shields.io/badge/pnpm-8.0-orange?style=flat&logo=pnpm&logoColor=white)
-![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=flat&logo=github-actions&logoColor=white)
-![Husky](https://img.shields.io/badge/Husky-Git_Hooks-brown?style=flat&logo=git&logoColor=white)
+![PWA](https://img.shields.io/badge/PWA-Supported-orange?style=flat&logo=pwa&logoColor=white)
+![Zustand](https://img.shields.io/badge/Zustand-State_Management-blue?style=flat)
+![Supabase](https://img.shields.io/badge/Supabase-Auth-green?style=flat&logo=supabase&logoColor=white)
 
-> 프로젝트의 프론트엔드 리포지토리입니다.
+</div>
+
+---
+
+## 📌 Key Highlights
+
+- **PWA(Progressive Web App) 기반 오프라인 접근성**: 도보 여행 중 발생할 수 있는 네트워크 불안정 환경에 대응하고, 설치 없이도 앱 라이크한 사용자 경험(UX)을 제공합니다.
+- **Next.js Middleware를 활용한 API Security**: Edge Proxy 구축을 통해 브라우저 CORS 문제를 근본적으로 해결하고, API 키 노출 방지 등 보안성을 강화했습니다.
+- **Framer Motion 기반 고성능 UI/UX**: 60fps의 부드러운 페이지 전환 애니메이션과 직관적인 Swipe UI를 구현하여 모바일 최적화 인터랙션을 완성했습니다.
+- **AI-Driven Code Quality Control**: Gemini AI를 활용한 1차 코드 리뷰 파이프라인을 도입하여 컨벤션 준수율을 높이고 비즈니스 로직 검증에 집중할 수 있는 환경을 구축했습니다.
 
 ## 📑 목차
 
+- [📌 Key Highlights](#-key-highlights)
+- [📑 목차](#-목차)
+- [✨ 서비스 소개](#-서비스-소개)
+  - [](#)
+  - [📲 모바일 웹앱 (PWA) 지원](#-모바일-웹앱-pwa-지원)
+  - [주요 기능 (Features)](#주요-기능-features)
+    - [📍 걷기 좋은 여행지 추천 (Explore)](#-걷기-좋은-여행지-추천-explore)
+    - [🎫 스탬프 획득 미션 (Stamp)](#-스탬프-획득-미션-stamp)
+    - [🔖 나만의 여행 보관함 (Bookmark)](#-나만의-여행-보관함-bookmark)
+    - [🎨 모바일 최적화 UI/UX](#-모바일-최적화-uiux)
 - [🛠 기술 스택](#-기술-스택)
 - [📂 프로젝트 구조](#-프로젝트-구조)
 - [🚀 시작하기](#-시작하기)
-- [📝 협업 가이드](#-협업-가이드)
-  - [1. 브랜치 전략](#1-브랜치-전략-git-flow)
-  - [2. 커밋 컨벤션](#2-커밋-컨벤션-conventional-commits)
-  - [3. PR 전략](#3-prpull-request-전략)
-  - [4. 코딩 컨벤션](#4-코딩--스타일-컨벤션)
-  - [5. CI/CD](#5-cicd-github-actions)
-  - [6. 스프린트 운영](#6-스프린트-및-통합-주기-sprint--integration)
-- [⚡️ 빠른 참조](#️-빠른-참조)
+  - [1. 패키지 설치](#1-패키지-설치)
+  - [2. 환경 변수 설정](#2-환경-변수-설정)
+  - [3. 개발 서버 실행](#3-개발-서버-실행)
+- [🤝 협업 가이드](#-협업-가이드)
+- [👥 팀원 구성](#-팀원-구성)
+
+---
+
+## ✨ 서비스 소개
+
+### <img src="public/images/walkavel-intro.png" width="100%" alt="Walkavel Service Introduction" />
+
+### 📲 모바일 웹앱 (PWA) 지원
+
+Walkavel은 **Progressive Web App(PWA)** 기술을 적용하여 네트워크 제약을 넘어선 사용자 경험을 설계했습니다.
+
+- **홈 화면 추가(A2HS)**: 별도의 앱 스토어 거치 없이 홈 화면 추가를 통해 즉각적인 서비스 진입 유도
+- **오프라인 라이브러리 지원**: 서비스 워커 캐싱 전략을 통해 오프라인 환경에서도 핵심 데이터 접근 가능
+
+### 주요 기능 (Features)
+
+#### 📍 걷기 좋은 여행지 추천 (Explore)
+
+- 사용자 위치 기반의 실시간 명소 추천 및 네이버 지도 API 커스터마이징을 통한 직관적 인터페이스 제공
+- **확장성 고려**: 현재 서울 중심의 서비스를 전국 단위 및 테마별 랜드마크로 확장 가능한 데이터 구조 설계
+
+#### 🎫 스탬프 획득 미션 (Stamp)
+
+- Geolocation API를 활용한 방문 인증 시스템과 **게이미피케이션** 요소를 결합하여 사용자 체류 시간 증대 및 재방문 유도
+
+#### 🔖 나만의 여행 보관함 (Bookmark)
+
+- 관심 장소의 효율적 관리를 위한 서버 사이드 데이터 동기화 및 즉각적인 UI 반영(Optimistic Update) 구현
+
+#### 🎨 모바일 최적화 UI/UX
+
+- iOS/Android Safe Area 완벽 대응 및 480px 고정 레이아웃으로 모바일 웹뷰 최상의 안정성 확보
 
 ---
 
 ## 🛠 기술 스택
 
-| Category                 | Technology                                     |
-| ------------------------ | ---------------------------------------------- |
-| **Framework**            | Next.js 16 (App Router), React 19              |
-| **Language**             | TypeScript 5                                   |
-| **Auth**                 | Supabase Auth (@supabase/ssr)                  |
-| **State Management**     | Zustand                                        |
-| **Styling**              | Tailwind CSS 4, Radix UI, Lucide React         |
-| **API & Data**           | Axios, Orval (API Code Generation), Zod        |
-| **PWA**                  | @ducanh2912/next-pwa                           |
-| **Animation**            | Framer Motion                                  |
-| **Documentation**        | Storybook                                      |
-| **Testing**              | Jest, React Testing Library, Playwright (E2E)  |
-| **Package Manager**      | pnpm                                           |
-| **Linting & Formatting** | ESLint, Prettier, Stylelint, Husky, Commitlint |
+| Category       | Technology                  | Decision (기술적 의사결정 배경)                                           |
+| :------------- | :-------------------------- | :------------------------------------------------------------------------ |
+| **Framework**  | Next.js 16, React 19        | App Router를 통한 성능 최적화 및 최신 리액트 기능(Server Actions 등) 활용 |
+| **Auth**       | Supabase Auth               | 서버리스 환경에서 관리가 용이하고 보안이 검증된 인증 시스템 구축          |
+| **State**      | Zustand 5                   | Boilerplate가 적고 가벼워 런타임 오버헤드를 최소화하며 개발 생산성 향상   |
+| **Styling**    | Tailwind CSS 4              | Utility-first 방식을 통한 디자인 시스템의 일관성 유지 및 빠른 스타일 전개 |
+| **PWA**        | @ducanh2912/next-pwa        | 도보 여행 중 네트워크 단절 상황에 대응하고 설치 없는 앱 경험 제공         |
+| **API & Data** | Orval, TanStack Query v4    | API 코드 자동 생성을 통한 타입 안정성 확보 및 효율적 서버 상태 관리       |
+| **Testing**    | Jest, Playwright, Storybook | 단위/E2E 테스트 및 UI 컴포넌트 문서화를 통한 안정적인 제품 품질 유지      |
+
+---
 
 ## 📂 프로젝트 구조
 
 ```bash
-├── app/                  # Next.js App Router (Pages, API, Layouts)
-│   ├── (auth)/           # 인증 관련 페이지 (Login, Callback 등)
-│   ├── (main)/           # 메인 서비스 페이지 (Home, Bookmark, MyPage 등)
-│   ├── api/              # API Route Handlers (Geocode 등)
-│   ├── globals.css       # Global Styles
-│   └── layout.tsx        # Root Layout
-├── components/           # 재사용 가능한 UI 컴포넌트
-│   ├── common/           # 공통 컴포넌트 (SplashScreen 등)
-│   ├── home/             # 홈 화면 전용 컴포넌트
-│   ├── layout/           # 레이아웃 관련 (Header, BottomNav)
-│   └── ui/               # Shadcn UI (Base Components)
-├── hooks/                # Custom React Hooks
-├── lib/                  # 유틸리티 및 설정
-│   ├── api/              # Axios Instance & API Clients
-│   └── supabase/         # Supabase Client & Middleware Logic
-├── store/                # Zustand State Stores
-├── types/                # TypeScript Type Definitions (API, Model 등)
-├── constants/            # 공통 상수 및 설정
-├── __tests__/            # Unit & Integration Tests (Jest)
-├── e2e/                  # End-to-End Tests (Playwright)
-├── stories/              # Storybook Stories
-└── public/               # Static Assets & PWA Manifest
+├── app/                  # Next.js App Router
+│   ├── (auth)/           # 인증 도메인 (Login, Callback) 라우트 그룹핑
+│   ├── (main)/           # 메인 서비스 비즈니스 레이어 (Home, Explore 등)
+│   ├── actions/          # Server Actions: 클라이언트-서버 간 타입 안전한 데이터 통신
+│   └── api/              # BFF(Backend for Frontend): 외부 API 통신을 위한 프록시 및 보안 레이어
+├── components/           # Atomic Design Pattern 기반 컴포넌트 분리
+│   ├── common/           # 도메인 의존성 없이 재사용 가능한 비즈니스 공통 컴포넌트
+│   ├── layout/           # 전역 레이아웃 및 페이지 전환(Transition) 관리
+│   └── ui/               # Shadcn UI 기반의 순수 디자인 컴포넌트 (Button, Input 등)
+├── hooks/                # 비즈니스 로직(View Model)과 UI 뷰의 관심사 분리를 위한 커스텀 훅
+├── lib/                  # 핵심 인프라 및 유틸리티
+│   └── repositories/     # Repository Pattern: 데이터 소스 교체가 용이하도록 데이터 접근 로직 캡슐화
+├── store/                # Zustand: 전역 클라이언트 상태 관리 (Auth, Map 등)
+├── types/                # Orval을 통해 자동 생성된 API 모델 및 공통 타입 정의
+├── __tests__/            # Jest: 비즈니스 로직 및 유틸리티 함수 단위 테스트
+└── e2e/                  # Playwright: 핵심 사용자 시나리오(Happy Path) 검증
 ```
+
+---
 
 ## 🚀 시작하기
 
@@ -80,11 +136,7 @@ pnpm install
 
 ### 2. 환경 변수 설정
 
-`.env.example` 파일을 `.env`로 복사하고, 필요한 환경 변수 값을 설정합니다.
-
-```bash
-cp .env.example .env
-```
+`.env.example` 파일을 `.env`로 복사하여 설정합니다.
 
 ### 3. 개발 서버 실행
 
@@ -92,301 +144,25 @@ cp .env.example .env
 pnpm dev
 ```
 
-브라우저에서 [http://localhost:3000](http://localhost:3000)으로 접속해 확인하세요.
+---
 
-### 4. 테스트 실행
+## 🤝 협업 가이드
 
-```bash
-pnpm test
-```
+팀의 협업 문화와 코드 작성 규칙에 대한 상세 내용은 [COLLABORATION.md](docs/COLLABORATION.md)와 [Team Notion](https://www.notion.so/hayeonbaek/2fdf2cf9d94180f488aef3da85e6e993?source=copy_link)에서 확인하실 수 있습니다.
+
+단순한 구현을 넘어 효율적인 프로세스를 통해 팀 전체의 퍼포먼스를 높이는 데 집중합니다.
+
+- **브랜치 전략**: Git Flow 기반의 엄격한 형상 관리
+- **커밋 컨벤션**: Conventional Commits 준수를 통한 히스토리 가시성 확보
+- **코드 리뷰**: Gemini AI 1차 리뷰 도입을 통해 **단순 컨벤션 오류 수정 시간을 30% 단축**하고, 팀원 간에는 비즈니스 로직 및 아키텍처 개선 논의에 집중
+- **품질 관리**: Github Actions 기반 CI/CD 구축으로 모든 PR에 대한 빌드 및 테스트 자동 검증
 
 ---
 
-## ✨ 핵심 기능 (Features)
-
-### 📲 Mobile PWA & UI
-
-- **모바일 웹앱 환경**: 홈 화면 추가(A2HS) 지원 및 스탠드얼론 실행 가능
-- **오프라인 지원**: `@ducanh2912/next-pwa`를 통한 서비스 워커 리소스 캐싱
-- **모바일 최적화 UI**:
-  - **Safe Area 대응**: iOS/Android 노치 디자인 및 하단 바 충돌 방지 (`env(safe-area-inset-*)`)
-  - **480px 고정 레이아웃**: 데스크탑에서도 일관된 모바일 경험을 제공하는 중앙 정렬 레이아웃
-- **부드러운 전환**: `framer-motion`과 Next.js `template.tsx`를 결합한 페이지 전환 애니메이션
-
----
-
-## 📝 협업 가이드
-
-팀원들과 함께 사용할 협업 규칙 및 컨벤션입니다.
-
-## 1. 브랜치 전략 (Git Flow)
-
-> **Git Flow** 전략을 기반으로 운영합니다.
-
-### 브랜치 종류
-
-| 브랜치                      | 용도                         | 직접 Push           |
-| --------------------------- | ---------------------------- | ------------------- |
-| **`main`**                  | 배포 가능한 프로덕션 코드    | ❌ 금지             |
-| **`develop`**               | 다음 배포를 위한 개발 브랜치 | ❌ 금지 (PR만 가능) |
-| **`feat/#이슈번호-기능명`** | 기능 개발                    | ✅ 가능             |
-| **`fix/#이슈번호-버그명`**  | 버그 수정                    | ✅ 가능             |
-
-### 브랜치 네이밍 예시
-
-```bash
-feat/#12-login-page
-feat/#23-main-banner
-fix/#15-header-alignment
-fix/#34-api-error-handling
-```
-
-### 📌 작업 프로세스
-
-```
-1. 이슈(Issue) 생성
-   ↓
-2. develop 브랜치 최신화
-   git pull origin develop
-   ↓
-3. 작업 브랜치 생성
-   git checkout -b feat/#이슈번호-기능명
-   ↓
-4. 작업 및 커밋
-   ↓
-5. 원격 저장소 푸시
-   git push origin feat/#이슈번호-기능명
-   ↓
-6. PR 생성 (작업 브랜치 → develop)
-```
-
-## 2. 커밋 컨벤션 (Conventional Commits)
-
-> **⚠️ 중요**: 자동화 도구(`commitlint`, `husky`)에 의해 커밋 메시지 규칙이 강제됩니다.
-
-### 커밋 메시지 형식
-
-```
-type: subject
-```
-
-- **`type`은 필수이며 소문자로 작성**
-- **`subject`는 대소문자 구분 없이 작성 가능** (API, UI 등 고유명사 사용 가능)
-- `type`과 `subject` 사이에 콜론(`:`)과 공백 한 칸
-- 제목 끝에 **마침표(`.`) 사용 가능** (선택 사항)
-- **본문(body) 최대 200자**까지 작성 가능 (유연한 설명 기재 가능)
-
-### Type 종류
-
-| Type       | 설명                                           | 예시                                       |
-| ---------- | ---------------------------------------------- | ------------------------------------------ |
-| `feat`     | 새로운 기능 추가                               | `feat: implement login api`                |
-| `fix`      | 버그 수정                                      | `fix: resolve db connection issue`         |
-| `docs`     | 문서 수정 (README, 주석 등)                    | `docs: update readme installation guide`   |
-| `style`    | 코드 포맷팅, 세미콜론 누락 등 (로직 변경 없음) | `style: format code with prettier`         |
-| `refactor` | 코드 리팩토링 (기능 변경 없음)                 | `refactor: simplify user validation logic` |
-| `test`     | 테스트 코드 추가/수정                          | `test: add unit tests for auth service`    |
-| `chore`    | 빌드 업무, 패키지 매니저 설정 등               | `chore: update dependencies`               |
-| `perf`     | 성능 개선                                      | `perf: optimize database queries`          |
-| `ci`       | CI 구성 파일 및 스크립트 변경                  | `ci: update github actions workflow`       |
-| `init`     | 프로젝트 초기 생성                             | `init: create project structure`           |
-| `revert`   | 커밋 되돌리기                                  | `revert: undo previous commit`             |
-
-### 커밋 단위 (Atomic Commit)
-
-✅ **DO**
-
-- 하나의 커밋은 **하나의 변경 사항**만 포함
-- 작은 단위로 자주 커밋
-- 각 커밋이 독립적으로 동작 가능하도록
-
-❌ **DON'T**
-
-- 여러 기능을 한 커밋에 섞지 않기
-- 기능 구현과 스타일 수정을 같이 커밋하지 않기
-
-### 좋은 커밋 예시
-
-```bash
-✅ feat: add user login component
-✅ fix: resolve api timeout error
-✅ style: format code with prettier
-```
-
-### 나쁜 커밋 예시
-
-```bash
-❌ FEAT: add login (type을 대문자로 작성)
-❌ feat:add login (공백 없음)
-❌ add login (type 누락)
-❌ feat: add login, fix header, update styles (여러 작업 혼재)
-```
-
-## 3. PR(Pull Request) 전략
-
-> PR 템플릿이 설정되어 있습니다. 내용을 충실히 작성해주세요.
-
-### PR 제목 형식
-
-```
-type: 요약 #이슈번호
-```
-
-**예시**: `feat: 메인 배너 구현 #23`
-
-### PR 작성 체크리스트
-
-- [ ] **Reviewers**: 팀원 전체 지정
-- [ ] **Assignees**: 자동으로 본인이 지정됨 (Github Actions)
-- [ ] **Labels**: 작업 성격에 맞는 라벨(`feat`, `bug` 등) 추가
-- [ ] **Linked Issues**: 본문에 `Close #이슈번호` 작성하여 이슈 자동 닫기 연결
-- [ ] **Description**: PR 템플릿에 따라 변경사항 상세히 작성
-
-### 리뷰 & 병합 규칙
-
-| 단계            | 내용                                                   |
-| --------------- | ------------------------------------------------------ |
-| **1차 리뷰**    | AI 코드 리뷰(Gemini Code Assist) 필수 진행             |
-| **2차 리뷰**    | 최소 **1명 이상**의 팀원 승인(Approve) 필요            |
-| **리뷰 포인트** | 코드의 논리적 오류, 컨벤션 준수, 테스트 코드 작성 여부 |
-| **병합 방식**   | `Squash and Merge` 권장 (커밋 히스토리 정리)           |
-
-### 💡 Gemini AI Bot 활용 팁
-
-- **자동 리뷰**: PR 생성 시 Gemini 봇이 자동으로 1차 리뷰 진행
-- **추가 질문**: `@gemini-code-assist`를 태그하여 특정 코드에 대해 질문 가능
-- **명령어**:
-  - `/gemini review` - 새로운 리뷰 요청
-  - `/gemini summary` - 변경 사항 요약 요청
-
-## 4. 코딩 & 스타일 컨벤션
-
-### 자동 검사 도구
-
-- **ESLint & Prettier**: 커밋 전 `husky`에 의해 자동 검사
-- **Stylelint**: Tailwind CSS 클래스 순서 자동 정렬
-- **IDE 설정 권장**: "저장 시 자동 포맷팅(Auto Fix on Save)" 활성화
-
-### 네이밍 컨벤션
-
-| 대상          | 규칙             | 예시                                 |
-| ------------- | ---------------- | ------------------------------------ |
-| **컴포넌트**  | PascalCase       | `LoginButton.tsx`, `UserProfile.tsx` |
-| **함수/변수** | camelCase        | `getUserData`, `isLoggedIn`          |
-| **상수**      | UPPER_SNAKE_CASE | `API_BASE_URL`, `MAX_RETRY_COUNT`    |
-| **파일/폴더** | Next.js 규칙     | `page.tsx`, `layout.tsx`             |
-
-### 코드 작성 원칙
-
-1. **명확한 변수명 사용**: 축약어보다는 의미 있는 이름
-2. **함수는 단일 책임**: 하나의 함수는 하나의 역할만
-3. **주석은 Why, not What**: 코드가 무엇을 하는지보다 왜 그렇게 했는지 설명
-4. **Early Return 패턴 사용**: 중첩 if문보다는 조기 반환
-
-## 5. CI/CD (Github Actions)
-
-### 자동 실행 작업
-
-PR 생성 및 푸시 시 자동으로 다음 작업이 실행됩니다:
-
-- ✅ **Build**: 빌드 성공 여부 확인
-- ✅ **Lint**: ESLint, Stylelint 검사
-- ✅ **Test**: 테스트 코드 통과 여부
-
-> **⚠️ 주의**: 테스트를 통과하지 못하면 Merge가 제한됩니다.
-
-### Git Hooks (로컬 검사)
-
-`Husky`와 `lint-staged`를 통해 커밋 전 자동 검사:
-
-- **Pre-commit**: Lint 및 Formatting 자동 검사
-- **Commit-msg**: 커밋 메시지 규칙 검증
-
-규칙 위반 시 커밋이 중단되므로, 에러 메시지를 확인하여 수정 후 재시도하세요.
-
-### Git Hooks & Local Quality
-
-- `Husky`와 `lint-staged`를 통해 커밋 전 자동으로 **Lint 및 Formatting** 검사가 수행됩니다.
-- 규칙에 어긋나는 코드가 있을 경우 커밋이 중단되므로, 에러 메시지를 확인하여 수정 후 다시 커밋해 주세요.
-- _팁: IDE의 "저장 시 자동 포맷팅(Auto Fix on Save)" 기능을 활성화하면 더욱 편리합니다._
-
-## 6. 스프린트 및 통합 주기 (Sprint & Integration)
-
-> **1주 단위 스프린트**로 개발 및 배포를 진행합니다.
-
-### 통합 방식
-
-#### 상시 통합 (Continuous Integration)
-
-- 개별 기능 개발 완료 시 **즉시** PR을 통해 `develop` 브랜치에 병합
-- ⚠️ **충돌 방지**: 스프린트 마지막 날에 몰아서 병합하지 않습니다
-
-#### 정기 배포 (End of Sprint)
-
-- 스프린트 종료 시 `develop` → `main` 병합하여 배포
-
-### 스프린트 프로세스 (1주 단위 예시)
-
-```
-월요일 (Sprint Start)
-  └─ PO가 할당한 백로그 확인 및 작업 시작
-     ↓
-월~목 (Development)
-  └─ feat 브랜치 작업 → develop으로 지속적 병합
-     ↓
-금요일 오전 (Code Freeze)
-  └─ 새로운 기능 병합 중단
-  └─ QA (테스트 코드 통과 및 수동 점검)
-  └─ 버그 수정
-     ↓
-금요일 오후 (Release)
-  └─ QA 통과 후 main 브랜치 병합 및 배포
-```
-
-> _위 일정은 프로젝트 상황에 따라 유연하게 변경될 수 있습니다._
-
----
-
-## ⚡️ 빠른 참조
-
-### 자주 사용하는 Git 명령어
-
-```bash
-# 브랜치 생성 및 이동
-git checkout -b feat/#이슈번호-기능명
-
-# develop 브랜치 최신화
-git pull origin develop
-
-# 현재 브랜치를 develop 기준으로 리베이스
-git rebase develop
-
-# 커밋 후 푸시
-git add .
-git commit -m "feat: add login button"
-git push origin feat/#이슈번호-기능명
-
-# 브랜치 삭제 (병합 후)
-git branch -d feat/#이슈번호-기능명
-```
-
-### 문제 해결
-
-#### 커밋이 안 될 때
-
-1. 린트 에러 확인: `pnpm lint`
-2. 포맷팅 자동 수정: `pnpm format`
-3. 커밋 메시지 형식 확인 (소문자, type: subject)
-
-#### 충돌(Conflict) 발생 시
-
-1. `git pull origin develop`로 최신 코드 받기
-2. 충돌 파일 수동 해결
-3. `git add .` 후 `git commit`
-4. `git push`
-
-#### 빌드 실패 시
-
-1. `node_modules` 삭제 후 재설치: `rm -rf node_modules && pnpm install`
-2. `.next` 폴더 삭제 후 재빌드: `rm -rf .next && pnpm build`
-3. 환경 변수 확인: `.env` 파일 존재 및 내용 확인
+## 👥 팀원 구성
+
+|                                                 [**백하연**](https://github.com/bhy304)                                                 |                                               [**정성윤**](https://github.com/jsyoon27)                                               |                                            [**박준하**](https://github.com/JHParrrk)                                             |                                          [**정여진**](https://github.com/YOJIN003)                                          |
+| :-------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------: |
+|                            <img src="https://avatars.githubusercontent.com/u/43948313?v=4" width="100px;"/>                             |                           <img src="https://avatars.githubusercontent.com/u/220376998?v=4" width="100px;"/>                           |                        <img src="https://avatars.githubusercontent.com/u/112451800?v=4" width="100px;"/>                         |                      <img src="https://avatars.githubusercontent.com/u/151131391?v=4" width="100px;"/>                      |
+|                                                            😎 **팀장 / FE**                                                             |                                                          🛠️ **부팀장 / BE**                                                           |                                                         🛠️ **팀원 / BE**                                                         |                                                      🛠️ **팀원 / BE**                                                       |
+| • 서비스 아키텍처 설계 및 UI/UX 총괄<br />• PWA 최적화 및 인프라 CI/CD 파이프라인 구축<br />• Framer Motion 기반 고도화된 인터랙션 구현 | • 핵심 비즈니스 로직 단위/통합 테스트 설계<br />• 마이크로서비스 지향 API 아키텍처 설계<br />• 인프라 자동화 및 시스템 품질 관리 총괄 | • Geolocation 기반 위치 서비스 최적화<br />• 검색 성능 개선 및 북마크 도메인 로직 구현<br />• 백엔드 비즈니스 레이어 확장성 강화 | • 사용자 인증 기반 데이터 정합성 검증<br />• Supabase 기반 인증/인가 시스템 고도화<br />• 스탬프 미션 데이터 모델링 및 가공 |
