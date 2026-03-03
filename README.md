@@ -129,7 +129,7 @@ pnpm install
 
 ### 2. 환경 변수 설정 <!-- omit in toc -->
 
-`.env.example` 파일을 `.env`로 복사하여 알맞은 값을 설정합니다.
+`.env.example` 파일을 `.env.local`로 복사하여 알맞은 값을 설정합니다.
 
 ```bash
 cp .env.example .env.local
@@ -140,6 +140,13 @@ cp .env.example .env.local
 ```bash
 pnpm dev
 ```
+
+### 💡 문제 해결 (Troubleshooting) <!-- omit in toc -->
+
+- **의존성 설치 오류**: `pnpm install` 중 오류가 발생하면 Node.js 버전이 20.0.0 이상인지 확인해 주세요. (`nvm use 20` 등 활용)
+- **환경 변수 누락**: 로컬 개발 시 `.env.local` 파일이 누락되면 API 통신 및 Supabase 인증에서 에러가 발생할 수 있습니다. `.env.example`을 참고해 반드시 설정해 주세요.
+- **PWA 오프라인 캐시 문제**: PWA 서비스 워커가 이전 버전의 정적 파일을 캐싱하고 있을 수 있습니다. 개발자 도구(F12) > Application > Service Workers에서 'Update on reload'를 체크하거나 'Unregister' 후 새로고침해 주세요.
+- **CORS 및 API 통신 오류**: 로컬 개발 환경에서 백엔드 API 호출 시 CORS 에러가 발생한다면, Next.js API Proxy (`app/api/...`)를 정상적으로 경유하고 있는지 점검해 주세요.
 
 ---
 
