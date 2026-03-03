@@ -3,10 +3,9 @@
 > **"지속 가능한 코드 품질과 효율적인 협업을 위해 다음 규칙을 준수합니다."**
 > 팀 내에서 논의된 상세한 협업 프로세스와 가이드는 [팀 노션](https://www.notion.so/hayeonbaek/2fdf2cf9d94180f488aef3da85e6e993?source=copy_link)에서 확인하실 수 있습니다.
 
-## 📑 목차
+## 📑 목차 <!-- omit in toc -->
 
 - [🤝 협업 가이드 (Collaboration Guide)](#-협업-가이드-collaboration-guide)
-  - [📑 목차](#-목차)
   - [1. 브랜치 전략 (Git Flow)](#1-브랜치-전략-git-flow)
     - [브랜치 종류](#브랜치-종류)
   - [2. 커밋 컨벤션 (Conventional Commits)](#2-커밋-컨벤션-conventional-commits)
