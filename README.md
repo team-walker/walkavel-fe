@@ -1,23 +1,7 @@
 <div align="center">
-  <h1 style="display: flex; align-items: center; justify-content: center; gap: 12px;">
-    <img src="public/icons/apple-touch-icon.png" width="40" height="40" alt="Walkavel Icon" />
-    <span style="color: #3182F6">Walkavel (워커블)</span>
-  </h1>
-  <p><b>일상이 여행이 되는 순간, 발걸음이 즐거운 여행을 제안합니다.</b></p>
-  <p>걷기 좋은 여행지를 발견하고 스탬프 미션을 통해 재미를 더해주는 모바일 최적화 웹 서비스</p>
-
-  <p>
-    <a href="https://walkavel.vercel.app/"><img src="https://img.shields.io/badge/Live_Demo-3182F6?style=for-the-badge&logo=vercel&logoColor=white" /></a>
-    <a href="docs/assets/presentation.pdf"><img src="https://img.shields.io/badge/Presentation-FF5722?style=for-the-badge&logo=adobe-acrobat-reader&logoColor=white" /></a>
-    <a href="https://youtu.be/BHgrptiKOFI"><img src="https://img.shields.io/badge/Demo_Video-FF0000?style=for-the-badge&logo=youtube&logoColor=white" /></a>
-    <a href="https://teamwalkerbackend.fly.dev/docs"><img src="https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=swagger&logoColor=black" /></a>
-  </p>
-
-<br/>
-<div align="center">
-  <h1 style="display: flex; align-items: center; justify-content: center; gap: 12px;">
-    <img src="public/icons/apple-touch-icon.png" width="40" height="40" alt="Walkavel Icon" />
-    <span style="color: #3182F6">Walkavel (워커블)</span>
+  <h1>
+    <img src="public/icons/apple-touch-icon.png" width="40" height="40" style="vertical-align: middle; margin-right: 8px;" alt="Walkavel Icon" />
+    <span style="vertical-align: middle;">Walkavel (워커블)</span>
   </h1>
   <p><b>일상이 여행이 되는 순간, 발걸음이 즐거운 여행을 제안합니다.</b></p>
   <p>걷기 좋은 여행지를 발견하고 스탬프 미션을 통해 재미를 더해주는 모바일 최적화 웹 서비스</p>
@@ -47,9 +31,7 @@
 
 - [✨ 서비스 소개](#-서비스-소개)
 - [📌 Key Highlights](#-key-highlights)
-- [✨ 서비스 소개](#-서비스-소개-1)
-- [📌 Key Highlights](#-key-highlights-1)
-- [🛠️️ 기술 스택](#️️-기술-스택)
+- [🛠️ 기술 스택](#️-기술-스택)
 - [📂 프로젝트 구조](#-프로젝트-구조)
 - [🚀 시작하기](#-시작하기)
 - [🤝 협업 가이드](#-협업-가이드)
@@ -95,53 +77,10 @@ Walkavel은 **Progressive Web App(PWA)** 기술을 적용하여 네트워크 제
 - **Next.js Middleware를 활용한 API Security**: Edge Proxy 구축을 통해 브라우저 CORS 문제를 근본적으로 해결하고, API 키 노출 방지 등 보안성을 강화했습니다.
 - **Framer Motion 기반 고성능 UI/UX**: 60fps의 부드러운 페이지 전환 애니메이션과 직관적인 Swipe UI를 구현하여 모바일 최적화 인터랙션을 완성했습니다.
 - **AI-Driven Code Quality Control**: Gemini AI를 활용한 1차 코드 리뷰 파이프라인을 도입하여 컨벤션 준수율을 높이고 비즈니스 로직 검증에 집중할 수 있는 환경을 구축했습니다.
-- [🤝 협업 가이드](#-협업-가이드)
-- [👥 팀원 구성](#-팀원-구성)
 
 ---
 
-## ✨ 서비스 소개
-
-<img src="public/images/walkavel-intro.png" width="100%" alt="Walkavel Service Introduction" />
-
-### 📲 모바일 웹앱 (PWA) 지원 <!-- omit in toc -->
-
-Walkavel은 **Progressive Web App(PWA)** 기술을 적용하여 네트워크 제약을 넘어선 사용자 경험을 설계했습니다.
-
-- **홈 화면 추가(A2HS)**: 별도의 앱 스토어 거치 없이 홈 화면 추가를 통해 즉각적인 서비스 진입 유도
-- **오프라인 라이브러리 지원**: 서비스 워커 캐싱 전략을 통해 오프라인 환경에서도 핵심 데이터 접근 가능
-
-### 💡 주요 기능 (Features) <!-- omit in toc -->
-
-#### 📍 걷기 좋은 여행지 추천 (Explore) <!-- omit in toc -->
-
-- 사용자 위치 기반의 실시간 명소 추천 및 네이버 지도 API 커스터마이징을 통한 직관적 인터페이스 제공
-- **확장성 고려**: 현재 서울 중심의 서비스를 전국 단위 및 테마별 랜드마크로 확장 가능한 데이터 구조 설계
-
-#### 🎫 스탬프 획득 미션 (Stamp) <!-- omit in toc -->
-
-- Geolocation API를 활용한 방문 인증 시스템과 **게이미피케이션** 요소를 결합하여 사용자 체류 시간 증대 및 재방문 유도
-
-#### 🔖 나만의 여행 보관함 (Bookmark) <!-- omit in toc -->
-
-- 관심 장소의 효율적 관리를 위한 서버 사이드 데이터 동기화 및 즉각적인 UI 반영(Optimistic Update) 구현
-
-#### 🎨 모바일 최적화 UI/UX <!-- omit in toc -->
-
-- iOS/Android Safe Area 완벽 대응 및 480px 고정 레이아웃으로 모바일 웹뷰 최상의 안정성 확보
-
----
-
-## 📌 Key Highlights
-
-- **PWA(Progressive Web App) 기반 오프라인 접근성**: 도보 여행 중 발생할 수 있는 네트워크 불안정 환경에 대응하고, 설치 없이도 앱 라이크한 사용자 경험(UX)을 제공합니다.
-- **Next.js Middleware를 활용한 API Security**: Edge Proxy 구축을 통해 브라우저 CORS 문제를 근본적으로 해결하고, API 키 노출 방지 등 보안성을 강화했습니다.
-- **Framer Motion 기반 고성능 UI/UX**: 60fps의 부드러운 페이지 전환 애니메이션과 직관적인 Swipe UI를 구현하여 모바일 최적화 인터랙션을 완성했습니다.
-- **AI-Driven Code Quality Control**: Gemini AI를 활용한 1차 코드 리뷰 파이프라인을 도입하여 컨벤션 준수율을 높이고 비즈니스 로직 검증에 집중할 수 있는 환경을 구축했습니다.
-
----
-
-## 🛠️️ 기술 스택
+## 🛠️ 기술 스택
 
 | Category       | Technology                  | Decision (기술적 의사결정 배경)                                           |
 | :------------- | :-------------------------- | :------------------------------------------------------------------------ |
@@ -182,23 +121,21 @@ Walkavel은 **Progressive Web App(PWA)** 기술을 적용하여 네트워크 제
 
 ### 1. 패키지 설치 <!-- omit in toc -->
 
-Node.js 20.0.0 이상의 버전이 필요합니다. <!-- omit in toc -->
-
 Node.js 20.0.0 이상의 버전이 필요합니다.
 
 ```bash
 pnpm install
 ```
 
-### 2. 환경 변수 설정 <!-- omit in toc --> <!-- omit in toc -->
+### 2. 환경 변수 설정 <!-- omit in toc -->
 
 `.env.example` 파일을 `.env.local`로 복사하여 알맞은 값을 설정합니다.
 
 ```bash
-cp .env.example .env.local.local
+cp .env.example .env.local
 ```
 
-### 3. 개발 서버 실행 <!-- omit in toc --> <!-- omit in toc -->
+### 3. 개발 서버 실행 <!-- omit in toc -->
 
 ```bash
 pnpm dev
