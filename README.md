@@ -39,7 +39,6 @@
 - [📌 Key Highlights](#-key-highlights)
 - [📑 목차](#-목차)
 - [✨ 서비스 소개](#-서비스-소개)
-  - [](#)
   - [📲 모바일 웹앱 (PWA) 지원](#-모바일-웹앱-pwa-지원)
   - [주요 기능 (Features)](#주요-기능-features)
     - [📍 걷기 좋은 여행지 추천 (Explore)](#-걷기-좋은-여행지-추천-explore)
@@ -59,7 +58,7 @@
 
 ## ✨ 서비스 소개
 
-### <img src="public/images/walkavel-intro.png" width="100%" alt="Walkavel Service Introduction" />
+<img src="public/images/walkavel-intro.png" width="100%" alt="Walkavel Service Introduction" />
 
 ### 📲 모바일 웹앱 (PWA) 지원
 
