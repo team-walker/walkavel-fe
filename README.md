@@ -1,19 +1,16 @@
 <div align="center">
 
-<h1>
-  <img src="public/icons/apple-touch-icon.png" width="40" height="40" style="vertical-align: middle; margin-right: 8px;" alt="Walkavel Icon" />
-  <span style="vertical-align: middle;">Walkavel (워커블)</span>
-</h1>
+<h1><img src="public/icons/apple-touch-icon.png" width="40" height="40" style="vertical-align: middle; margin-right: 8px;" alt="Walkavel Icon" /><span style="vertical-align: middle;">Walkavel (워커블)</span></h1>
 
 <p><b>일상이 여행이 되는 순간, 발걸음이 즐거운 여행을 제안합니다.</b></p>
-
 <p>걷기 좋은 여행지를 발견하고 스탬프 미션을 통해 재미를 더해주는 모바일 최적화 웹 서비스.</p>
 
 <p>
   <a href="https://walkavel.vercel.app/"><img src="https://img.shields.io/badge/Live_Demo-3182F6?style=for-the-badge&logo=vercel&logoColor=white" /></a>
   <a href="https://drive.google.com/drive/u/0/folders/16cbmrRNOPyO_16IaLjRC9ilSsMod0N-k"><img src="https://img.shields.io/badge/Presentation-FF5722?style=for-the-badge&logo=googledrive&logoColor=white" /></a>
   <a href="https://youtu.be/BHgrptiKOFI"><img src="https://img.shields.io/badge/Demo_Video-FF0000?style=for-the-badge&logo=youtube&logoColor=white" /></a>
-  <a href="https://www.figma.com/design/In0GfLVEGlNWgTcizgf5SA/Walkavel?node-id=134-107&t=jsY7b4CEHzCgUxSi-1"><img src="https://img.shields.io/badge/Figma-1E1E1E?style=for-the-badge&logo=figma&logoColor=white" /></a>
+  <a href="https://www.figma.com/design/In0GfLVEGlNWgTcizgf5SA/Walkavel?node-id=134-107&t=jsY7b4CEUxSi-1"><img src="https://img.shields.io/badge/Figma-1E1E1E?style=for-the-badge&logo=figma&logoColor=white" /></a>
+  <a href="https://teamwalkerbackend.fly.dev/docs"><img src="https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=swagger&logoColor=black" /></a>
 </p>
 
 <br/>
