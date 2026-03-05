@@ -1,6 +1,6 @@
 <div align="center">
 
-<h1><img src="public/icons/apple-touch-icon.png" width="40" height="40" style="vertical-align: middle; margin-right: 8px;" alt="Walkavel Icon" /><span style="vertical-align: middle;">Walkavel (워커블)</span></h1>
+<h1><img src="public/icons/apple-touch-icon.png" width="40" height="40" style="vertical-align: middle; margin-right: 8px;" alt="Walkavel Icon" /><span style="vertical-align: middle;">Walkavel (워커블) — Frontend</span></h1>
 
 <p><b>일상이 여행이 되는 순간, 발걸음이 즐거운 여행을 제안합니다.</b></p>
 <p>걷기 좋은 여행지를 발견하고 스탬프 미션을 통해 재미를 더해주는 모바일 최적화 웹 서비스.</p>
