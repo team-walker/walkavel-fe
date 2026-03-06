@@ -3905,7 +3905,7 @@ body,
 <p><strong>4. Next.js Middleware 기반 Edge Proxy 구축</strong> — 클라이언트 API 키 노출과 CORS 문제를 서버 레이어로 해결</p>
 <ul>
 <li>🔍 <strong>문제</strong>: 클라이언트에서 네이버 지도 API 직접 호출 시 API 키 노출 및 CORS 오류 발생</li>
-<li>✅ <strong>해결</strong>: <code>middleware.ts</code>를 Edge Proxy 레이어로 구성하여 인증 세션 갱신·보호 경로 접근 제어·API Proxying을 통합 처리 → 외부 API 키 노출 방지 및 CORS 동시 해결</li>
+<li>✅ <strong>해결</strong>: <code>proxy.ts</code>를 Edge Proxy 레이어로 구성하여 인증 세션 갱신·보호 경로 접근 제어·API Proxying을 통합 처리 → 외부 API 키 노출 방지 및 CORS 동시 해결</li>
 </ul>
 <p><strong>5. 팀 개발 환경 기반 구축 및 CI/CD 자동화</strong> — 의존성 충돌 해소와 자동화 파이프라인 구축으로 팀 개발 생산성 확보</p>
 <ul>
