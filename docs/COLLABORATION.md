@@ -1,22 +1,21 @@
-# 🤝 협업 가이드 (Collaboration Guide)
+# 🤝 협업 가이드 (Collaboration Guide) <!-- omit in toc -->
 
 > **"지속 가능한 코드 품질과 효율적인 협업을 위해 다음 규칙을 준수합니다."**
 > 팀 내에서 논의된 상세한 협업 프로세스와 가이드는 [팀 노션](https://www.notion.so/hayeonbaek/2fdf2cf9d94180f488aef3da85e6e993?source=copy_link)에서 확인하실 수 있습니다.
 
 ## 📑 목차 <!-- omit in toc -->
 
-- [🤝 협업 가이드 (Collaboration Guide)](#-협업-가이드-collaboration-guide)
-  - [1. 브랜치 전략 (Git Flow)](#1-브랜치-전략-git-flow)
-    - [브랜치 종류](#브랜치-종류)
-  - [2. 커밋 컨벤션 (Conventional Commits)](#2-커밋-컨벤션-conventional-commits)
-    - [커밋 메시지 형식](#커밋-메시지-형식)
-  - [3. PR(Pull Request) 전략](#3-prpull-request-전략)
-    - [PR 작성 및 리뷰 규칙](#pr-작성-및-리뷰-규칙)
-  - [4. 코딩 \& 스타일 컨벤션](#4-코딩--스타일-컨벤션)
-    - [네이밍 컨벤션](#네이밍-컨벤션)
-    - [코드 작성 원칙](#코드-작성-원칙)
-  - [5. CI/CD (Github Actions)](#5-cicd-github-actions)
-  - [6. 스프린트 및 통합 주기 (Sprint \& Integration)](#6-스프린트-및-통합-주기-sprint--integration)
+- [1. 브랜치 전략 (Git Flow)](#1-브랜치-전략-git-flow)
+  - [브랜치 종류](#브랜치-종류)
+- [2. 커밋 컨벤션 (Conventional Commits)](#2-커밋-컨벤션-conventional-commits)
+  - [커밋 메시지 형식](#커밋-메시지-형식)
+- [3. PR(Pull Request) 전략](#3-prpull-request-전략)
+  - [PR 작성 및 리뷰 규칙](#pr-작성-및-리뷰-규칙)
+- [4. 코딩 \& 스타일 컨벤션](#4-코딩--스타일-컨벤션)
+  - [네이밍 컨벤션](#네이밍-컨벤션)
+  - [코드 작성 원칙](#코드-작성-원칙)
+- [5. CI/CD (Github Actions)](#5-cicd-github-actions)
+- [6. 스프린트 및 통합 주기 (Sprint \& Integration)](#6-스프린트-및-통합-주기-sprint--integration)
 
 ---
 
@@ -26,12 +25,12 @@
 
 ### 브랜치 종류
 
-| 브랜치                  | 용도                         | 직접 Push           |
-| :---------------------- | :--------------------------- | :------------------ |
-| **`main`**              | 배포 가능한 프로덕션 코드    | ❌ 금지             |
-| **`develop`**           | 다음 배포를 위한 개발 브랜치 | ❌ 금지 (PR만 가능) |
-| **`feat/#이슈번호-기능명`** | 기능 개발                    | ✅ 가능             |
-| **`fix/#이슈번호-버그명`**  | 버그 수정                    | ✅ 가능             |
+| 브랜치                      | 용도                           | 직접 Push           |
+| :-------------------------- | :----------------------------- | :------------------ |
+| **`main`**                  | 배포 가능한 프로덕션 코드      | ❌ 금지             |
+| **`develop`**               | 다음 배포를 위한 개발 브랜치   | ❌ 금지 (PR만 가능) |
+| **`feat/#이슈번호-기능명`** | 기능 개발 (예: feat/#12-login) | ✅ 가능             |
+| **`fix/#이슈번호-버그명`**  | 버그 수정 (예: fix/#15-error)  | ✅ 가능             |
 
 ---
 
