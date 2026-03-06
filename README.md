@@ -7,7 +7,7 @@
 
 <p>
   <a href="https://walkavel.vercel.app/"><img src="https://img.shields.io/badge/Live_Demo-3182F6?style=for-the-badge&logo=vercel&logoColor=white" /></a>
-  <a href="https://drive.google.com/drive/u/0/folders/16cbmrRNOPyO_16IaLjRC9ilSsMod0N-k"><img src="https://img.shields.io/badge/Presentation-FF5722?style=for-the-badge&logo=googledrive&logoColor=white" /></a>
+  <a href="https://drive.google.com/file/d/1Oi6CBBlS4PEIIHEBGks2jYhfqHN6Skfb/view?usp=drive_link"><img src="https://img.shields.io/badge/Presentation-FF5722?style=for-the-badge&logo=googledrive&logoColor=white" /></a>
   <a href="https://youtu.be/BHgrptiKOFI"><img src="https://img.shields.io/badge/Demo_Video-FF0000?style=for-the-badge&logo=youtube&logoColor=white" /></a>
   <a href="https://www.figma.com/design/In0GfLVEGlNWgTcizgf5SA/Walkavel?node-id=134-107&t=jsY7b4CEUxSi-1"><img src="https://img.shields.io/badge/Figma-1E1E1E?style=for-the-badge&logo=figma&logoColor=white" /></a>
   <a href="https://teamwalkerbackend.fly.dev/docs"><img src="https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=swagger&logoColor=black" /></a>
@@ -81,10 +81,10 @@
 - 🔍 **문제**: 도보 여행 중 네트워크 불안정 환경에서의 접근성 보장 필요, iOS 하단 탭과 UI 겹침·깨짐 현상 발생
 - ✅ **해결**: `@ducanh2912/next-pwa`로 서비스 워커 캐싱 전략 적용 및 A2HS 구현, CSS `env(safe-area-inset-*)` 적용으로 Safe Area 대응, 480px 고정 레이아웃으로 모바일 UI 안정성 확보
 
-**4. Next.js Middleware 기반 Edge Proxy 구축** — 클라이언트 API 키 노출과 CORS 문제를 서버 레이어로 해결
+**4. Next.js Proxy 기반 Edge Proxy 구축** — 클라이언트 API 키 노출과 CORS 문제를 서버 레이어로 해결
 
 - 🔍 **문제**: 클라이언트에서 네이버 지도 API 직접 호출 시 API 키 노출 및 CORS 오류 발생
-- ✅ **해결**: `middleware.ts`를 Edge Proxy 레이어로 구성하여 인증 세션 갱신·보호 경로 접근 제어·API Proxying을 통합 처리 → 외부 API 키 노출 방지 및 CORS 동시 해결
+- ✅ **해결**: `proxy.ts`를 Edge Proxy 레이어로 구성하여 인증 세션 갱신·보호 경로 접근 제어·API Proxying을 통합 처리 → 외부 API 키 노출 방지 및 CORS 동시 해결
 
 **5. 팀 개발 환경 기반 구축 및 CI/CD 자동화** — 의존성 충돌 해소와 자동화 파이프라인 구축으로 팀 개발 생산성 확보
 
@@ -137,7 +137,7 @@
 
 ### 🤔 기술적 의사결정
 
-- **Next.js 16** — App Router 기반 SSR/SSG로 비로그인 화면의 SEO 최적화 및 초기 로딩 성능 확보. `middleware.ts`를 Edge Proxy 레이어로 활용하여 인증 세션 갱신, 보호된 경로 접근 제어, API Proxying을 한 곳에서 통합 관리
+- **Next.js 16** — App Router 기반 SSR/SSG로 비로그인 화면의 SEO 최적화 및 초기 로딩 성능 확보. `proxy.ts`를 Edge Proxy 레이어로 활용하여 인증 세션 갱신, 보호된 경로 접근 제어, API Proxying을 한 곳에서 통합 관리
 - **Supabase Auth** — Google·Kakao OAuth 2.0 소셜 로그인 연동, PostgreSQL DB·Auth·Storage를 하나의 BaaS로 통합 관리하여 별도 서버 배포 없이 인증 체계 구축
 - **Zustand 5** — Boilerplate 없이 가볍고 직관적인 전역 상태 관리
 - **Tailwind CSS 4** — Utility-first 방식으로 디자인 시스템 일관성 유지 및 빠른 스타일 개발
