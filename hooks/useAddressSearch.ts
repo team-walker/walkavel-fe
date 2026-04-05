@@ -75,6 +75,22 @@ export const useAddressSearch = ({
     [onSelectAddress],
   );
 
+  const handleFetchAddresses = useCallback(
+    async (searchQuery: string) => {
+      setIsLoading(true);
+      try {
+        const addresses = await searchAddressAction(searchQuery, defaultRegion);
+        return addresses;
+      } catch (error) {
+        console.error('Address search error:', error);
+        return [];
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [defaultRegion],
+  );
+
   const handleFocus = useCallback(() => {
     setIsFocused(true);
     if (query.length >= 2 && results.length > 0) {
@@ -92,6 +108,7 @@ export const useAddressSearch = ({
     isFocused,
     setIsFocused,
     handleSelectAddress,
+    handleFetchAddresses,
     handleFocus,
   };
 };
