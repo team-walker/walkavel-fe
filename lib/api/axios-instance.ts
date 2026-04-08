@@ -2,7 +2,7 @@ import axios, { AxiosError, type InternalAxiosRequestConfig } from 'axios';
 
 import { supabase } from '@/lib/supabase/client';
 
-const DEFAULT_TIMEOUT = 30000;
+export const DEFAULT_TIMEOUT = 10000;
 
 export const axiosInstance = axios.create({
   baseURL:
