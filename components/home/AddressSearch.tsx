@@ -150,17 +150,32 @@ export default function AddressSearch({ onSelectAddress }: AddressSearchProps) {
           </PopoverContent>
         </Popover>
 
-        <div className="flex flex-col space-y-3 px-1">
-          <span className="text-walkavel-gray-500 text-sm font-semibold">인기 지역</span>
+        <div
+          className="flex flex-col space-y-3 px-1"
+          role="group"
+          aria-labelledby="popular-regions-label"
+        >
+          <span id="popular-regions-label" className="text-walkavel-gray-500 text-sm font-semibold">
+            인기 지역
+          </span>
           <div className="flex flex-wrap gap-2">
             {POPULAR_REGIONS.map((region) => (
               <Badge
                 key={region.value}
+                asChild
                 variant="secondary"
-                className="bg-walkavel-gray-100 text-walkavel-gray-700 hover:bg-brand-blue/10 hover:text-brand-blue flex h-9 cursor-pointer items-center rounded-xl border-none px-4 text-sm font-medium transition-colors"
+                className="bg-walkavel-gray-100 text-walkavel-gray-700 hover:bg-brand-blue/10 hover:text-brand-blue cursor-pointer rounded-xl border-none px-4 text-sm font-medium transition-colors"
                 onClick={() => handleRegionClick(region)}
               >
-                {region.label}
+                <button
+                  type="button"
+                  onClick={() => handleRegionClick(region)}
+                  aria-label={`${region.label} 지역 선택`}
+                  data-testid={`popular-region-${region.sigugun}`}
+                  className="flex h-9 items-center"
+                >
+                  {region.label}
+                </button>
               </Badge>
             ))}
           </div>
