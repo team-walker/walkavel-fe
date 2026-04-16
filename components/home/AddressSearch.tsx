@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/command';
 import { Input } from '@/components/ui/input';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { POPULAR_REGIONS, PopularRegion } from '@/constants/map';
 import { COMMON_LITERALS } from '@/constants/types';
 import { useAddressSearch } from '@/hooks/useAddressSearch';
 import { AddressResult } from '@/types/address';
@@ -20,15 +21,6 @@ import { AddressResult } from '@/types/address';
 interface AddressSearchProps {
   onSelectAddress: (address: AddressResult) => void;
 }
-
-const POPULAR_REGIONS = [
-  { label: '종로·북촌', value: '서울특별시 종로구', sigugun: '종로구' },
-  { label: '명동·남산', value: '서울특별시 중구', sigugun: '중구' },
-  { label: '성수·서울숲', value: '서울특별시 성동구', sigugun: '성동구' },
-  { label: '연남·숲길', value: '서울특별시 마포구', sigugun: '마포구' },
-  { label: '한남·용산', value: '서울특별시 용산구', sigugun: '용산구' },
-  { label: '강남·압구정', value: '서울특별시 강남구', sigugun: '강남구' },
-];
 
 export default function AddressSearch({ onSelectAddress }: AddressSearchProps) {
   const {
@@ -44,7 +36,7 @@ export default function AddressSearch({ onSelectAddress }: AddressSearchProps) {
     handleFocus,
   } = useAddressSearch({ onSelectAddress });
 
-  const handleRegionClick = (region: (typeof POPULAR_REGIONS)[0]) => {
+  const handleRegionClick = (region: PopularRegion) => {
     handleSelectAddress({
       roadAddress: region.value,
       jibunAddress: region.value,
@@ -169,7 +161,6 @@ export default function AddressSearch({ onSelectAddress }: AddressSearchProps) {
               >
                 <button
                   type="button"
-                  onClick={() => handleRegionClick(region)}
                   aria-label={`${region.label} 지역 선택`}
                   data-testid={`popular-region-${region.sigugun}`}
                   className="flex h-9 items-center"

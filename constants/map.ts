@@ -40,3 +40,14 @@ export const MAP_APP_URLS = {
   NAVER_DESKTOP: (keyword: string, lat: number, lng: number) =>
     `https://map.naver.com/p/search/${encodeURIComponent(keyword)}?c=${lng},${lat},15,0,0,0,dh`,
 } as const;
+
+export const POPULAR_REGIONS = [
+  { label: '종로·북촌', value: '서울특별시 종로구', sigugun: '종로구' },
+  { label: '명동·남산', value: '서울특별시 중구', sigugun: '중구' },
+  { label: '성수·서울숲', value: '서울특별시 성동구', sigugun: '성동구' },
+  { label: '연남·숲길', value: '서울특별시 마포구', sigugun: '마포구' },
+  { label: '한남·용산', value: '서울특별시 용산구', sigugun: '용산구' },
+  { label: '강남·압구정', value: '서울특별시 강남구', sigugun: '강남구' },
+] as const;
+
+export type PopularRegion = (typeof POPULAR_REGIONS)[number];
