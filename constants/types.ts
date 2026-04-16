@@ -26,5 +26,5 @@ export const SWIPE_CONFIG = {
 export const COMMON_LITERALS = {
   NO_ADDR: '상세 주소 정보가 없습니다.',
   LOADING_MAP: '지도 로딩 중...',
-  SEARCH_PLACEHOLDER: '동 이름으로 검색 (예: 인사동, 명동)',
+  SEARCH_PLACEHOLDER: '구 또는 동 이름으로 검색 (예: 종로구, 성수동)',
 } as const;
