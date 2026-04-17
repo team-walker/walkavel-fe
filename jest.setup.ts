@@ -1,9 +1,10 @@
 import '@testing-library/jest-dom';
 
-/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-(process.env as any).NEXT_PUBLIC_SUPABASE_URL = 'https://example.supabase.co';
-/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-(process.env as any).NEXT_PUBLIC_SUPABASE_ANON_KEY = 'example-key';
+// 테스트 환경 변수 설정
+Object.assign(process.env, {
+  NEXT_PUBLIC_SUPABASE_URL: 'https://example.supabase.co',
+  NEXT_PUBLIC_SUPABASE_ANON_KEY: 'example-key',
+});
 
 // window.location mock 설정
 const mockLocation = {

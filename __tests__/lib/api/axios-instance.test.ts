@@ -1,6 +1,19 @@
 import { axiosInstance } from '@/lib/api/axios-instance';
 import { supabase } from '@/lib/supabase/client';
 
+type InterceptorHandler<T> = {
+  fulfilled: (config: T) => Promise<T>;
+  rejected: (error: unknown) => Promise<unknown>;
+};
+
+type RequestInterceptor = {
+  handlers: InterceptorHandler<Record<string, unknown>>[];
+};
+
+type ResponseInterceptor = {
+  handlers: InterceptorHandler<Record<string, unknown>>[];
+};
+
 jest.mock('@/lib/supabase/client', () => ({
   supabase: {
     auth: {
@@ -13,7 +26,7 @@ jest.mock('@/lib/supabase/client', () => ({
 describe('AxiosInstance', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    (window.location as any).href = 'http://localhost/';
+    (window.location as unknown as Location).href = 'http://localhost/';
   });
 
   afterAll(() => {
@@ -27,12 +40,16 @@ describe('AxiosInstance', () => {
         data: { session: mockSession },
       });
 
-      const config = { headers: {} } as any;
-      const interceptedConfig = await (
-        axiosInstance.interceptors.request as any
-      ).handlers[0].fulfilled(config);
+      const config: Record<string, unknown> = { headers: {} };
+      const requestInterceptor = axiosInstance.interceptors
+        .request as unknown as RequestInterceptor;
+      const interceptedConfig = await requestInterceptor.handlers[0].fulfilled(config);
 
-      expect(interceptedConfig.headers.Authorization).toBe('Bearer fake-token');
+      expect(interceptedConfig.headers).toEqual(
+        expect.objectContaining({
+          Authorization: 'Bearer fake-token',
+        }),
+      );
     });
 
     it('세션이 없으면 Authorization 헤더를 추가하지 않아야 한다', async () => {
@@ -40,20 +57,22 @@ describe('AxiosInstance', () => {
         data: { session: null },
       });
 
-      const config = { headers: {} } as any;
-      const interceptedConfig = await (
-        axiosInstance.interceptors.request as any
-      ).handlers[0].fulfilled(config);
+      const config: Record<string, unknown> = { headers: {} };
+      const requestInterceptor = axiosInstance.interceptors
+        .request as unknown as RequestInterceptor;
+      const interceptedConfig = await requestInterceptor.handlers[0].fulfilled(config);
 
-      expect(interceptedConfig.headers.Authorization).toBeUndefined();
+      expect(interceptedConfig.headers).not.toHaveProperty('Authorization');
     });
 
     it('세션을 가져오는 데 실패하면 에러를 기록해야 한다', async () => {
       const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
       (supabase.auth.getSession as jest.Mock).mockRejectedValue(new Error('Session Error'));
 
-      const config = { headers: {} } as any;
-      await (axiosInstance.interceptors.request as any).handlers[0].fulfilled(config);
+      const config: Record<string, unknown> = { headers: {} };
+      const requestInterceptor = axiosInstance.interceptors
+        .request as unknown as RequestInterceptor;
+      await requestInterceptor.handlers[0].fulfilled(config);
 
       expect(consoleSpy).toHaveBeenCalledWith(
         'Failed to get session for axios request:',
@@ -70,9 +89,11 @@ describe('AxiosInstance', () => {
         isAxiosError: true,
       };
 
-      let rejectedError;
+      let rejectedError: unknown;
       try {
-        await (axiosInstance.interceptors.response as any).handlers[0].rejected(error);
+        const responseInterceptor = axiosInstance.interceptors
+          .response as unknown as ResponseInterceptor;
+        await responseInterceptor.handlers[0].rejected(error);
       } catch (err) {
         rejectedError = err;
       }
@@ -86,11 +107,13 @@ describe('AxiosInstance', () => {
         isAxiosError: true,
       };
 
-      let caughtError;
+      let caughtError: unknown;
       try {
-        await (axiosInstance.interceptors.response as any).handlers[0].rejected(error);
-      } catch (_err) {
-        caughtError = _err;
+        const responseInterceptor = axiosInstance.interceptors
+          .response as unknown as ResponseInterceptor;
+        await responseInterceptor.handlers[0].rejected(error);
+      } catch (err) {
+        caughtError = err;
       }
 
       expect(caughtError).toEqual(error);
