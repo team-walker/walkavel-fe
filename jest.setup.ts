@@ -5,6 +5,26 @@ import '@testing-library/jest-dom';
 /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 (process.env as any).NEXT_PUBLIC_SUPABASE_ANON_KEY = 'example-key';
 
+// window.location mock 설정
+const mockLocation = {
+  href: 'http://localhost/',
+  pathname: '/',
+  search: '',
+  hash: '',
+  origin: 'http://localhost',
+  protocol: 'http:',
+  host: 'localhost',
+  hostname: 'localhost',
+  port: '',
+  assign: jest.fn(),
+  replace: jest.fn(),
+  reload: jest.fn(),
+  toString: jest.fn(() => 'http://localhost/'),
+};
+
+delete (window as unknown as Record<string, unknown>).location;
+(window as unknown as Record<string, unknown>).location = mockLocation;
+
 // ResizeObserver Mock
 global.ResizeObserver = jest.fn().mockImplementation(() => ({
   observe: jest.fn(),
