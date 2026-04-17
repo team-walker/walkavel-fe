@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "statusMessage": "테스트 파일 확인 중...",
+            "command": "FILE=$(jq -r '.tool_input.file_path // empty' 2>/dev/null); [ -z \"$FILE\" ] && exit 0; echo \"$FILE\" | grep -qE '/(hooks|store|lib)/[^/]+\\.tsx?$' || exit 0; BASENAME=$(basename \"$FILE\" | sed 's/\\.[^.]*$//'); TEST=$(find __tests__ -name \"${BASENAME}.test.*\" 2>/dev/null | head -1); REL=$(echo \"$FILE\" | grep -oE '(hooks|store|lib)/.+'); if [ -z \"$TEST\" ]; then printf '{\"systemMessage\":\"no-test: %s -> /sync-test %s\"}' \"$REL\" \"$REL\"; else TEST_REL=$(echo \"$TEST\" | sed 's|.*/frontend/||'); printf '{\"hookSpecificOutput\":{\"hookEventName\":\"PostToolUse\",\"additionalContext\":\"[test-sync] %s modified. Check %s for needed updates. Run /sync-test %s if logic changed.\"}}' \"$REL\" \"$TEST_REL\" \"$REL\"; fi"
+          }
+        ]
+      }
+    ]
+  }
+}
