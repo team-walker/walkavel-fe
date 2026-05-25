@@ -14,12 +14,24 @@ const config: Config = {
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/$1',
+    '^@components/(.*)$': '<rootDir>/app/_components/$1',
+    '^@lib/(.*)$': '<rootDir>/lib/$1',
+    '^@hooks/(.*)$': '<rootDir>/hooks/$1',
+  },
+  globals: {
+    'ts-jest': {
+      tsconfig: './tsconfig.test.json',
+    },
   },
   testPathIgnorePatterns: [
     '<rootDir>/node_modules/',
     '<rootDir>/e2e/',
     '<rootDir>/__tests__/utils/',
+    '<rootDir>/.claude/',
   ],
+  // 성능 최적화
+  maxWorkers: '50%',
+  testTimeout: 10000,
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
